@@ -1,0 +1,1311 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="googlebot" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<title>Khảo sát</title>
+<script>(function(){var p=location.pathname;if(/^https?:$/.test(location.protocol)&&!p.endsWith("/")&&!/\.[a-z0-9]+$/i.test(p))location.replace(p+"/"+location.search+location.hash);})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1F3A5F; --topbar:#0B5CAD; --btn:#BDD7EE; --btn-line:#8DB4E2; --btn-text:#0B2E59;  --bg:#F2F5F8; --surface:#FFFFFF; --line:#D3DBE4; --text:#18212C;
+  --muted:#5B6573; --go:#23704A; --go-text:#FFFFFF; --stop:#B3261E; --sel:#E2ECF8; --sel-line:#1F3A5F; --warn:#8A5A00;
+}
+@media (prefers-color-scheme: dark){
+  :root{ --ink:#9CBCE6; --topbar:#0A4A8C; --btn:#2B4A6B; --btn-line:#4A6E94; --btn-text:#E6EEF8;  --bg:#0F151C; --surface:#18212C; --line:#2C3947; --text:#E6EBF1;
+    --muted:#9AA6B4; --go:#4FAE78; --go-text:#0F151C; --stop:#F07167; --sel:#1F3247; --sel-line:#9CBCE6; --warn:#E8B04B; color-scheme:dark; }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;font-size:18px;line-height:1.5}
+.top{background:var(--ink);color:var(--bg);padding:10px 16px;display:flex;justify-content:space-between;gap:12px;font-size:15px}
+.top b{font-weight:600}
+.bar{height:5px;background:var(--line)}
+.bar i{display:block;height:100%;background:var(--go);transition:width .25s}
+main{max-width:720px;margin:0 auto;padding:22px 16px 120px}
+h1{font-size:24px;line-height:1.4;margin:4px 0 10px;font-weight:400}
+h1 b{font-weight:700} h1 .qn{color:var(--ink)}
+h2{font-size:19px;margin:24px 0 10px;font-weight:600}
+.qid{color:var(--muted);font-weight:600;font-size:15px}
+.note{color:var(--muted);font-style:italic;font-size:16px;margin:0 0 16px}
+.opt{display:flex;align-items:flex-start;gap:14px;background:var(--surface);border:2px solid var(--line);
+  border-radius:10px;padding:14px 16px;margin:8px 0;cursor:pointer;min-height:56px}
+.opt input[type=radio],.opt input[type=checkbox]{width:24px;height:24px;margin:2px 0 0;accent-color:var(--ink);flex:none}
+.opt:has(input:checked){background:var(--sel);border-color:var(--sel-line)}
+.code{color:var(--muted);font-size:14px;min-width:26px;padding-top:3px}
+.oth{display:none;margin-top:8px;width:100%}
+.opt:has(input:checked) .oth,.oth.show{display:block}
+.scale{display:grid;grid-template-columns:repeat(auto-fit,minmax(96px,1fr));gap:8px}
+.scale .opt{flex-direction:column;align-items:center;text-align:center;gap:6px}
+.rank{align-items:center}
+.rank select{font:inherit;min-width:64px;min-height:44px;padding:6px 8px;border:2px solid var(--line);border-radius:8px;background:var(--surface);color:var(--text)}
+.topic{border:2px solid var(--line);border-radius:10px;background:var(--surface);margin:10px 0;padding:10px 14px 14px;min-width:0}
+.topic legend{font-weight:600;padding:0 6px;max-width:100%}
+.chips{display:grid;grid-template-columns:repeat(auto-fit,minmax(88px,1fr));gap:6px}
+.chip{display:flex;flex-direction:column;align-items:center;text-align:center;gap:2px;border:2px solid var(--line);
+  border-radius:8px;padding:8px 6px;cursor:pointer;font-size:15px;min-height:52px}
+.chip input{width:22px;height:22px;accent-color:var(--ink)}
+.chip:has(input:checked){background:var(--sel);border-color:var(--sel-line)}
+.chip span{color:var(--muted)}
+img.lbl{display:block;max-width:100%;max-height:96px;height:auto;object-fit:contain;border-radius:6px;background:#fff}
+img.lbl.sm{max-height:56px}
+img.qimg{display:block;max-width:100%;max-height:360px;margin:6px 0 14px;border-radius:8px;border:1px solid var(--line)}
+input[type=text],input[type=number],input[type=date],textarea{width:100%;font:inherit;padding:12px 14px;border:2px solid var(--line);
+  border-radius:10px;background:var(--surface);color:var(--text)}
+textarea{min-height:150px} textarea.small{min-height:80px}
+input:focus-visible,textarea:focus-visible,button:focus-visible,select:focus-visible,.opt:focus-within{outline:3px solid var(--sel-line);outline-offset:2px}
+.err{background:var(--stop);color:#fff;padding:12px 16px;border-radius:10px;margin:0 0 14px;font-weight:500}
+.nav{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:1px solid var(--line);padding:12px 16px}
+.nav .in{max-width:720px;margin:0 auto;display:flex;gap:10px}
+button{font:inherit;font-weight:600;border:0;border-radius:10px;padding:14px 22px;cursor:pointer;min-height:52px}
+button:disabled{opacity:.45;cursor:default}
+.go{background:var(--go);color:var(--go-text);flex:1}
+.ghost{background:transparent;color:var(--text);border:2px solid var(--line)}
+.stop{background:transparent;color:var(--stop);border:2px solid var(--stop)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px;margin:14px 0}
+.big{font-size:40px;font-weight:700;line-height:1.1}
+.row{display:flex;gap:24px;flex-wrap:wrap}
+.muted{color:var(--muted);font-size:15px}
+.ok{color:var(--go)} .bad{color:var(--stop)} .warn{color:var(--warn)}
+.center{text-align:center}
+.top{align-items:center;min-height:52px}
+.top .tl{display:flex;align-items:center;gap:12px;min-width:0}
+.top .tl b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.brand{display:flex;align-items:center;background:#fff;border-radius:6px;padding:4px 8px;height:38px;flex:none}
+.brand img{height:30px;width:auto;display:block}
+@media (max-width:520px){.brand{height:32px;padding:3px 6px}.brand img{height:24px}}
+.imgcap{display:block;font-size:14px;margin-top:4px;color:var(--text)}
+.hint{color:var(--muted);font-size:14px;margin:6px 0 0}
+input.numfmt,input.num{max-width:320px;font-variant-numeric:tabular-nums}
+.mtx-wrap{overflow-x:auto;margin:8px 0 14px;-webkit-overflow-scrolling:touch}
+table.mtx{border-collapse:separate;border-spacing:0;width:100%;font-size:15px;background:var(--surface)}
+.mtx th,.mtx td{border:0;border-right:1px solid #9AA3AD;border-bottom:1px solid #9AA3AD;padding:4px;text-align:center;vertical-align:middle}
+.mtx thead th{border-top:1px solid #9AA3AD}
+.mtx th.rlab{border-left:1px solid #9AA3AD}
+.mtx thead th{font-weight:400;font-size:14px;line-height:1.25;padding:6px 4px;min-width:44px}
+.mtx thead th.corner{border-top:0;background:transparent}
+.mtx th.rlab{text-align:left !important;vertical-align:middle;font-weight:400;padding:6px 12px;position:sticky;left:0;z-index:1;background:var(--surface);min-width:120px;max-width:260px}
+.mtx th.rlab img.lbl{max-height:44px;margin:0}
+.mtx th.rlab .oth{display:block;margin-top:4px;font-size:14px;padding:4px 6px;min-width:140px}
+.mtx tbody tr:hover td,.mtx tbody tr:hover th.rlab{background:#F4F6F8}
+.mtx td label{display:flex;justify-content:center;align-items:center;min-height:34px;cursor:pointer;margin:0}
+.mtx td input{width:18px;height:18px;margin:0;accent-color:#7DBA3C}
+.mtx td:has(input:checked){background:#EAF5DF}
+.mtx .goth{display:none;margin:4px auto 2px;font-size:14px;padding:4px 6px;width:130px;max-width:none}
+.mtx .goth.on{display:block}
+@media (max-width:640px){.mtx th.rlab{min-width:110px;font-size:14px}.mtx td label{min-height:40px}}
+.optgrid{display:grid;grid-template-columns:repeat(var(--cols),minmax(0,1fr));column-gap:10px}
+.optgrid .opt{margin:5px 0}
+.optgrid img.lbl{max-height:150px}
+main.wide{max-width:1100px}
+@media (max-width:640px){.optgrid{grid-template-columns:repeat(var(--cols-sm),minmax(0,1fr))}.optgrid .opt{padding:10px;gap:8px}}
+.fld{display:grid;grid-template-columns:minmax(140px,38%) 1fr;gap:10px;align-items:center;margin:8px 0}
+.fld span{font-size:17px}
+.fld .req{color:var(--stop);font-weight:700}
+@media (max-width:520px){.fld{grid-template-columns:1fr;gap:4px}}
+.rec{color:#FF6B6B;font-weight:700;margin-left:8px;animation:blink 1.4s infinite}
+.rec.off{color:#FFD08A;animation:none;font-weight:500}
+@keyframes blink{50%{opacity:.35}}
+.warnbar{background:#FFF4D6;color:#5A3D00;padding:8px 16px;font-size:15px;border-bottom:1px solid #E8C770}
+
+/* ===== Kiểu gọn (giống mẫu khảo sát online): câu hỏi 17px chữ thường, đáp án 15px dạng danh sách ===== */
+body{font-family:"Source Sans 3","Source Sans Pro","Segoe UI",Roboto,Arial,sans-serif;font-size:16px;background:#EBEEF1}
+main{background:var(--surface);max-width:1100px;padding:30px 48px 120px;min-height:calc(100vh - 58px)}
+main.wide{max-width:1100px}
+h1{font-size:17px;line-height:1.65;font-weight:400;margin:0 0 12px;color:var(--text)}
+h1 b,h1 .qn{font-weight:700;color:var(--text)}
+.note{font-size:14px;margin:-4px 0 12px}
+.opt{border:0;background:transparent;border-radius:4px;padding:4px 6px;margin:0;min-height:0;gap:10px;align-items:center;font-size:15px;line-height:1.4}
+.opt:hover{background:#F4F6F8}
+.opt:has(input:checked){background:transparent;border:0}
+.opt input[type=radio],.opt input[type=checkbox]{width:18px;height:18px;margin:0;accent-color:#7DBA3C}
+.opt .code{font-size:12px;min-width:24px;padding:0}
+.opt .oth{margin-top:4px;max-width:420px}
+.optgrid{column-gap:24px}.optgrid .opt{margin:0}
+.scale{gap:6px}.scale .opt{border:1px solid var(--line);padding:8px 4px}.scale .opt:has(input:checked){background:var(--sel);border-color:var(--sel-line)}
+.rank select{min-height:32px;min-width:56px;font-size:14px;padding:2px 6px;border-width:1px;border-radius:3px}
+.topic{border:1px solid var(--line);border-radius:6px;padding:8px 12px 10px;margin:8px 0}
+.topic legend{font-size:15px}
+.chip{border-width:1px;border-radius:4px;padding:6px 4px;min-height:44px;font-size:14px}
+input[type=text],input[type=number],input[type=date],input[type=tel],textarea{font-size:15px;padding:8px 10px;border:1px solid #B8BEC6;border-radius:3px}
+textarea{min-height:110px}
+.fld span{font-size:15px}
+.err{font-size:15px;padding:10px 14px;border-radius:4px}
+img.lbl{max-height:120px}
+@media (max-width:640px){main{padding:20px 16px 120px}.opt{padding:7px 4px}}
+@media (prefers-color-scheme: dark){body{background:var(--bg)}.opt:hover{background:var(--sel)}}
+
+/* thanh tiêu đề xanh biển + logo trong ô phỏng vấn */
+.top{background:var(--topbar);color:#fff}
+.qlogo{display:flex;align-items:center;margin:0 0 14px}
+.qlogo img{height:44px;width:auto;display:block}
+.center .qlogo{justify-content:center}
+.top,.bar,.warnbar{max-width:1100px;margin-left:auto;margin-right:auto}
+
+/* nút điều hướng gọn kiểu STG: << Quay lại (trái)  Tiếp tục >> (phải), xanh dương nhạt */
+.nav.qnav{padding:10px 16px}
+.nav.qnav .in{max-width:1100px;align-items:center;justify-content:space-between}
+.qnav button{min-height:40px;padding:8px 18px;min-width:130px;border-radius:4px;font-weight:600;font-size:16px;
+  background:var(--btn);color:var(--btn-text);border:1px solid var(--btn-line);flex:none}
+.qnav button:hover{filter:brightness(.96)}
+.qnav button:disabled{opacity:.45;cursor:default}
+.qnav .bk{order:1}
+.qnav .stop{order:2;background:transparent;color:var(--stop);border:1px solid var(--stop);min-width:0}
+.qnav .nx{order:3;margin-left:auto}
+
+/* hình tự co giãn theo màn hình (điện thoại / tablet / laptop): rộng theo cột, cao theo chiều cao màn hình */
+img.lbl{max-height:clamp(70px,16vh,200px)}
+.optgrid img.lbl{max-height:clamp(90px,20vh,260px)}
+img.lbl.sm{max-height:clamp(44px,8vh,90px)}
+.mtx th.rlab img.lbl{max-height:clamp(64px,13vh,140px)}
+.mtx th.rlab:has(img.lbl){min-width:clamp(110px,16vw,200px)}
+img.qimg{max-height:min(60vh,640px);width:auto;max-width:100%;height:auto}
+
+/* hình nhãn hiệu được piping vào câu hỏi */
+.pimgs{display:flex;flex-wrap:wrap;gap:10px;margin:2px 0 14px}
+.pimgs img.lbl{max-height:clamp(80px,16vh,180px);max-width:min(100%,260px);border:1px solid var(--line)}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+/* ===== ENGINE ===== */
+/*
+ * survey-engine.js - bản JavaScript của engine.py (link PV dạng web, không cần cài đặt)
+ * Logic giống hệt engine.py: điều kiện, COUNT, Expression, lọc show/hide nhiều nguồn, piping Khác,
+ * SA/MA/SCALE/RANK/NUM/OE/DATE/INFO/GRID_SA/GRID_MA/GRID_NUM/GRID_OE/EXPR.
+ * Không phụ thuộc DOM -> dùng được trong trình duyệt và Node (test).
+ */
+(function (root) {
+  "use strict";
+  const CHOICE = ["sa", "ma", "scale", "rank"];
+  const GRID = ["grid_sa", "grid_ma", "grid_num", "grid_oe", "form"];
+  const REQ = /\s*\(\*\)\s*$/;
+  const PHONE = /điện thoại|dien thoai|phone|sđt|sdt|di động|mobile/i;
+  const fieldName = (l) => String(l || "").replace(REQ, "").trim();
+  const EMPTY = (v) => v === null || v === undefined || v === "" ||
+    (Array.isArray(v) && v.length === 0) || (isObj(v) && Object.keys(v).length === 0);
+  function isObj(v) { return v !== null && typeof v === "object" && !Array.isArray(v); }
+
+  function flat(v) {
+    if (isObj(v)) { let o = []; Object.values(v).forEach(x => { o = o.concat(Array.isArray(x) ? x : [x]); }); return o; }
+    return Array.isArray(v) ? v : [v];
+  }
+  function count(v) { if (EMPTY(v)) return 0; if (Array.isArray(v)) return v.length; if (isObj(v)) return Object.keys(v).length; return 1; }
+  const CMP = { ">": (a, b) => a > b, ">=": (a, b) => a >= b, "<": (a, b) => a < b, "<=": (a, b) => a <= b,
+    "=": (a, b) => a === b, "<>": (a, b) => a !== b };
+  const eq = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+
+  function evalCond(cond, ans) {
+    if (!cond) return true;
+    if (cond.all) return cond.all.every(c => evalCond(c, ans));
+    if (cond.any) return cond.any.some(c => evalCond(c, ans));
+    if (cond.not) return !evalCond(cond.not, ans);
+    const v = ans[cond.q], op = cond.op, x = cond.value;
+    if (op === "count") return CMP[cond.cmp || ">="](count(v), x);
+    if (op === "answered") return !EMPTY(v);
+    if (EMPTY(v)) return false;
+    const vals = flat(v);
+    if ((Array.isArray(v) || isObj(v)) && ["eq", "ne", "lt", "lte", "gt", "gte", "between"].includes(op)) return false;
+    switch (op) {
+      case "eq": return eq(v, x);
+      case "ne": return !eq(v, x);
+      case "lt": return v < x;
+      case "lte": return v <= x;
+      case "gt": return v > x;
+      case "gte": return v >= x;
+      case "between": return x[0] <= v && v <= x[1];
+      case "in": case "has": return vals.some(i => x.includes(i));
+      case "not_in": case "not_has": return !vals.some(i => x.includes(i));
+      case "has_all": return x.every(i => vals.includes(i));
+    }
+    throw new Error("Toán tử không hỗ trợ: " + op);
+  }
+
+  // ---------- Expression số an toàn: + - * / // % ( ), mã câu, YEAR, COUNT(Q), MIN/MAX/ABS/ROUND ----------
+  function evalExpr(expr, ans) {
+    const names = {}; Object.keys(ans).forEach(k => { names[k.toUpperCase()] = k; });
+    const toks = []; const re = /\s*(\d+(?:\.\d+)?|[A-Za-z_][\w.]*|\/\/|[-+*/%(),])/y; let m, s = String(expr);
+    re.lastIndex = 0;
+    while (re.lastIndex < s.length) {
+      const start = re.lastIndex; m = re.exec(s);
+      if (!m) { if (/^\s*$/.test(s.slice(start))) break; throw new Error("Biểu thức sai: " + s); }
+      toks.push(m[1]);
+    }
+    let i = 0;
+    const peek = () => toks[i], take = () => toks[i++];
+    const val = (name) => { const v = ans[names[name.toUpperCase()] || name]; return typeof v === "number" ? v : null; };
+    const bin = (a, b, f) => (a === null || b === null) ? null : f(a, b);
+    function prim() {
+      const t = take();
+      if (t === undefined) throw new Error("Biểu thức thiếu");
+      if (t === "(") { const v = exprP(); take(); return v; }
+      if (t === "-") { const v = prim(); return v === null ? null : -v; }
+      if (/^\d/.test(t)) return parseFloat(t);
+      const U = t.toUpperCase();
+      if (U === "YEAR") return new Date().getFullYear();
+      if (peek() === "(") {
+        take(); const args = [];
+        if (U === "COUNT") { const q = take(); take(); return count(ans[names[q.toUpperCase()] || q]); }
+        while (peek() !== ")") { args.push(exprP()); if (peek() === ",") take(); }
+        take();
+        if (args.some(a => a === null)) return null;
+        if (U === "MIN") return Math.min(...args); if (U === "MAX") return Math.max(...args);
+        if (U === "ABS") return Math.abs(args[0]);
+        if (U === "ROUND") { const p = Math.pow(10, args[1] || 0); return Math.round(args[0] * p) / p; }
+        throw new Error("Hàm không hỗ trợ: " + t);
+      }
+      return val(t);
+    }
+    function term() {
+      let v = prim();
+      while (["*", "/", "//", "%"].includes(peek())) {
+        const op = take(), r = prim();
+        v = bin(v, r, (a, b) => b === 0 && op !== "*" ? null : op === "*" ? a * b : op === "/" ? a / b
+          : op === "//" ? Math.floor(a / b) : ((a % b) + b) % b);
+      }
+      return v;
+    }
+    function exprP() {
+      let v = term();
+      while (["+", "-"].includes(peek())) { const op = take(), r = term(); v = bin(v, r, (a, b) => op === "+" ? a + b : a - b); }
+      return v;
+    }
+    const v = exprP();
+    return v;
+  }
+
+  function num(raw) {                  // "30,000" -> 30000 (phẩy = hàng nghìn, chấm = thập phân)
+    const s = String(raw).trim().replace(/[, ]/g, "");
+    if (!/^-?\d+(\.\d+)?$/.test(s)) throw new Error("NaN");
+    return Number(s);
+  }
+  const numGroup = (q) => !("max" in q) || q.max >= 10000;   // năm sinh, tuổi... không có dấu phẩy
+  const fmtNum = (x, group = true) => group ? Number(x).toLocaleString("en-US", { maximumFractionDigits: 10 }) : String(Number(x));
+  const rangeMsg = (q) => { const g = numGroup(q); return ("min" in q && "max" in q) ? `từ ${fmtNum(q.min, g)} đến ${fmtNum(q.max, g)}`
+    : ("min" in q ? `tối thiểu ${fmtNum(q.min, g)}` : `tối đa ${fmtNum(q.max, g)}`); };
+  const sources = (spec) => !spec ? [] : (Array.isArray(spec.q) ? spec.q : [spec.q]);
+
+  // Form: {get(k), getlist(k)} - bọc object thường hoặc FormData
+  function Form(obj) {
+    if (typeof FormData !== "undefined" && obj instanceof FormData) {
+      return { get: k => obj.get(k) ?? "", getlist: k => obj.getAll(k) };
+    }
+    return {
+      get: k => { const v = obj[k]; return v === undefined ? "" : (Array.isArray(v) ? (v[0] ?? "") : String(v)); },
+      getlist: k => { const v = obj[k]; return v === undefined ? [] : (Array.isArray(v) ? v.map(String) : [String(v)]); }
+    };
+  }
+
+  function shuffle(a) { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+  const pad = (n) => String(n).padStart(2, "0");
+  function stamp(d) { return `${d.getFullYear()}${pad(d.getMonth() + 1)}${pad(d.getDate())}_${pad(d.getHours())}${pad(d.getMinutes())}${pad(d.getSeconds())}`; }
+  function iso(d) { return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`; }
+  function rid() { return Math.random().toString(16).slice(2, 6).toUpperCase().padEnd(4, "0"); }
+
+  class Questionnaire {
+    constructor(data) {
+      this.data = data; this.project = data.project || "Survey";
+      this.questions = data.questions; this.index = {};
+      this.questions.forEach((q, i) => { if (q.id in this.index) throw new Error("Trùng mã câu: " + q.id); this.index[q.id] = i; });
+    }
+    get(id) { return this.questions[this.index[id]]; }
+    label(id, code, key) { const o = (this.get(id)[key || "options"] || []).find(o => o.code === code); return o ? o.label : String(code); }
+  }
+
+  class Interview {
+    constructor(qnr, interviewer, state, prefill) {
+      this.qnr = qnr; this.prefill = {};
+      if (state) { Object.assign(this, state); this.prefill = state.prefill || {}; this.start = new Date(state.start); this.end = state.end ? new Date(state.end) : null; return; }
+      const now = new Date();
+      this.interviewer = interviewer || "WEB";
+      this.resp_id = `${this.interviewer}_${stamp(now)}_${rid()}`;
+      this.start = now; this.end = null; this.status = "In progress"; this.term_reason = "";
+      this.answers = {}; this.history = []; this.order = {};
+      // giá trị điền sẵn từ link (vd ?id=001 -> MSP = 001): câu đó tự trả lời, không hiện
+      for (const [k, v] of Object.entries(prefill || {})) if (k in qnr.index && v !== "" && v != null) this.prefill[k] = v;
+      this.current = this.nextIndex(-1);
+    }
+    state() {
+      return { interviewer: this.interviewer, resp_id: this.resp_id, start: this.start.toISOString(),
+        end: this.end ? this.end.toISOString() : null, status: this.status, term_reason: this.term_reason,
+        answers: this.answers, history: this.history, order: this.order, current: this.current, prefill: this.prefill };
+    }
+
+    // ---------- piping ----------
+    pipe(text) {
+      return String(text || "").replace(/\{(\w+)\}/g, (_, key) => {
+        const mo = key.match(/^(\w+?)_OTH$/);
+        if (mo && !(key in this.answers)) {
+          const r = new RegExp("^" + mo[1].replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "_\\d+_OTH$");
+          const t = Object.keys(this.answers).sort().filter(k => r.test(k) && this.answers[k]).map(k => this.answers[k]);
+          return t.length ? t.join(", ") : "…";
+        }
+        const v = this.answers[key];
+        if (EMPTY(v)) return "…";
+        if (key in this.qnr.index && this.qnr.get(key).options) {
+          return flat(v).map(c => this.answers[`${key}_${c}_OTH`] || this.qnr.label(key, c)).join(", ");
+        }
+        return String(v);
+      });
+    }
+    pipeImages(text) {                         // hình của đáp án được piping ({BU7} -> logo nhãn ĐV đã chọn)
+      const out = [], seen = new Set();
+      for (const m of String(text || "").matchAll(/\{(\w+)\}/g)) {
+        const key = m[1];
+        if (!(key in this.qnr.index)) continue;
+        const opts = this.qnr.get(key).options || [], v = this.answers[key];
+        if (EMPTY(v)) continue;
+        for (const c of flat(v)) {
+          const o = opts.find(x => x.code === c);
+          if (o && o.image && !o.other && !seen.has(o.image)) { seen.add(o.image); out.push([o.image, o.label || ""]); }
+        }
+      }
+      return out;
+    }
+    otherText(qid, code, seen) {
+      seen = seen || new Set(); if (seen.has(qid)) return null; seen.add(qid);
+      const t = this.answers[`${qid}_${code}_OTH`]; if (t) return t;
+      if (qid in this.qnr.index) {
+        const q = this.qnr.get(qid);
+        for (const s of sources(q.options_from).concat(sources(q.topics_from))) { const r = this.otherText(s, code, seen); if (r) return r; }
+      }
+      return null;
+    }
+
+    // ---------- lọc ----------
+    chosen(qid) { const v = this.answers[qid]; return EMPTY(v) ? [] : flat(v); }
+    filtered(q, key, specKey, rndKey, orderKey) {
+      let items = (q[key] || []).filter(o => !o.hidden);
+      const spec = q[specKey], srcs = sources(spec);
+      if (srcs.length) {
+        const ch = new Set(); srcs.forEach(s => this.chosen(s).forEach(c => ch.add(c)));
+        const ex = new Set(spec.exclude || []);
+        items = (spec.mode || "show") === "hide"
+          ? items.filter(o => !ch.has(o.code) || ex.has(o.code) || o.always)
+          : items.filter(o => (ch.has(o.code) && !ex.has(o.code)) || o.always);
+      }
+      const rnd = q[rndKey];
+      const grp = typeof rnd === "string" && ["GROUP", "GROUP+"].includes(rnd.toUpperCase());
+      const ref = typeof rnd === "string" && !grp ? (this.order[rnd] || this.order[rnd + "#topics"] || null) : null;
+      if (grp && !(orderKey in this.order)) {         // random theo NHÓM đáp án: đảo nhóm, giữ/đảo code trong nhóm
+        const groups = {}, names = [], tail = [];
+        items.forEach(o => { if (o.group) { if (!(o.group in groups)) { groups[o.group] = []; names.push(o.group); } groups[o.group].push(o.code); } else tail.push(o.code); });
+        shuffle(names); const seq = [];
+        names.forEach(g => { const codes = groups[g].slice(); if (rnd.toUpperCase() === "GROUP+") shuffle(codes); seq.push(...codes); });
+        this.order[orderKey] = seq.concat(tail);
+      }
+      if (ref) {                                      // random CÙNG THỨ TỰ với câu khác (vd BU1 theo BA3)
+        const pos = {}; ref.forEach((c, i) => { pos[c] = i; });
+        const fx = (o) => (o.exclusive || o.other || o.fixed) ? 1 : 0;
+        items.sort((a, b) => (fx(a) - fx(b)) || ((pos[a.code] ?? 999) - (pos[b.code] ?? 999)));
+      } else if (rnd) {
+        if (!(orderKey in this.order)) {
+          const fixed = items.filter(o => o.exclusive || o.other || o.fixed).map(o => o.code);
+          const mov = shuffle(items.map(o => o.code).filter(c => !fixed.includes(c)));
+          this.order[orderKey] = mov.concat(fixed);
+        }
+        const pos = {}; this.order[orderKey].forEach((c, i) => { pos[c] = i; });
+        items.sort((a, b) => (pos[a.code] ?? 999) - (pos[b.code] ?? 999));
+      }
+      return items.map(o0 => {
+        const o = Object.assign({}, o0, { label: this.pipe(o0.label) });
+        for (const s of srcs) { const t = this.otherText(s, o.code); if (t) { Object.assign(o, { label: t, other: false, piped: true }); break; } }
+        return o;
+      });
+    }
+    options(q) { return this.filtered(q, "options", "options_from", "random", q.id); }
+    topics(q) { return this.filtered(q, "topics", "topics_from", "random_topics", q.id + "#topics"); }
+
+    // ---------- điều hướng ----------
+    isAuto(i) {
+      const q = this.qnr.questions[i];
+      return q.type === "expr" || !!q.hidden || (q.id in (this.prefill || {})) || (q.auto_single && CHOICE.includes(q.type) && this.options(q).length === 1);
+    }
+    compute(q) {
+      if (q.options && q.options.length) {
+        for (const o of q.options) if (o.auto_if && evalCond(o.auto_if, this.answers)) return o.code;
+        return null;
+      }
+      try { return q.expr ? evalExpr(q.expr, this.answers) : null; } catch (e) { return null; }
+    }
+    seq() {                                         // thứ tự câu: block 'random_block' liền nhau được đảo (random loop)
+      if (!("#seq" in this.order)) {
+        const qs = this.qnr.questions, seq = []; let i = 0;
+        const blk = (k) => String(qs[k].random_block || "").split(":")[0].trim();
+        while (i < qs.length) {
+          const b = blk(i); let j = i + 1;
+          if (b) {
+            while (j < qs.length && blk(j) === b) j++;
+            const units = [];                         // cụm 'NHOM1:A' giữ nguyên thứ tự bên trong
+            for (let k = i; k < j; k++) {
+              const tag = String(qs[k].random_block).trim();
+              if (units.length && tag.includes(":") && units[units.length - 1][0] === tag) units[units.length - 1][1].push(k);
+              else units.push([tag, [k]]);
+            }
+            shuffle(units); units.forEach(u => seq.push(...u[1]));
+          } else seq.push(i);
+          i = j;
+        }
+        this.order["#seq"] = seq;
+      }
+      return this.order["#seq"];
+    }
+    nextIndex(from) {
+      const qs = this.qnr.questions, seq = this.seq();
+      let p = from >= 0 ? seq.indexOf(from) + 1 : 0;
+      while (p < seq.length) {
+        const i = seq[p], q = qs[i];
+        if (evalCond(q.show_if, this.answers)) {
+          const t = q.type;
+          const pre = q.id in (this.prefill || {});
+          if (t === "expr" || q.hidden || pre) {
+            const v = pre ? this.prefill[q.id] : this.compute(q); this.answers[q.id] = (v !== null && (t === "ma" || t === "rank")) ? [v] : v; this.history.push(i);
+            if (q.terminate_if && evalCond(q.terminate_if, this.answers)) {
+              this.finish("Terminated", q.terminate_reason || "Terminate tại " + q.id); return null;
+            }
+            p++; continue;
+          }
+          if (CHOICE.includes(t)) {
+            const opts = this.options(q);
+            if (!opts.length) { p++; continue; }
+            if (opts.length === 1 && q.auto_single) {
+              const c = opts[0].code;
+              this.answers[q.id] = (t === "ma" || t === "rank") ? [c] : c;
+              if (opts[0].piped) this.answers[`${q.id}_${c}_OTH`] = opts[0].label;
+              this.history.push(i); p++; continue;
+            }
+          }
+          if (GRID.includes(t) && (!this.topics(q).length || ((t === "grid_sa" || t === "grid_ma") && !this.options(q).length))) { p++; continue; }
+          return i;
+        }
+        p++;
+      }
+      return null;
+    }
+    back() {
+      if (this.history.length) {
+        this.current = this.history.pop();
+        while (this.history.length && this.isAuto(this.current)) this.current = this.history.pop();
+      }
+    }
+    progress() { return this.current === null ? 100 : Math.floor(this.seq().indexOf(this.current) / Math.max(this.qnr.questions.length - 1, 1) * 100); }
+
+    // ---------- validate ----------
+    others(qid, codes, omap, form, extra) {
+      for (const c of codes) {
+        const o = omap[c];
+        if (o.piped) extra[`${qid}_${c}_OTH`] = o.label;
+        else if (o.other) {
+          const txt = form.get("oth_" + c).trim();
+          if (!txt) return `Ghi rõ nội dung cho "${o.label}".`;
+          extra[`${qid}_${c}_OTH`] = txt;
+        }
+      }
+      return null;
+    }
+    parse(q, form) {
+      const t = q.type, qid = q.id, extra = {};
+      const mapOf = (arr) => { const m = {}; arr.forEach(o => { m[o.code] = o; }); return m; };
+      if (t === "info") return [null, extra, null];
+      if (t === "sa" || t === "scale") {
+        const omap = mapOf(this.options(q)), raw = form.get("ans");
+        if (!raw) return [null, extra, "Chọn 1 đáp án để tiếp tục."];
+        const code = parseInt(raw, 10);
+        if (!(code in omap)) return [null, extra, "Đáp án không hợp lệ."];
+        return [code, extra, this.others(qid, [code], omap, form, extra)];
+      }
+      if (t === "ma") {
+        const omap = mapOf(this.options(q));
+        const codes = form.getlist("ans").map(x => parseInt(x, 10)).filter(c => c in omap);
+        if (!codes.length) return [null, extra, "Chọn ít nhất 1 đáp án."];
+        const ex = codes.filter(c => omap[c].exclusive);
+        if (ex.length && codes.length > 1) return [null, extra, `"${omap[ex[0]].label}" không chọn cùng đáp án khác.`];
+        if (codes.length < (q.min_select || 1)) return [null, extra, `Chọn tối thiểu ${q.min_select} đáp án.`];
+        if (q.max_select && codes.length > q.max_select) return [null, extra, `Chọn tối đa ${q.max_select} đáp án.`];
+        const err = this.others(qid, codes, omap, form, extra);
+        const order = q.options.map(o => o.code);
+        return [codes.sort((a, b) => order.indexOf(a) - order.indexOf(b)), extra, err];
+      }
+      if (t === "rank") {
+        const omap = mapOf(this.options(q)), ranks = {};
+        Object.keys(omap).forEach(c => { const v = form.get("rank_" + c).trim(); if (v) ranks[c] = parseInt(v, 10); });
+        const ks = Object.keys(ranks);
+        if (!ks.length) return [null, extra, "Xếp hạng ít nhất 1 đáp án."];
+        const vals = Object.values(ranks).sort((a, b) => a - b);
+        if (!vals.every((v, i) => v === i + 1)) return [null, extra, "Thứ hạng phải liên tục 1, 2, 3… và không trùng."];
+        const need = q.rank_all ? Object.keys(omap).length : (q.min_select || 1);
+        if (ks.length < need) return [null, extra, `Xếp hạng tối thiểu ${need} đáp án.`];
+        if (q.max_select && ks.length > q.max_select) return [null, extra, `Xếp hạng tối đa ${q.max_select} đáp án.`];
+        const codes = ks.map(Number).sort((a, b) => ranks[a] - ranks[b]);
+        return [codes, extra, this.others(qid, codes, omap, form, extra)];
+      }
+      if (t === "numeric") {
+        let v; try { v = num(form.get("ans")); } catch (e) { return [null, extra, "Nhập một con số."]; }
+        if (("min" in q && v < q.min) || ("max" in q && v > q.max)) return [null, extra, `Giá trị phải ${rangeMsg(q)}.`];
+        return [v, extra, null];
+      }
+      if (t === "oe") {
+        const txt = form.get("ans").trim(), ml = q.min_length || 1;
+        if (txt.length < ml) return [null, extra, `Ghi nhận câu trả lời (tối thiểu ${ml} ký tự).`];
+        return [txt, extra, null];
+      }
+      if (t === "date") {
+        const raw = form.get("ans").trim();
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(raw) || isNaN(Date.parse(raw))) return [null, extra, "Chọn ngày hợp lệ."];
+        return [raw, extra, null];
+      }
+      if (GRID.includes(t)) {
+        const omap = mapOf(this.options(q)), value = {};
+        for (const tp of this.topics(q)) {
+          const tc = tp.code, name = tp.label, fk = "g_" + tc; let v;
+          if (t === "grid_sa") {
+            const raw = form.get(fk); v = raw ? parseInt(raw, 10) : null;
+            if (v !== null && !(v in omap)) return [null, extra, `"${name}": đáp án không hợp lệ.`];
+          } else if (t === "grid_ma") {
+            v = form.getlist(fk).map(x => parseInt(x, 10)).filter(c => c in omap); if (!v.length) v = null;
+            if (v) { const ex = v.filter(c => omap[c].exclusive); if (ex.length && v.length > 1) return [null, extra, `"${name}": "${omap[ex[0]].label}" không chọn cùng đáp án khác.`]; }
+          } else if (t === "grid_num") {
+            const raw = form.get(fk).trim();
+            try { v = raw ? num(raw) : null; } catch (e) { return [null, extra, `"${name}": nhập một con số.`]; }
+            if (v !== null && (("min" in q && v < q.min) || ("max" in q && v > q.max))) return [null, extra, `"${name}": giá trị phải ${rangeMsg(q)}.`];
+          } else if (t === "form") {
+            v = form.get(fk).trim() || null;
+            const nm = fieldName(name);
+            if (v === null) { if (REQ.test(tp.label)) return [null, extra, `Nhập "${nm}".`]; continue; }
+            if (PHONE.test(nm)) {
+              const digits = v.replace(/\D/g, "");
+              if (!/^0\d{8,10}$/.test(digits)) return [null, extra, `"${nm}": số điện thoại không hợp lệ (9-11 số, bắt đầu bằng 0).`];
+              v = digits;
+            }
+          } else { v = form.get(fk).trim() || null; }
+          if (tp.other && !tp.piped) {
+            const txt = form.get("toth_" + tc).trim();
+            if (v === null && !txt) continue;
+            if (!txt) return [null, extra, `Ghi rõ nội dung cho "${name}".`];
+            if (v === null) return [null, extra, `Trả lời cho "${txt}".`];
+            extra[`${qid}_${tc}_OTH`] = txt;
+          } else if (v === null) return [null, extra, `Trả lời cho "${name}".`];
+          if (tp.piped) extra[`${qid}_${tc}_OTH`] = name;
+          if (t === "grid_sa" || t === "grid_ma") {          // CỘT Khác (ghi rõ) trong grid
+            for (const c of (Array.isArray(v) ? v : [v])) {
+              if (omap[c].other) {
+                const txt = form.get(`goth_${tc}_${c}`).trim();
+                if (!txt) return [null, extra, `"${name}": ghi rõ nội dung cho "${omap[c].label}".`];
+                extra[`${qid}_${tc}_${c}_OTH`] = txt;
+              }
+            }
+          }
+          value[String(tc)] = v; extra[`${qid}_${tc}`] = v;
+        }
+        if (!Object.keys(value).length) return [null, extra, "Trả lời ít nhất 1 dòng."];
+        return [value, extra, null];
+      }
+      throw new Error("Loại câu hỏi không hỗ trợ: " + t);
+    }
+
+    submit(formObj) {
+      const form = (formObj && formObj.get && formObj.getlist) ? formObj : Form(formObj || {});
+      const q = this.qnr.questions[this.current], qid = q.id;
+      const [value, extra, err] = this.parse(q, form);
+      if (err) return err;
+      if (q.type !== "info") {
+        this.answers[qid] = value;
+        const r = new RegExp("^" + qid.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "(_\\d+)+(_OTH)?$");
+        Object.keys(this.answers).forEach(k => { if (r.test(k)) delete this.answers[k]; });
+        Object.assign(this.answers, extra);
+      }
+      this.history.push(this.current);
+      if (q.terminate_if && evalCond(q.terminate_if, this.answers)) {
+        this.finish("Terminated", q.terminate_reason || "Terminate tại " + qid); return null;
+      }
+      const nxt = this.nextIndex(this.current);
+      if (this.status !== "In progress") return null;
+      if (nxt === null) this.finish("Completed"); else this.current = nxt;
+      return null;
+    }
+    finish(status, reason) { this.status = status; this.term_reason = reason || ""; this.end = new Date(); this.current = null; }
+
+    toRecord(extraMeta) {
+      const path = new Set(this.history.map(i => this.qnr.questions[i].id)), ans = {};
+      Object.keys(this.answers).forEach(k => { if (path.has(k) || path.has(k.replace(/(_\d+)+(_OTH)?$/, ""))) ans[k] = this.answers[k]; });
+      const end = this.end || new Date();
+      return Object.assign({
+        RespID: this.resp_id, Interviewer: this.interviewer, Status: this.status, TermReason: this.term_reason,
+        StartTime: iso(this.start), EndTime: iso(end), Duration_sec: Math.floor((end - this.start) / 1000), answers: ans
+      }, extraMeta || {});
+    }
+  }
+
+  const api = { Questionnaire, Interview, evalCond, evalExpr, Form, fieldName, REQ, PHONE, fmtNum, rangeMsg, numGroup };
+  if (typeof module !== "undefined" && module.exports) module.exports = api; else root.SurveyEngine = api;
+})(typeof window !== "undefined" ? window : globalThis);
+
+</script>
+<script>
+/* ===== SURVEY + CONFIG (sinh từ Script_PV.xlsx bằng build_web.py) ===== */
+const SURVEY = {"project": "Test Project", "questions": [{"id": "MSP", "type": "oe", "text": "Mã số phiếu", "single_line": true, "note": "PVV ghi mã số phiếu theo phiếu giấy / danh sách được phát.", "min_length": 1}, {"id": "DV", "type": "form", "text": "ĐỊA CHỈ LIÊN LẠC CỦA ĐÁP VIÊN", "note": "PVV ghi đầy đủ, chính xác để kiểm tra lại (back-check). Ô có dấu * là bắt buộc.", "topics": [{"code": 1, "label": "Họ Tên Đáp Viên (*)"}, {"code": 2, "label": "Địa chỉ (Số nhà)"}, {"code": 3, "label": "Tên Đường"}, {"code": 4, "label": "Phường Cũ"}, {"code": 5, "label": "Phường Mới"}, {"code": 6, "label": "Quận"}, {"code": 7, "label": "Điện thoại di động (*)"}]}, {"id": "SC1", "type": "sa", "text": "Ghi nhận khu vực phỏng vấn", "note": "PVV tự ghi nhận", "terminate_if": {"q": "SC1", "op": "in", "value": [6]}, "terminate_reason": "SC1 - Nơi khác", "options": [{"code": 1, "label": "HCMC"}, {"code": 2, "label": "Hà Nội"}, {"code": 3, "label": "Miền Bắc (không tính HN)"}, {"code": 4, "label": "Miền Trung"}, {"code": 5, "label": "Miền Nam (không tính HCM)"}, {"code": 6, "label": "Nơi khác"}]}, {"id": "SC2", "type": "ma", "text": "Xin vui lòng cho biết bản thân Anh/Chị/Em hoặc người thân của Anh/Chị/Em có ai làm việc trong những công ty thuộc các lĩnh vực sau đây không?", "note": "PVV: Đọc lên từng lĩnh vực", "terminate_if": {"q": "SC2", "op": "has", "value": [1, 2, 3, 4, 5, 6, 7, 8]}, "terminate_reason": "SC2 - Làm việc trong ngành nhạy cảm", "options": [{"code": 1, "label": "Công ty quảng cáo hoặc bộ phận quảng cáo"}, {"code": 2, "label": "Công ty nghiên cứu thị trường hoặc bộ phận nghiên cứu thị trường"}, {"code": 3, "label": "Lĩnh vực truyền thông đại chúng (truyền hình, báo chí)"}, {"code": 4, "label": "Quan hệ công cộng, tổ chức sự kiện"}, {"code": 5, "label": "Công ty sản xuất, phân phối, cửa hàng bán mỹ phẩm và các mặt hàng chăm sóc cá nhân"}, {"code": 6, "label": "Bán online các mặt hàng chăm sóc cá nhân"}, {"code": 7, "label": "Tiệm/ salon chăm sóc sắc đẹp/ spa"}, {"code": 8, "label": "Tiệm thuốc tây"}, {"code": 9, "label": "Không thuộc lĩnh vực nào trên đây", "exclusive": true}]}, {"id": "SC3", "type": "sa", "text": "Anh/Chị/Em có tham gia bất kỳ cuộc phỏng vấn nghiên cứu thị trường nào trong 3 tháng qua không?", "terminate_if": {"q": "SC3", "op": "in", "value": [1]}, "terminate_reason": "SC3 - Tham gia NC 3 tháng qua", "options": [{"code": 1, "label": "Có"}, {"code": 2, "label": "Không"}]}, {"id": "SC4", "type": "sa", "text": "Ghi nhận giới tính của người trả lời", "note": "PVV tự ghi nhận", "options": [{"code": 1, "label": "Nam"}, {"code": 2, "label": "Nữ"}]}, {"id": "SC5_YOB", "type": "numeric", "text": "Anh/Chị/Em vui lòng cho biết Anh/Chị/Em sinh vào năm nào?", "note": "Tuổi = 2022 – năm sinh", "min": 1920, "max": 2022}, {"id": "SC5_AGE", "type": "expr", "text": "Tuổi đáp viên (2022 - năm sinh)", "expr": "2022 - SC5_YOB"}, {"id": "SC5", "type": "expr", "text": "Nhóm tuổi (auto-code)", "note": "PROGRAMMER: AUTO CODE CHO NHÓM TUỔI", "terminate_if": {"any": [{"q": "SC5", "op": "in", "value": [1]}, {"q": "SC5", "op": "in", "value": [9]}]}, "terminate_reason": "SC5 - Ngoài độ tuổi 18-45", "options": [{"code": 1, "label": "Dưới 18 tuổi", "auto_if": {"q": "SC5_AGE", "op": "lt", "value": 18}}, {"code": 2, "label": "18-22 tuổi", "auto_if": {"all": [{"q": "SC5_AGE", "op": "gte", "value": 18}, {"q": "SC5_AGE", "op": "lte", "value": 22}]}}, {"code": 3, "label": "23-25 tuổi", "auto_if": {"all": [{"q": "SC5_AGE", "op": "gte", "value": 23}, {"q": "SC5_AGE", "op": "lte", "value": 25}]}}, {"code": 4, "label": "26-29 tuổi", "auto_if": {"all": [{"q": "SC5_AGE", "op": "gte", "value": 26}, {"q": "SC5_AGE", "op": "lte", "value": 29}]}}, {"code": 5, "label": "30-35 tuổi", "auto_if": {"all": [{"q": "SC5_AGE", "op": "gte", "value": 30}, {"q": "SC5_AGE", "op": "lte", "value": 35}]}}, {"code": 6, "label": "36-40 tuổi", "auto_if": {"all": [{"q": "SC5_AGE", "op": "gte", "value": 36}, {"q": "SC5_AGE", "op": "lte", "value": 40}]}}, {"code": 7, "label": "41-45 tuổi", "auto_if": {"all": [{"q": "SC5_AGE", "op": "gte", "value": 41}, {"q": "SC5_AGE", "op": "lte", "value": 45}]}}, {"code": 9, "label": "Trên 45 tuổi", "auto_if": {"all": []}}]}, {"id": "SC6a", "type": "sa", "text": "Vui lòng cho biết **__tổng thu nhập của hộ gia đình Anh/Chị/Em__** một tháng khoảng bao nhiêu?", "note": "Nhóm thu nhập: code 1=A, 2=B, 3=C, 4=D", "terminate_if": {"any": [{"q": "SC6a", "op": "in", "value": [4]}, {"q": "SC6a", "op": "in", "value": [98]}, {"q": "SC6a", "op": "in", "value": [99]}]}, "terminate_reason": "SC6a - Thu nhập HGĐ không đạt", "options": [{"code": 1, "label": "Trên 26,000,000"}, {"code": 2, "label": "17,000,001 – 26,000,000"}, {"code": 3, "label": "10,000,001 – 17,000,000"}, {"code": 4, "label": "10,000,000 trở xuống"}, {"code": 98, "label": "Không có thu nhập"}, {"code": 99, "label": "Không biết"}]}, {"id": "SC6b", "type": "sa", "text": "Vui lòng cho biết **__tổng thu nhập của cá nhân Anh/Chị/Em__** một tháng khoảng bao nhiêu?", "options": [{"code": 1, "label": "Trên 26,000,000"}, {"code": 2, "label": "17,000,001 – 26,000,000"}, {"code": 3, "label": "10,000,001 – 17,000,000"}, {"code": 4, "label": "10,000,000 trở xuống"}, {"code": 98, "label": "Không có thu nhập"}, {"code": 99, "label": "Không biết"}]}, {"id": "SC7", "type": "sa", "text": "Anh/Chị/Em vui lòng cho biết tình trạng hôn nhân hiện nay", "terminate_if": {"q": "SC7", "op": "in", "value": [8]}, "terminate_reason": "SC7 - Từ chối", "options": [{"code": 1, "label": "Độc thân"}, {"code": 2, "label": "Có gia đình, chưa có con"}, {"code": 3, "label": "Có gia đình, có con"}, {"code": 8, "label": "Từ chối"}]}, {"id": "SC8", "type": "ma", "text": "Vui lòng cho biết con của Anh/chị thuộc độ tuổi nào sau đây?", "note": "HỎI NẾU ĐÁP VIÊN CÓ GIA ĐÌNH (CODE 3/SC7)", "show_if": {"q": "SC7", "op": "in", "value": [3]}, "options": [{"code": 1, "label": "Dưới 6 tháng tuổi"}, {"code": 2, "label": "6 tháng – Dưới 4 tuổi"}, {"code": 3, "label": "4 tuổi – Dưới 18 tuổi"}, {"code": 4, "label": "18 tuổi hoặc hơn"}]}, {"id": "SC9a", "type": "ma", "text": "Những sản phẩm nào Anh/Chị/Em **__từng dùng__**?", "options": [{"code": 81, "label": "Sản phẩm chống muỗi (dạng xịt/ lăn/ kem/ dầu)"}, {"code": 82, "label": "Sản phẩm trị vết côn trùng cắn"}, {"code": 83, "label": "Sản phẩm trị ngứa"}, {"code": 89, "label": "Không sử dụng sản phẩm nào ở trên", "exclusive": true}]}, {"id": "SC9b", "type": "ma", "text": "Những sản phẩm nào Anh/Chị/Em có dùng trong **__3 tháng qua__**?", "options_from": {"q": "SC9a", "mode": "show", "exclude": [89]}, "options": [{"code": 81, "label": "Sản phẩm chống muỗi (dạng xịt/ lăn/ kem/ dầu)"}, {"code": 82, "label": "Sản phẩm trị vết côn trùng cắn"}, {"code": 83, "label": "Sản phẩm trị ngứa"}, {"code": 89, "label": "Không sử dụng sản phẩm nào ở trên", "exclusive": true, "always": true}]}, {"id": "SC9c", "type": "ma", "text": "Những sản phẩm nào Anh/Chị/Em **__hiện đang dùng__**?", "options_from": {"q": "SC9b", "mode": "show", "exclude": [89]}, "options": [{"code": 81, "label": "Sản phẩm chống muỗi (dạng xịt/ lăn/ kem/ dầu)"}, {"code": 82, "label": "Sản phẩm trị vết côn trùng cắn"}, {"code": 83, "label": "Sản phẩm trị ngứa"}, {"code": 89, "label": "Không sử dụng sản phẩm nào ở trên", "exclusive": true, "always": true}]}, {"id": "SC9e", "type": "ma", "text": "Và những sản phẩm nào Anh/Chị/Em **__tự quyết định để mua__** trong 3 tháng qua?", "note": "PROGRAMMER: KẾT THÚC NẾU KHÔNG CÓ CODE 81 Ở SC9b và SC9e", "terminate_if": {"not": {"all": [{"q": "SC9b", "op": "has", "value": [81]}, {"q": "SC9e", "op": "has", "value": [81]}]}}, "terminate_reason": "SC9 - Không dùng 3 tháng qua / không tự mua SP chống muỗi", "options_from": {"q": "SC9b", "mode": "show", "exclude": [89]}, "options": [{"code": 81, "label": "Sản phẩm chống muỗi (dạng xịt/ lăn/ kem/ dầu)"}, {"code": 82, "label": "Sản phẩm trị vết côn trùng cắn"}, {"code": 83, "label": "Sản phẩm trị ngứa"}, {"code": 89, "label": "Không sử dụng sản phẩm nào ở trên", "exclusive": true, "always": true}]}, {"id": "SC10", "type": "sa", "text": "Câu nào trong những câu nói sau đây mô tả đúng nhất vai trò của Anh/Chị/Em trong việc mua **sản phẩm chống muỗi** cho bản thân và gia đình?", "note": "SHOWCARD", "terminate_if": {"any": [{"q": "SC10", "op": "in", "value": [2]}, {"q": "SC10", "op": "in", "value": [3]}]}, "terminate_reason": "SC10 - Không phải người quyết định & mua", "options": [{"code": 1, "label": "Tôi là người ra quyết định về nhãn hiệu và là người mua cho bản thân và gia đình"}, {"code": 2, "label": "Tôi là người ra quyết định về nhãn hiệu nhưng người khác đi mua"}, {"code": 3, "label": "Tôi không phải là người ra quyết định về nhãn hiệu"}]}, {"id": "SC11", "type": "sa", "text": "Anh/chị/em vui lòng cho biết trình độ học vấn cao nhất của Anh/chị/em?", "terminate_if": {"q": "SC11", "op": "in", "value": [1]}, "terminate_reason": "SC11 - Học vấn Không đi học/Cấp 1", "options": [{"code": 1, "label": "Không đi học/ Cấp 1"}, {"code": 2, "label": "Cấp 2/ Trung học cơ sở"}, {"code": 3, "label": "Trung học phổ thông/ Cấp 3/ Trung học chuyên nghiệp (dạy nghề)"}, {"code": 4, "label": "Cao đẳng/ Đại học"}, {"code": 5, "label": "Sau Đại học"}]}, {"id": "INFO_BA", "type": "info", "text": "Trong câu hỏi tiếp theo, tôi xin phép dời máy tính sang một bên. Chúng tôi sẽ đặt câu hỏi và Anh/Chị/Em vui lòng trả lời theo ý kiến của bản thân Anh/Chị/Em.", "note": "PHỎNG VẤN VIÊN: DỜI MÁY TÍNH, THIẾT BỊ SANG BÊN CẠNH ĐỂ CHUẨN BỊ HỎI. Hỏi cho sản phẩm chống muỗi."}, {"id": "BA1a", "type": "sa", "text": "Khi nhắc đến các sản phẩm **chống muỗi**, Anh/Chị/Em nghĩ đến **__nhãn hiệu__** nào **__đầu tiên__**?", "note": "TOM - không đọc danh sách", "columns": 2, "options": [{"code": 1, "label": "ANTI MOS SOFT II - OCEANPHARM-PTTH"}, {"code": 2, "label": "BABYGANICS - KAS DIRECT LLC"}, {"code": 3, "label": "CALI USA THAO DUOC - CALI USA"}, {"code": 4, "label": "CHICCO A-MOSQUITO - ARTSANA"}, {"code": 5, "label": "LOMOS - WEALTH DRAGON COSM"}, {"code": 6, "label": "REMOS - ROHTO METHO."}, {"code": 7, "label": "REMOS BABY - ROHTO METHO."}, {"code": 8, "label": "SOFFELL - PT.HERLINA INDAH"}, {"code": 9, "label": "VUONG TRAM HUONG - ROSABELA VIET NAM"}, {"code": 991, "label": "Khác (ghi rõ)", "other": true}, {"code": 98, "label": "Không nhớ"}]}, {"id": "BA1b", "type": "ma", "text": "Còn **__nhãn hiệu__** nào **__khác__**? Còn gì nữa?", "note": "Không hiện nhãn đã chọn ở BA1a", "show_if": {"q": "BA1a", "op": "not_in", "value": [98]}, "options_from": {"q": "BA1a", "mode": "hide", "exclude": []}, "columns": 2, "options": [{"code": 1, "label": "ANTI MOS SOFT II - OCEANPHARM-PTTH"}, {"code": 2, "label": "BABYGANICS - KAS DIRECT LLC"}, {"code": 3, "label": "CALI USA THAO DUOC - CALI USA"}, {"code": 4, "label": "CHICCO A-MOSQUITO - ARTSANA"}, {"code": 5, "label": "LOMOS - WEALTH DRAGON COSM"}, {"code": 6, "label": "REMOS - ROHTO METHO."}, {"code": 7, "label": "REMOS BABY - ROHTO METHO."}, {"code": 8, "label": "SOFFELL - PT.HERLINA INDAH"}, {"code": 9, "label": "VUONG TRAM HUONG - ROSABELA VIET NAM"}, {"code": 991, "label": "Khác 1 (ghi rõ)", "other": true}, {"code": 992, "label": "Khác 2 (ghi rõ)", "other": true}, {"code": 993, "label": "Khác 3 (ghi rõ)", "other": true}, {"code": 98, "label": "Không nhớ", "exclusive": true}]}, {"id": "BA2a", "type": "sa", "text": "Khi nhắc đến **__quảng cáo__** của các sản phẩm **chống muỗi** trong thời gian gần đây, Anh/Chị/Em nhớ đến quảng cáo của nhãn hiệu nào **__đầu tiên__**?", "note": "Lưu ý: ‘Quảng cáo’ không chỉ bao gồm quảng cáo trên TV mà còn bao gồm quảng cáo trên báo, đài, internet, màn hình LCD tại cao ốc/ văn phòng/ siêu thị/ trung tâm mua sắm, bảng quảng cáo ngoài trời và các chương trình quảng cáo khuyến mãi,…", "columns": 2, "options": [{"code": 1, "label": "ANTI MOS SOFT II - OCEANPHARM-PTTH"}, {"code": 2, "label": "BABYGANICS - KAS DIRECT LLC"}, {"code": 3, "label": "CALI USA THAO DUOC - CALI USA"}, {"code": 4, "label": "CHICCO A-MOSQUITO - ARTSANA"}, {"code": 5, "label": "LOMOS - WEALTH DRAGON COSM"}, {"code": 6, "label": "REMOS - ROHTO METHO."}, {"code": 7, "label": "REMOS BABY - ROHTO METHO."}, {"code": 8, "label": "SOFFELL - PT.HERLINA INDAH"}, {"code": 9, "label": "VUONG TRAM HUONG - ROSABELA VIET NAM"}, {"code": 991, "label": "Khác (ghi rõ)", "other": true}, {"code": 98, "label": "Không nhớ"}]}, {"id": "BA2b", "type": "ma", "text": "Anh/Chị/Em còn thấy **__quảng cáo__** của các nhãn hiệu sản phẩm **chống muỗi** nào **__khác__** gần đây nữa không? Còn gì nữa không?", "note": "Không hiện nhãn đã chọn ở BA2a", "show_if": {"q": "BA2a", "op": "not_in", "value": [98]}, "options_from": {"q": "BA2a", "mode": "hide", "exclude": []}, "columns": 2, "options": [{"code": 1, "label": "ANTI MOS SOFT II - OCEANPHARM-PTTH"}, {"code": 2, "label": "BABYGANICS - KAS DIRECT LLC"}, {"code": 3, "label": "CALI USA THAO DUOC - CALI USA"}, {"code": 4, "label": "CHICCO A-MOSQUITO - ARTSANA"}, {"code": 5, "label": "LOMOS - WEALTH DRAGON COSM"}, {"code": 6, "label": "REMOS - ROHTO METHO."}, {"code": 7, "label": "REMOS BABY - ROHTO METHO."}, {"code": 8, "label": "SOFFELL - PT.HERLINA INDAH"}, {"code": 9, "label": "VUONG TRAM HUONG - ROSABELA VIET NAM"}, {"code": 991, "label": "Khác 1 (ghi rõ)", "other": true}, {"code": 992, "label": "Khác 2 (ghi rõ)", "other": true}, {"code": 993, "label": "Khác 3 (ghi rõ)", "other": true}, {"code": 98, "label": "Không nhớ", "exclusive": true}]}, {"id": "BA3", "type": "ma", "text": "Những nhãn hiệu **sản phẩm chống muỗi** nào trong bảng này Anh/Chị/Em đã từng nghe qua hoặc biết đến? Còn nhãn hiệu nào khác không? Còn gì nữa không?", "note": "SHOW LOGO RANDOM. PROGRAMMER: KHÔNG HIỆN NHÃN HIỆU ĐÃ CHỌN Ở BA1ab", "random": true, "options_from": {"q": ["BA1a", "BA1b"], "mode": "hide", "exclude": []}, "columns": 2, "options": [{"code": 1, "label": "ANTI MOS SOFT II - OCEANPHARM-PTTH", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 1.png"}, {"code": 2, "label": "BABYGANICS - KAS DIRECT LLC", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 2.png"}, {"code": 3, "label": "CALI USA THAO DUOC - CALI USA", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 3.png"}, {"code": 4, "label": "CHICCO A-MOSQUITO - ARTSANA", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 4.png"}, {"code": 5, "label": "LOMOS - WEALTH DRAGON COSM", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 5.png"}, {"code": 6, "label": "REMOS - ROHTO METHO.", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 6.png"}, {"code": 7, "label": "REMOS BABY - ROHTO METHO.", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 7.png"}, {"code": 8, "label": "SOFFELL - PT.HERLINA INDAH", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 8.png"}, {"code": 9, "label": "VUONG TRAM HUONG - ROSABELA VIET NAM", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 9.png"}, {"code": 991, "label": "Khác 1 (ghi rõ)", "other": true, "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/NH Khac.png"}, {"code": 992, "label": "Khác 2 (ghi rõ)", "other": true, "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/NH Khac.png"}, {"code": 993, "label": "Khác 3 (ghi rõ)", "other": true, "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/NH Khac.png"}, {"code": 99, "label": "Không biết nhãn hiệu nào", "exclusive": true}]}, {"id": "BA4", "type": "ma", "text": "Những nhãn hiệu **sản phẩm chống muỗi** nào trong bảng này Anh/Chị/Em đã xem hoặc biết đến quảng cáo hoặc hoạt động khuyến mãi gần đây? Còn nhãn hiệu nào khác nữa không?", "note": "SHOW LOGO RANDOM. PROGRAMMER: KHÔNG HIỆN NHÃN HIỆU ĐÃ CHỌN Ở BA2ab", "random": true, "options_from": {"q": ["BA2a", "BA2b"], "mode": "hide", "exclude": []}, "columns": 2, "options": [{"code": 1, "label": "ANTI MOS SOFT II - OCEANPHARM-PTTH", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 1.png"}, {"code": 2, "label": "BABYGANICS - KAS DIRECT LLC", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 2.png"}, {"code": 3, "label": "CALI USA THAO DUOC - CALI USA", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 3.png"}, {"code": 4, "label": "CHICCO A-MOSQUITO - ARTSANA", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 4.png"}, {"code": 5, "label": "LOMOS - WEALTH DRAGON COSM", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 5.png"}, {"code": 6, "label": "REMOS - ROHTO METHO.", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 6.png"}, {"code": 7, "label": "REMOS BABY - ROHTO METHO.", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 7.png"}, {"code": 8, "label": "SOFFELL - PT.HERLINA INDAH", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 8.png"}, {"code": 9, "label": "VUONG TRAM HUONG - ROSABELA VIET NAM", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 9.png"}, {"code": 991, "label": "Khác 1 (ghi rõ)", "other": true, "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/NH Khac.png"}, {"code": 992, "label": "Khác 2 (ghi rõ)", "other": true, "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/NH Khac.png"}, {"code": 993, "label": "Khác 3 (ghi rõ)", "other": true, "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/NH Khac.png"}, {"code": 99, "label": "Không biết nhãn hiệu nào", "exclusive": true}]}, {"id": "BU1", "type": "ma", "text": "Những nhãn hiệu **sản phẩm chống muỗi** nào Anh/Chị/Em **__từng mua và sử dụng__**? Còn gì nữa?", "note": "SHOW LOGO CÁC NHÃN HIỆU ĐÃ CHỌN Ở BA1,BA2,BA3,BA4", "options_from": {"q": ["BA1a", "BA1b", "BA2a", "BA2b", "BA3", "BA4"], "mode": "show", "exclude": [98, 99]}, "columns": 2, "options": [{"code": 1, "label": "ANTI MOS SOFT II - OCEANPHARM-PTTH", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 1.png"}, {"code": 2, "label": "BABYGANICS - KAS DIRECT LLC", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 2.png"}, {"code": 3, "label": "CALI USA THAO DUOC - CALI USA", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 3.png"}, {"code": 4, "label": "CHICCO A-MOSQUITO - ARTSANA", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 4.png"}, {"code": 5, "label": "LOMOS - WEALTH DRAGON COSM", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 5.png"}, {"code": 6, "label": "REMOS - ROHTO METHO.", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 6.png"}, {"code": 7, "label": "REMOS BABY - ROHTO METHO.", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 7.png"}, {"code": 8, "label": "SOFFELL - PT.HERLINA INDAH", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 8.png"}, {"code": 9, "label": "VUONG TRAM HUONG - ROSABELA VIET NAM", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 9.png"}, {"code": 991, "label": "Khác 1 (ghi rõ)", "other": true, "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/NH Khac.png"}, {"code": 992, "label": "Khác 2 (ghi rõ)", "other": true, "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/NH Khac.png"}, {"code": 993, "label": "Khác 3 (ghi rõ)", "other": true, "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/NH Khac.png"}]}, {"id": "BU3", "type": "ma", "text": "Những nhãn hiệu **sản phẩm chống muỗi** nào Anh/Chị/Em dùng trong 3 tháng qua? Còn gì nữa?", "note": "SHOW LOGO CÁC NHÃN HIỆU ĐÃ CHỌN Ở BU1 (BCH ghi BU4)", "options_from": {"q": "BU1", "mode": "show", "exclude": []}, "columns": 2, "options": [{"code": 1, "label": "ANTI MOS SOFT II - OCEANPHARM-PTTH", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 1.png"}, {"code": 2, "label": "BABYGANICS - KAS DIRECT LLC", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 2.png"}, {"code": 3, "label": "CALI USA THAO DUOC - CALI USA", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 3.png"}, {"code": 4, "label": "CHICCO A-MOSQUITO - ARTSANA", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 4.png"}, {"code": 5, "label": "LOMOS - WEALTH DRAGON COSM", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 5.png"}, {"code": 6, "label": "REMOS - ROHTO METHO.", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 6.png"}, {"code": 7, "label": "REMOS BABY - ROHTO METHO.", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 7.png"}, {"code": 8, "label": "SOFFELL - PT.HERLINA INDAH", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 8.png"}, {"code": 9, "label": "VUONG TRAM HUONG - ROSABELA VIET NAM", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 9.png"}, {"code": 991, "label": "Khác 1 (ghi rõ)", "other": true, "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/NH Khac.png"}, {"code": 992, "label": "Khác 2 (ghi rõ)", "other": true, "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/NH Khac.png"}, {"code": 993, "label": "Khác 3 (ghi rõ)", "other": true, "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/NH Khac.png"}]}, {"id": "BU6", "type": "ma", "text": "Những nhãn hiệu **sản phẩm chống muỗi** nào Anh/Chị/Em hiện đang dùng? Còn gì nữa?", "note": "SHOW LOGO CÁC NHÃN HIỆU ĐÃ CHỌN Ở BU3 (BCH ghi BU4)", "options_from": {"q": "BU3", "mode": "show", "exclude": []}, "columns": 2, "options": [{"code": 1, "label": "ANTI MOS SOFT II - OCEANPHARM-PTTH", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 1.png"}, {"code": 2, "label": "BABYGANICS - KAS DIRECT LLC", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 2.png"}, {"code": 3, "label": "CALI USA THAO DUOC - CALI USA", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 3.png"}, {"code": 4, "label": "CHICCO A-MOSQUITO - ARTSANA", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 4.png"}, {"code": 5, "label": "LOMOS - WEALTH DRAGON COSM", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 5.png"}, {"code": 6, "label": "REMOS - ROHTO METHO.", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 6.png"}, {"code": 7, "label": "REMOS BABY - ROHTO METHO.", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 7.png"}, {"code": 8, "label": "SOFFELL - PT.HERLINA INDAH", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 8.png"}, {"code": 9, "label": "VUONG TRAM HUONG - ROSABELA VIET NAM", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 9.png"}, {"code": 991, "label": "Khác 1 (ghi rõ)", "other": true, "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/NH Khac.png"}, {"code": 992, "label": "Khác 2 (ghi rõ)", "other": true, "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/NH Khac.png"}, {"code": 993, "label": "Khác 3 (ghi rõ)", "other": true, "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/NH Khac.png"}, {"code": 99, "label": "Không có", "exclusive": true, "always": true}]}, {"id": "BU7", "type": "sa", "text": "Nhãn hiệu sản phẩm **chống muỗi** nào Anh/Chị/Em dùng thường xuyên nhất?", "note": "SHOW LOGO CÁC NHÃN HIỆU ĐÃ CHỌN Ở BU6", "auto_single": true, "options_from": {"q": "BU6", "mode": "show", "exclude": []}, "columns": 2, "options": [{"code": 1, "label": "ANTI MOS SOFT II - OCEANPHARM-PTTH", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 1.png"}, {"code": 2, "label": "BABYGANICS - KAS DIRECT LLC", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 2.png"}, {"code": 3, "label": "CALI USA THAO DUOC - CALI USA", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 3.png"}, {"code": 4, "label": "CHICCO A-MOSQUITO - ARTSANA", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 4.png"}, {"code": 5, "label": "LOMOS - WEALTH DRAGON COSM", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 5.png"}, {"code": 6, "label": "REMOS - ROHTO METHO.", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 6.png"}, {"code": 7, "label": "REMOS BABY - ROHTO METHO.", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 7.png"}, {"code": 8, "label": "SOFFELL - PT.HERLINA INDAH", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 8.png"}, {"code": 9, "label": "VUONG TRAM HUONG - ROSABELA VIET NAM", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 9.png"}, {"code": 991, "label": "Khác 1 (ghi rõ)", "other": true, "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/NH Khac.png"}, {"code": 992, "label": "Khác 2 (ghi rõ)", "other": true, "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/NH Khac.png"}, {"code": 993, "label": "Khác 3 (ghi rõ)", "other": true, "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/NH Khac.png"}, {"code": 99, "label": "Không có", "always": true}]}, {"id": "BU10", "type": "sa", "text": "Nếu phải giới thiệu nhãn hiệu **sản phẩm chống muỗi** cho một ai đó, Anh/Chị/Em sẽ giới thiệu nhãn hiệu nào?", "note": "SHOW LOGO CÁC NHÃN HIỆU ĐÃ CHỌN Ở BA1,BA2,BA3,BA4", "options_from": {"q": ["BA1a", "BA1b", "BA2a", "BA2b", "BA3", "BA4"], "mode": "show", "exclude": [98, 99]}, "columns": 2, "options": [{"code": 1, "label": "ANTI MOS SOFT II - OCEANPHARM-PTTH", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 1.png"}, {"code": 2, "label": "BABYGANICS - KAS DIRECT LLC", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 2.png"}, {"code": 3, "label": "CALI USA THAO DUOC - CALI USA", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 3.png"}, {"code": 4, "label": "CHICCO A-MOSQUITO - ARTSANA", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 4.png"}, {"code": 5, "label": "LOMOS - WEALTH DRAGON COSM", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 5.png"}, {"code": 6, "label": "REMOS - ROHTO METHO.", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 6.png"}, {"code": 7, "label": "REMOS BABY - ROHTO METHO.", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 7.png"}, {"code": 8, "label": "SOFFELL - PT.HERLINA INDAH", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 8.png"}, {"code": 9, "label": "VUONG TRAM HUONG - ROSABELA VIET NAM", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 9.png"}, {"code": 991, "label": "Khác 1 (ghi rõ)", "other": true, "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/NH Khac.png"}, {"code": 992, "label": "Khác 2 (ghi rõ)", "other": true, "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/NH Khac.png"}, {"code": 993, "label": "Khác 3 (ghi rõ)", "other": true, "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/NH Khac.png"}, {"code": 99, "label": "Không có", "always": true}]}, {"id": "ST1a", "type": "grid_sa", "text": "Bây giờ xem xét mọi khía cạnh, vui lòng cho biết mức độ yêu thích của Anh/Chị/em với từng nhãn hiệu sau?", "note": "BRAND PERCEPTION. NHÃN HIỆU NHẬN BIẾT - HIỂN THỊ LOGO - RANDOM NHÃN HIỆU", "random_topics": true, "topics_from": {"q": ["BA1a", "BA1b", "BA2a", "BA2b", "BA3", "BA4"], "mode": "show", "exclude": [98, 99]}, "options": [{"code": 1, "label": "1 - Hoàn toàn không thích"}, {"code": 2, "label": "2"}, {"code": 3, "label": "3"}, {"code": 4, "label": "4"}, {"code": 5, "label": "5"}, {"code": 6, "label": "6"}, {"code": 7, "label": "7"}, {"code": 8, "label": "8"}, {"code": 9, "label": "9"}, {"code": 10, "label": "10 - Cực kỳ yêu thích"}], "topics": [{"code": 1, "label": "ANTI MOS SOFT II", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 1.png"}, {"code": 2, "label": "BABYGANICS", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 2.png"}, {"code": 3, "label": "CALI USA THAO DUOC", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 3.png"}, {"code": 4, "label": "CHICCO A-MOSQUITO", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 4.png"}, {"code": 5, "label": "LOMOS", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 5.png"}, {"code": 6, "label": "REMOS", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 6.png"}, {"code": 7, "label": "REMOS BABY", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 7.png"}, {"code": 8, "label": "SOFFELL", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 8.png"}, {"code": 9, "label": "VUONG TRAM HUONG", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 9.png"}, {"code": 991, "label": "Khác 1 (ghi rõ)", "other": true}, {"code": 992, "label": "Khác 2 (ghi rõ)", "other": true}, {"code": 993, "label": "Khác 3 (ghi rõ)", "other": true}]}, {"id": "ST2", "type": "ma", "text": "Vui lòng cho biết lý do khiến Anh/Chị/Em sử dụng nhãn hiệu {BU7} thường xuyên nhất? Còn gì nữa không?", "note": "LOYALTY. HIỂN THỊ LOGO BRAND DÙNG THƯỜNG XUYÊN NHẤT (BU7)", "show_if": {"q": "BU7", "op": "not_in", "value": [99]}, "columns": 2, "options": [{"code": 1, "label": "Sản phẩm rất tốt/ hiệu quả xua muỗi kéo dài hơn những nhãn hiệu khác"}, {"code": 2, "label": "Là một trong số ít nhãn hiệu không làm tôi dị ứng"}, {"code": 3, "label": "Là một trong số ít nhãn hiệu có loại tôi cần/ hợp với da của tôi"}, {"code": 4, "label": "Không gây nhờn rít trên da"}, {"code": 6, "label": "Được bán ở tất cả những nơi tôi mua"}, {"code": 8, "label": "Có mức giá hợp lý"}, {"code": 9, "label": "Đáng đồng tiền"}, {"code": 10, "label": "Có mức giá rẻ hơn các nhãn hiệu khác"}, {"code": 11, "label": "Thường xuyên có quảng cáo"}, {"code": 12, "label": "Tôi thích quảng cáo của nó"}, {"code": 13, "label": "Nhiều người thân/ bạn bè tôi cũng thích nhãn hiệu này"}, {"code": 14, "label": "Có nhiều người khen (về tính năng/ chất lượng sản phẩm)"}, {"code": 15, "label": "Bác sĩ/ dược sĩ khuyên/ kê toa cho tôi dùng nhãn hiệu này"}, {"code": 16, "label": "Thường xuyên có nhiều khuyến mãi hấp dẫn tôi"}, {"code": 17, "label": "Bao bì bắt mắt và thu hút tôi"}, {"code": 18, "label": "Có kích cỡ phù hợp với nhu cầu của tôi"}]}, {"id": "ST2b", "type": "ma", "text": "Nếu có thể, theo Anh/Chị/Em thì nhãn hiệu {BU7} có thể cải thiện thêm ở những điểm gì sau đây để Anh/Chị/Em hài lòng hơn, yêu thích hơn? Vui lòng chọn tối đa 3 điểm", "note": "HIỂN THỊ RANDOM CÁC ATTRIBUTES. Chọn tối đa 3", "show_if": {"q": "BU7", "op": "not_in", "value": [99]}, "random": true, "max_select": 3, "columns": 2, "options": [{"code": 1, "label": "Tác dụng lâu dài hơn hiện tại"}, {"code": 2, "label": "Có thêm nhiều mùi thơm khác"}, {"code": 3, "label": "Có thêm loại không mùi"}, {"code": 4, "label": "Có thêm dạng xịt"}, {"code": 5, "label": "Có thêm dạng miếng dán"}, {"code": 6, "label": "Có thêm loại chai / dung tích nhỏ hơn"}, {"code": 7, "label": "Có thêm loại dung tích lớn hơn"}, {"code": 8, "label": "Bán ở nhiều nơi hơn để dễ mua hơn"}, {"code": 9, "label": "Có thêm nhiều tính năng trong cùng 1 sp: vừa chống muỗi, vừa trị vết muỗi đốt"}, {"code": 10, "label": "Có thêm sản phẩm thành phần từ thiên nhiên"}, {"code": 11, "label": "Có thêm sản phẩm cho làn da nhạy cảm, em bé nhỏ (khoảng 6 tháng tuổi)"}, {"code": 99, "label": "Đã đủ - không có yêu cầu gì hơn", "exclusive": true}]}, {"id": "ST3", "type": "oe", "text": "Vui lòng cho biết lý do Anh/chị/em dùng cùng lúc nhiều nhãn hiệu {BU6}? Còn gì nữa không?", "note": "CHỈ HỎI NẾU HIỆN ĐANG DÙNG 2 NHÃN HIỆU TRỞ LÊN (BU6 CÓ 2 CODE TRỞ LÊN). PVV: GHI NHẬN NGUYÊN VĂN VÀ PROBE KỸ ĐẾN KHI HẾT Ý", "show_if": {"q": "BU6", "op": "count", "cmp": ">=", "value": 2}, "min_length": 3}, {"id": "ST4a", "type": "ma", "text": "Trước đây Anh/Chị/Em đã từng sử dụng nhãn hiệu **Remos**, vui lòng cho biết lý do vì sao Anh/Chị/Em ngừng / không sử dụng nữa? Còn gì nữa không?", "note": "LAPSED REMOS: CÓ CODE 6 Ở BU1 NHƯNG KHÔNG CÓ Ở BU6", "show_if": {"all": [{"q": "BU1", "op": "has", "value": [6]}, {"q": "BU6", "op": "not_has", "value": [6]}]}, "columns": 2, "options": [{"code": 1, "label": "Sản phẩm không hiệu quả như ý tôi"}, {"code": 2, "label": "Sản phẩm làm tôi dị ứng/ không hợp với tôi"}, {"code": 3, "label": "Không có loại mà tôi cần/ hợp với da của tôi"}, {"code": 4, "label": "Tôi tìm được sản phẩm khác tốt hơn/ hợp với tôi hơn"}, {"code": 5, "label": "Chất lượng sản phẩm không còn tốt như trước"}, {"code": 6, "label": "Gây nhờn rít trên da"}, {"code": 7, "label": "Không kéo dài hiệu quả chống muỗi/ xua muỗi"}, {"code": 8, "label": "Không có bán ở những nơi tôi thường mua"}, {"code": 9, "label": "Khi tôi mua bị hết hàng"}, {"code": 10, "label": "Giá cao hơn các sản phẩm khác"}, {"code": 11, "label": "Không đáng giá đồng tiền"}, {"code": 12, "label": "Tôi chuyển qua mua sản phẩm khác với giá hấp dẫn hơn"}, {"code": 13, "label": "ít khi thấy quảng cáo"}, {"code": 14, "label": "Tôi không thích quảng cáo của nó"}, {"code": 16, "label": "Có từng nghe người khác chê"}, {"code": 17, "label": "Bác sĩ/ dược sĩ khuyên/ kê toa cho tôi dùng một nhãn hiệu khác"}, {"code": 19, "label": "Tôi không thích bao bì"}, {"code": 20, "label": "Không có kích cỡ (dung tích) tôi muốn mua"}, {"code": 21, "label": "Tôi bị thu hút bởi bao bì của nhãn khác"}, {"code": 991, "label": "Khác 1 (ghi rõ)", "other": true}, {"code": 992, "label": "Khác 2 (ghi rõ)", "other": true}, {"code": 993, "label": "Khác 3 (ghi rõ)", "other": true}]}, {"id": "ST4b", "type": "ma", "text": "Anh/Chị/Em đã từng biết đến nhãn hiệu **Remos**, vui lòng cho biết lý do vì sao Anh/Chị/Em chưa từng sử dụng nhãn hiệu này? Còn gì nữa không?", "note": "NOT CONSIDER REMOS: NHẬN BIẾT CODE 6 (BCH ghi BA3,4) NHƯNG KHÔNG CÓ Ở BU1", "show_if": {"all": [{"any": [{"q": "BA1a", "op": "in", "value": [6]}, {"q": "BA1b", "op": "has", "value": [6]}, {"q": "BA2a", "op": "in", "value": [6]}, {"q": "BA2b", "op": "has", "value": [6]}, {"q": "BA3", "op": "has", "value": [6]}, {"q": "BA4", "op": "has", "value": [6]}]}, {"q": "BU1", "op": "not_has", "value": [6]}]}, "columns": 2, "options": [{"code": 1, "label": "Nghe người khác nói sản phẩm không hiệu quả"}, {"code": 2, "label": "Nghe người khác nói sản phẩm làm dị ứng"}, {"code": 3, "label": "Không có loại mà tôi cần/ hợp với da của tôi"}, {"code": 4, "label": "Tôi tìm được sản phẩm khác tốt hơn/ hợp với tôi hơn"}, {"code": 5, "label": "Nghe người khác nói chất lượng sản phẩm không còn tốt như trước"}, {"code": 6, "label": "Nghe người khác nói sản phẩm gây nhờn rít trên da"}, {"code": 7, "label": "Nghe người khác nói sản phẩm không kéo dài hiệu quả chống muỗi/ xua muỗi"}, {"code": 8, "label": "Không có bán ở những nơi tôi thường mua"}, {"code": 9, "label": "Khi tôi mua bị hết hàng"}, {"code": 10, "label": "Giá cao hơn các sản phẩm khác"}, {"code": 11, "label": "Không đáng giá đồng tiền"}, {"code": 12, "label": "Sản phẩm khác có giá hấp dẫn hơn"}, {"code": 13, "label": "ít khi thấy quảng cáo"}, {"code": 14, "label": "Tôi không thích quảng cáo của nó"}, {"code": 16, "label": "Có từng nghe người khác chê"}, {"code": 17, "label": "Bác sĩ/ dược sĩ khuyên/ kê toa cho tôi dùng một nhãn hiệu khác"}, {"code": 19, "label": "Tôi không thích bao bì"}, {"code": 20, "label": "Không có kích cỡ (dung tích) tôi muốn mua"}, {"code": 21, "label": "Tôi bị thu hút bởi bao bì của nhãn khác"}, {"code": 991, "label": "Khác 1 (ghi rõ)", "other": true}, {"code": 992, "label": "Khác 2 (ghi rõ)", "other": true}, {"code": 993, "label": "Khác 3 (ghi rõ)", "other": true}]}, {"id": "ST4c", "type": "ma", "text": "Trước đây Anh/Chị/Em đã từng sử dụng nhãn hiệu **Remos Baby**, vui lòng cho biết lý do vì sao Anh/Chị/Em ngừng / không sử dụng nữa? Còn gì nữa không?", "note": "LAPSED REMOS BABY: CÓ CODE 7 Ở BU1 NHƯNG KHÔNG CÓ Ở BU6", "show_if": {"all": [{"q": "BU1", "op": "has", "value": [7]}, {"q": "BU6", "op": "not_has", "value": [7]}]}, "columns": 2, "options": [{"code": 1, "label": "Sản phẩm không hiệu quả như ý tôi"}, {"code": 2, "label": "Sản phẩm làm tôi dị ứng/ không hợp với tôi"}, {"code": 3, "label": "Không có loại mà tôi cần/ hợp với da của tôi"}, {"code": 4, "label": "Tôi tìm được sản phẩm khác tốt hơn/ hợp với tôi hơn"}, {"code": 5, "label": "Chất lượng sản phẩm không còn tốt như trước"}, {"code": 6, "label": "Gây nhờn rít trên da"}, {"code": 7, "label": "Không kéo dài hiệu quả chống muỗi/ xua muỗi"}, {"code": 8, "label": "Không có bán ở những nơi tôi thường mua"}, {"code": 9, "label": "Khi tôi mua bị hết hàng"}, {"code": 10, "label": "Giá cao hơn các sản phẩm khác"}, {"code": 11, "label": "Không đáng giá đồng tiền"}, {"code": 12, "label": "Tôi chuyển qua mua sản phẩm khác với giá hấp dẫn hơn"}, {"code": 13, "label": "ít khi thấy quảng cáo"}, {"code": 14, "label": "Tôi không thích quảng cáo của nó"}, {"code": 16, "label": "Có từng nghe người khác chê"}, {"code": 17, "label": "Bác sĩ/ dược sĩ khuyên/ kê toa cho tôi dùng một nhãn hiệu khác"}, {"code": 19, "label": "Tôi không thích bao bì"}, {"code": 20, "label": "Không có kích cỡ (dung tích) tôi muốn mua"}, {"code": 21, "label": "Tôi bị thu hút bởi bao bì của nhãn khác"}, {"code": 991, "label": "Khác 1 (ghi rõ)", "other": true}, {"code": 992, "label": "Khác 2 (ghi rõ)", "other": true}, {"code": 993, "label": "Khác 3 (ghi rõ)", "other": true}]}, {"id": "ST4d", "type": "ma", "text": "Anh/Chị/Em đã từng biết đến nhãn hiệu **Remos Baby**, vui lòng cho biết lý do vì sao Anh/Chị/Em chưa từng sử dụng nhãn hiệu này? Còn gì nữa không?", "note": "NOT CONSIDER REMOS BABY: NHẬN BIẾT CODE 7 (BCH ghi BA3,4) NHƯNG KHÔNG CÓ Ở BU1", "show_if": {"all": [{"any": [{"q": "BA1a", "op": "in", "value": [7]}, {"q": "BA1b", "op": "has", "value": [7]}, {"q": "BA2a", "op": "in", "value": [7]}, {"q": "BA2b", "op": "has", "value": [7]}, {"q": "BA3", "op": "has", "value": [7]}, {"q": "BA4", "op": "has", "value": [7]}]}, {"q": "BU1", "op": "not_has", "value": [7]}]}, "columns": 2, "options": [{"code": 1, "label": "Nghe người khác nói sản phẩm không hiệu quả"}, {"code": 2, "label": "Nghe người khác nói sản phẩm làm dị ứng"}, {"code": 3, "label": "Không có loại mà tôi cần/ hợp với da của tôi"}, {"code": 4, "label": "Tôi tìm được sản phẩm khác tốt hơn/ hợp với tôi hơn"}, {"code": 5, "label": "Nghe người khác nói chất lượng sản phẩm không còn tốt như trước"}, {"code": 6, "label": "Nghe người khác nói sản phẩm gây nhờn rít trên da"}, {"code": 7, "label": "Nghe người khác nói sản phẩm không kéo dài hiệu quả chống muỗi/ xua muỗi"}, {"code": 8, "label": "Không có bán ở những nơi tôi thường mua"}, {"code": 9, "label": "Khi tôi mua bị hết hàng"}, {"code": 10, "label": "Giá cao hơn các sản phẩm khác"}, {"code": 11, "label": "Không đáng giá đồng tiền"}, {"code": 12, "label": "Sản phẩm khác có giá hấp dẫn hơn"}, {"code": 13, "label": "ít khi thấy quảng cáo"}, {"code": 14, "label": "Tôi không thích quảng cáo của nó"}, {"code": 16, "label": "Có từng nghe người khác chê"}, {"code": 17, "label": "Bác sĩ/ dược sĩ khuyên/ kê toa cho tôi dùng một nhãn hiệu khác"}, {"code": 19, "label": "Tôi không thích bao bì"}, {"code": 20, "label": "Không có kích cỡ (dung tích) tôi muốn mua"}, {"code": 21, "label": "Tôi bị thu hút bởi bao bì của nhãn khác"}, {"code": 991, "label": "Khác 1 (ghi rõ)", "other": true}, {"code": 992, "label": "Khác 2 (ghi rõ)", "other": true}, {"code": 993, "label": "Khác 3 (ghi rõ)", "other": true}]}, {"id": "ST4e", "type": "ma", "text": "Trước đây Anh/Chị/Em đã từng sử dụng nhãn hiệu **Soffell**, vui lòng cho biết lý do vì sao Anh/Chị/Em ngừng / không sử dụng nữa? Còn gì nữa không?", "note": "LAPSED SOFFELL: CÓ CODE 8 Ở BU1 NHƯNG KHÔNG CÓ Ở BU6", "show_if": {"all": [{"q": "BU1", "op": "has", "value": [8]}, {"q": "BU6", "op": "not_has", "value": [8]}]}, "columns": 2, "options": [{"code": 1, "label": "Sản phẩm không hiệu quả như ý tôi"}, {"code": 2, "label": "Sản phẩm làm tôi dị ứng/ không hợp với tôi"}, {"code": 3, "label": "Không có loại mà tôi cần/ hợp với da của tôi"}, {"code": 4, "label": "Tôi tìm được sản phẩm khác tốt hơn/ hợp với tôi hơn"}, {"code": 5, "label": "Chất lượng sản phẩm không còn tốt như trước"}, {"code": 6, "label": "Gây nhờn rít trên da"}, {"code": 7, "label": "Không kéo dài hiệu quả chống muỗi/ xua muỗi"}, {"code": 8, "label": "Không có bán ở những nơi tôi thường mua"}, {"code": 9, "label": "Khi tôi mua bị hết hàng"}, {"code": 10, "label": "Giá cao hơn các sản phẩm khác"}, {"code": 11, "label": "Không đáng giá đồng tiền"}, {"code": 12, "label": "Tôi chuyển qua mua sản phẩm khác với giá hấp dẫn hơn"}, {"code": 13, "label": "ít khi thấy quảng cáo"}, {"code": 14, "label": "Tôi không thích quảng cáo của nó"}, {"code": 16, "label": "Có từng nghe người khác chê"}, {"code": 17, "label": "Bác sĩ/ dược sĩ khuyên/ kê toa cho tôi dùng một nhãn hiệu khác"}, {"code": 19, "label": "Tôi không thích bao bì"}, {"code": 20, "label": "Không có kích cỡ (dung tích) tôi muốn mua"}, {"code": 21, "label": "Tôi bị thu hút bởi bao bì của nhãn khác"}, {"code": 991, "label": "Khác 1 (ghi rõ)", "other": true}, {"code": 992, "label": "Khác 2 (ghi rõ)", "other": true}, {"code": 993, "label": "Khác 3 (ghi rõ)", "other": true}]}, {"id": "ST4f", "type": "ma", "text": "Anh/Chị/Em đã từng biết đến nhãn hiệu **Soffell**, vui lòng cho biết lý do vì sao Anh/Chị/Em chưa từng sử dụng nhãn hiệu này? Còn gì nữa không?", "note": "NOT CONSIDER SOFFELL: NHẬN BIẾT CODE 8 (BCH ghi BA3,4) NHƯNG KHÔNG CÓ Ở BU1", "show_if": {"all": [{"any": [{"q": "BA1a", "op": "in", "value": [8]}, {"q": "BA1b", "op": "has", "value": [8]}, {"q": "BA2a", "op": "in", "value": [8]}, {"q": "BA2b", "op": "has", "value": [8]}, {"q": "BA3", "op": "has", "value": [8]}, {"q": "BA4", "op": "has", "value": [8]}]}, {"q": "BU1", "op": "not_has", "value": [8]}]}, "columns": 2, "options": [{"code": 1, "label": "Nghe người khác nói sản phẩm không hiệu quả"}, {"code": 2, "label": "Nghe người khác nói sản phẩm làm dị ứng"}, {"code": 3, "label": "Không có loại mà tôi cần/ hợp với da của tôi"}, {"code": 4, "label": "Tôi tìm được sản phẩm khác tốt hơn/ hợp với tôi hơn"}, {"code": 5, "label": "Nghe người khác nói chất lượng sản phẩm không còn tốt như trước"}, {"code": 6, "label": "Nghe người khác nói sản phẩm gây nhờn rít trên da"}, {"code": 7, "label": "Nghe người khác nói sản phẩm không kéo dài hiệu quả chống muỗi/ xua muỗi"}, {"code": 8, "label": "Không có bán ở những nơi tôi thường mua"}, {"code": 9, "label": "Khi tôi mua bị hết hàng"}, {"code": 10, "label": "Giá cao hơn các sản phẩm khác"}, {"code": 11, "label": "Không đáng giá đồng tiền"}, {"code": 12, "label": "Sản phẩm khác có giá hấp dẫn hơn"}, {"code": 13, "label": "ít khi thấy quảng cáo"}, {"code": 14, "label": "Tôi không thích quảng cáo của nó"}, {"code": 16, "label": "Có từng nghe người khác chê"}, {"code": 17, "label": "Bác sĩ/ dược sĩ khuyên/ kê toa cho tôi dùng một nhãn hiệu khác"}, {"code": 19, "label": "Tôi không thích bao bì"}, {"code": 20, "label": "Không có kích cỡ (dung tích) tôi muốn mua"}, {"code": 21, "label": "Tôi bị thu hút bởi bao bì của nhãn khác"}, {"code": 991, "label": "Khác 1 (ghi rõ)", "other": true}, {"code": 992, "label": "Khác 2 (ghi rõ)", "other": true}, {"code": 993, "label": "Khác 3 (ghi rõ)", "other": true}]}, {"id": "SOA", "type": "grid_ma", "text": "Anh/Chị/Em biết đến các nhãn hiệu **sản phẩm chống muỗi** từ những nguồn thông tin nào sau đây?", "note": "NGUỒN NHẬN BIẾT. RANDOM CÁC NGUỒN NHẬN BIẾT, RANDOM NHÃN HIỆU. Chỉ hỏi HCM & HN", "show_if": {"any": [{"q": "SC1", "op": "in", "value": [1]}, {"q": "SC1", "op": "in", "value": [2]}]}, "random": true, "random_topics": true, "topics_from": {"q": ["BA1a", "BA1b", "BA2a", "BA2b", "BA3", "BA4"], "mode": "show", "exclude": [98, 99]}, "options": [{"code": 1, "label": "Gia đình/Bạn bè"}, {"code": 2, "label": "Bác sĩ/Dược sĩ"}, {"code": 3, "label": "Người bán lẻ/ tạp hóa"}, {"code": 4, "label": "Nhân viên tiếp thị (PG)"}, {"code": 6, "label": "Khu vực bán sản phẩm ở siêu thị"}, {"code": 7, "label": "Khu vực bán sản phẩm ở cửa hàng tiện lợi"}, {"code": 8, "label": "Trưng bày tại nhà thuốc"}, {"code": 9, "label": "Cửa hàng mỹ phẩm"}, {"code": 10, "label": "Các trang bán hàng thương mại điện tử"}, {"code": 11, "label": "Vật phẩm quảng cáo tại điểm bán, tờ rơi, brochure"}, {"code": 12, "label": "Quảng cáo trên truyền hình"}, {"code": 14, "label": "Phát sản phẩm mẫu"}, {"code": 15, "label": "Internet/ mạng xã hội/ các trang thương mại điện tử"}, {"code": 16, "label": "Các sự kiện xã hội"}, {"code": 17, "label": "Quảng cáo trên các phương tiện công cộng (xe buýt, taxi,…)"}, {"code": 991, "label": "Khác (ghi rõ)", "other": true, "fixed": true}, {"code": 99, "label": "Không nhớ", "exclusive": true}], "topics": [{"code": 1, "label": "ANTI MOS SOFT II", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 1.png"}, {"code": 4, "label": "CHICCO A-MOSQUITO", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 4.png"}, {"code": 5, "label": "LOMOS", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 5.png"}, {"code": 6, "label": "REMOS", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 6.png"}, {"code": 7, "label": "REMOS BABY", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 7.png"}, {"code": 8, "label": "SOFFELL", "image": "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 8.png"}]}, {"id": "CU1a", "type": "ma", "text": "Vui lòng cho biết trong gia đình Anh/chị/em ai là người sử dụng sản phẩm chống muỗi ngoài bản thân Anh/chị em?", "note": "SHOWCARD. Chỉ hỏi HCM & HN", "show_if": {"any": [{"q": "SC1", "op": "in", "value": [1]}, {"q": "SC1", "op": "in", "value": [2]}]}, "options": [{"code": 1, "label": "Trẻ em dưới 6 tháng tuổi"}, {"code": 2, "label": "Trẻ em 6 tháng – dưới 4 tuổi"}, {"code": 3, "label": "Trẻ em 4 tuổi – dưới 18 tuổi"}, {"code": 4, "label": "Thành viên từ 18 tuổi trở lên"}]}, {"id": "CU1b", "type": "sa", "text": "Ai là người dùng nhiều nhất?", "note": "SHOWCARD", "show_if": {"any": [{"q": "SC1", "op": "in", "value": [1]}, {"q": "SC1", "op": "in", "value": [2]}]}, "auto_single": true, "options_from": {"q": "CU1a", "mode": "show", "exclude": []}, "options": [{"code": 1, "label": "Trẻ em dưới 6 tháng tuổi"}, {"code": 2, "label": "Trẻ em 6 tháng – dưới 4 tuổi"}, {"code": 3, "label": "Trẻ em 4 tuổi – dưới 18 tuổi"}, {"code": 4, "label": "Thành viên từ 18 tuổi trở lên"}]}, {"id": "CU2a", "type": "ma", "text": "Anh/chị/em thường dùng sản phẩm chống muỗi vào những lúc nào?", "note": "SHOWCARD. Bản thân", "show_if": {"any": [{"q": "SC1", "op": "in", "value": [1]}, {"q": "SC1", "op": "in", "value": [2]}]}, "options": [{"code": 1, "label": "Buổi tối trước khi đi ngủ"}, {"code": 2, "label": "Ban ngày, ở nhà"}, {"code": 3, "label": "Đi du lịch"}, {"code": 4, "label": "Đi công tác"}, {"code": 5, "label": "Đi học"}, {"code": 6, "label": "Khi đi picnic/ dã ngoại"}, {"code": 991, "label": "Khác 1 (ghi rõ)", "other": true}, {"code": 992, "label": "Khác 2 (ghi rõ)", "other": true}, {"code": 993, "label": "Khác 3 (ghi rõ)", "other": true}]}, {"id": "CU2b", "type": "ma", "text": "Anh/Chị dùng sản phẩm chống muỗi cho bé dưới 4 tuổi vào những lúc nào?", "note": "SHOWCARD. CHỈ HỎI NHỮNG NGƯỜI CÓ CON DƯỚI 4 TUỔI (CODE 1,2 Ở SC8)", "show_if": {"all": [{"any": [{"q": "SC1", "op": "in", "value": [1]}, {"q": "SC1", "op": "in", "value": [2]}]}, {"q": "SC8", "op": "has", "value": [1, 2]}]}, "options": [{"code": 1, "label": "Buổi tối trước khi đi ngủ"}, {"code": 2, "label": "Ban ngày, ở nhà"}, {"code": 3, "label": "Đi du lịch"}, {"code": 5, "label": "Đi học"}, {"code": 6, "label": "Khi đi picnic/ dã ngoại"}, {"code": 991, "label": "Khác 1 (ghi rõ)", "other": true}, {"code": 992, "label": "Khác 2 (ghi rõ)", "other": true}, {"code": 993, "label": "Khác 3 (ghi rõ)", "other": true}]}, {"id": "CU4a", "type": "sa", "text": "Anh/chị/em thích dùng sản phẩm chống muỗi có đặc tính nào nhất về mùi hương?", "show_if": {"any": [{"q": "SC1", "op": "in", "value": [1]}, {"q": "SC1", "op": "in", "value": [2]}]}, "options": [{"code": 1, "label": "Cam"}, {"code": 2, "label": "Sả chanh"}, {"code": 3, "label": "Lavender"}, {"code": 4, "label": "Hương hoa"}, {"code": 5, "label": "Bạc hà"}, {"code": 6, "label": "Khuynh diệp"}, {"code": 991, "label": "Khác (ghi rõ)", "other": true}]}, {"id": "CU4b", "type": "sa", "text": "Anh/chị/em thích dùng sản phẩm chống muỗi loại sản phẩm nào nhất?", "show_if": {"any": [{"q": "SC1", "op": "in", "value": [1]}, {"q": "SC1", "op": "in", "value": [2]}]}, "options": [{"code": 1, "label": "Loại kem"}, {"code": 2, "label": "Loại xịt/ phun sương"}, {"code": 3, "label": "Miếng dán"}, {"code": 4, "label": "Vòng tay"}, {"code": 991, "label": "Khác (ghi rõ)", "other": true}]}, {"id": "CU4c", "type": "sa", "text": "Anh/chị/em thích dùng sản phẩm chống muỗi có kích cỡ/ dung tích nào nhất (đối với dạng kem/xịt/phun sương)?", "show_if": {"any": [{"q": "SC1", "op": "in", "value": [1]}, {"q": "SC1", "op": "in", "value": [2]}]}, "options": [{"code": 1, "label": "Dưới 50ml/g"}, {"code": 2, "label": "50ml/g tới 100ml/g"}, {"code": 3, "label": "100ml/g tới 150ml/g"}, {"code": 4, "label": "150ml/g trở lên"}]}, {"id": "INFO_PH", "type": "info", "text": "Tôi sẽ hỏi Anh/Chị/Em thêm 1 vài câu nữa về thói quen mua sản phẩm chống muỗi của Anh/Chị/Em.", "note": "PVV nói", "show_if": {"any": [{"q": "SC1", "op": "in", "value": [1]}, {"q": "SC1", "op": "in", "value": [2]}]}}, {"id": "PH1a", "type": "ma", "text": "Anh/chị/em thường mua sản phẩm chống muỗi ở đâu?", "note": "SHOWCARD", "show_if": {"any": [{"q": "SC1", "op": "in", "value": [1]}, {"q": "SC1", "op": "in", "value": [2]}]}, "columns": 2, "options": [{"code": 1, "label": "Siêu thị (Coopmart, Big C, VinMart, Satramart, Fivimart, Intimex,…)"}, {"code": 2, "label": "Siêu thị kết hợp khu vui chơi giải trí (Aeon, Lotte, E-mart, Vincom, Takashimaya)"}, {"code": 3, "label": "Bán sỉ (bao gồm nhà phân phối hoặc Metro)"}, {"code": 4, "label": "Cửa hàng tiện lợi (Circle K, Family Mart, B’s Mart,…)"}, {"code": 5, "label": "Siêu thị mini (Coop Food, Satra Food)"}, {"code": 6, "label": "Cửa hàng tạp hoá"}, {"code": 7, "label": "Sạp chợ"}, {"code": 8, "label": "Hệ thống chuỗi nhà thuốc (Pharmacity, Phano, ECO, An Khang)"}, {"code": 9, "label": "Tiệm thuốc tây/ Nhà thuốc khác"}, {"code": 10, "label": "Chuỗi cửa hàng sức khỏe và sắc đẹp (Medicare, Nuty, Hasaki, Guardian)"}, {"code": 11, "label": "Các cửa hàng chuyên bán mỹ phẩm"}, {"code": 12, "label": "Nhân viên bán hàng trực tiếp"}, {"code": 13, "label": "Mua trực tuyến trên các trang bán hàng (Lazada, Tiki, Adayroi, Shopee…)"}, {"code": 14, "label": "Mua hàng xách tay trên mạng xã hội (Facebook, Zalo,…) hoặc các cửa hàng chuyên bán hàng xách tay"}, {"code": 991, "label": "Khác 1 (ghi rõ)", "other": true}, {"code": 992, "label": "Khác 2 (ghi rõ)", "other": true}, {"code": 993, "label": "Khác 3 (ghi rõ)", "other": true}]}, {"id": "PH1b", "type": "sa", "text": "Nơi nào mua thường xuyên nhất?", "note": "SHOWCARD", "show_if": {"any": [{"q": "SC1", "op": "in", "value": [1]}, {"q": "SC1", "op": "in", "value": [2]}]}, "auto_single": true, "options_from": {"q": "PH1a", "mode": "show", "exclude": []}, "columns": 2, "options": [{"code": 1, "label": "Siêu thị (Coopmart, Big C, VinMart, Satramart, Fivimart, Intimex,…)"}, {"code": 2, "label": "Siêu thị kết hợp khu vui chơi giải trí (Aeon, Lotte, E-mart, Vincom, Takashimaya)"}, {"code": 3, "label": "Bán sỉ (bao gồm nhà phân phối hoặc Metro)"}, {"code": 4, "label": "Cửa hàng tiện lợi (Circle K, Family Mart, B’s Mart,…)"}, {"code": 5, "label": "Siêu thị mini (Coop Food, Satra Food)"}, {"code": 6, "label": "Cửa hàng tạp hoá"}, {"code": 7, "label": "Sạp chợ"}, {"code": 8, "label": "Hệ thống chuỗi nhà thuốc (Pharmacity, Phano, ECO, An Khang)"}, {"code": 9, "label": "Tiệm thuốc tây/ Nhà thuốc khác"}, {"code": 10, "label": "Chuỗi cửa hàng sức khỏe và sắc đẹp (Medicare, Nuty, Hasaki, Guardian)"}, {"code": 11, "label": "Các cửa hàng chuyên bán mỹ phẩm"}, {"code": 12, "label": "Nhân viên bán hàng trực tiếp"}, {"code": 13, "label": "Mua trực tuyến trên các trang bán hàng (Lazada, Tiki, Adayroi, Shopee…)"}, {"code": 14, "label": "Mua hàng xách tay trên mạng xã hội (Facebook, Zalo,…) hoặc các cửa hàng chuyên bán hàng xách tay"}, {"code": 991, "label": "Khác 1 (ghi rõ)", "other": true}, {"code": 992, "label": "Khác 2 (ghi rõ)", "other": true}, {"code": 993, "label": "Khác 3 (ghi rõ)", "other": true}]}, {"id": "PH2", "type": "sa", "text": "Bao lâu Anh/chị/em mua sản phẩm chống muỗi 1 lần?", "note": "SHOWCARD", "show_if": {"any": [{"q": "SC1", "op": "in", "value": [1]}, {"q": "SC1", "op": "in", "value": [2]}]}, "options": [{"code": 1, "label": "1 tháng / lần hoặc nhiều hơn"}, {"code": 2, "label": "2-3 tháng/ lần"}, {"code": 3, "label": "4-6 tháng/ lần"}, {"code": 4, "label": "1 năm/ lần hoặc ít thường xuyên hơn"}]}, {"id": "PH3", "type": "numeric", "text": "Trung bình Anh/Chị/Em chi khoảng bao nhiêu tiền cho sản phẩm chống muỗi trong 1 lần mua? (VND)", "show_if": {"any": [{"q": "SC1", "op": "in", "value": [1]}, {"q": "SC1", "op": "in", "value": [2]}]}, "min": 1000, "max": 10000000}, {"id": "UP1", "type": "sa", "text": "Anh/Chị/Em vui lòng cho biết hiện Anh/Chị/Em đang làm nghề gì?", "note": "GHI NHẬN CHÍNH XÁC CÔNG VIỆC HIỆN TẠI", "columns": 2, "options": [{"code": 1, "label": "Chuyên gia/ Chuyên viên"}, {"code": 2, "label": "Kỹ thuật viên"}, {"code": 3, "label": "Điều hành/ quản lý cao cấp"}, {"code": 4, "label": "Quản lý cấp trung"}, {"code": 5, "label": "Nhân viên văn phòng/ dịch vụ"}, {"code": 6, "label": "Công nhân sản xuất"}, {"code": 7, "label": "Nông dân"}, {"code": 8, "label": "Chủ/ kinh doanh riêng"}, {"code": 9, "label": "Học sinh/ Sinh viên"}, {"code": 10, "label": "Nội trợ"}, {"code": 11, "label": "Thất nghiệp"}, {"code": 12, "label": "Về hưu"}, {"code": 991, "label": "Khác (ghi rõ)", "other": true}, {"code": 99, "label": "Từ chối trả lời"}]}, {"id": "END", "type": "info", "text": "Cảm ơn Anh/Chị/Em đã tham gia khảo sát!"}]};
+const CONFIG = {"submit_url": "", "mode": "", "cawi_autostart": false, "cawi_once": true, "recording": true, "gps": true, "show_qnum": true, "show_progress": false, "show_back": true, "image_zoom": true, "strict_tick": true, "pipe_image": true, "show_code": false, "image_label": false, "logo": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUIAAAB4CAIAAAAIWWy0AABhJklEQVR42u19d1wU19r/c2ZmO1VRsQMWUBBBRVCKCmhMNEbTTTFVTbuJienJ+77JTe5Nbk80Jje5aZpejKkajUqRYldArNgoClKks7uzM+f3xzM7zBZ2BsTcm/vjZD9m2Z05c/ac85ynfx9CKYVLbOfPg8MBAEApYG/yv5QCBQDq8glA54fKWzgOTCYIDITAQJf+BQEIAYaBvqbaKIVVq6C2FggBkSpmXjHhougy7c5lokAJvmcI8A5YsgSSkkAUu5x5SoEQqKujzzwDPA8UgIqKDn2+gAIFlw3gcJC//AViYuQnUgAqigzDAMC5c+cOHzlSWVlptVr79esXERExISbGYDAAgCAILMv+N62hw+HgOG7V6tWPr1xptlh4h4M6p0taMyqtKBDC2+0jRozgev40nO5jx+j06e5krKRkt3+Vb9y+YhjQ68HfH0JCIDycTJwI06dDYiIEBUnEzDBASB+p+lqOigq6YkXPDwHFezJ3rvtiuTVBAI6Dzz6Dd9/thfHr9TBoEG5NaQAAhGF++eWXN996q7Cw8ELtBSqI+JXBZBwVEbFw4aLfPfRQaGioIAos899DyYQQAMjKzuJ53ma3CYIgT4jb/mcZRnQIs2bOAtrjxvOUUrpmjQhwGV+hoeK999K9e6WHCgLtaz6W49NPRUJEvV5k2Ut80aIilQkXRepwiOPHiywr6nQ9fxaOdsEC+XGiKAqCwPP8ffffj/uV4ViDyWg0m0wWs9Fs0hn1+Hno4MGbt2yhlAr/LRtDFEVKaXNz85BhQxmWMZiMeqOhq5fRbAJC1q//5hLI2OGglIqLFomEiBwnEtJrL4YRWVbkOJFhJGJmGHHpUtrQ0EfJvslYvPdeEUDkuJ6fm4SIAKLZTKuqJFrtavVFkW7ZIq3OpZzUHCcC0Ndek38F0uSDv3sIAMx+FpPF7LmbjWaTxd8PGGIymw8cPIiU/1+wjA6Hg1Kam5tLCDGaTT5o2GAyMiwzaHBoTU0N03MdjGWhtRXy84FSEAStSpGWlyiCIIDDAaIIhADHAaXwr3/R5GQ4WQYMA6LYJ0R7WQ6HA3JzJQH7EkQ6AICQEOjfX/VK+tZbkjZ0KQ3VpfR07EoURYZhSg4denPNm0azSRAEpE8PHULked7iZ+lob3/p5ZcJIb1g5fmPWEkKADm5uZRSxufEMgwjCuKUyVMGDhzI9FwTA4A9e+DCBWAYuHwzSCk4HEAp6HRw5AideyU0NKjobP9/kjEhcOwYlJUBIb1wzA0YAAaD1K3X1WdZOH0aNm4EQsCpvPWk4eYZPRrGjZPJGAD27dsHlDIM45s4BYdACCktLRVFkWXZ/wJKRtLNycmRSdq3Cp2eng4Al8CNAWDr1l44jDU2ngedDsrK4Lnn+hiy91M1O1sisEszsAAADB3qi6vj5++/BzYbsOwlHakMAwBk1izgODSU4u4cOGCAFpokhBBCgoODkBuT37gFFDlwXV3dgQMHGI4VfW5yQRAYlp05c+YlkDHLAgDdtq0bjJFhgGU7Xz0wOzscwDB03To4f/5Sd89/WSMEACieqrQXuoLhw7tcWRTg29vph2svVYCXHzF7tpIdUUpnzJwZNW5ce2ubXq/3wbgYhhFFcdnSpYQQ4VKEgv+U01gEgN179tTX1RkMBh8HGcMwNqtt1OhRMdHRPSVjVFkryqGoqBsLiRqv/ELvZbdYB8p47e1QUCDpVH1NaafAaRF7YVoIcuOuVFlC4PvvobISWPZS9XBBAD8/SEmReQPyVYvZ/PFHHw8cNKi1uYUQwnEcq2j4p9VqbWtpffChh+668y5RFDmO++9QjLOzs2WpxJfsTWlqapper3c4HFzPXZS5O8BqBZbVSk5RUeDvDzodEAJ2O1y8COUVYLd1e+EJgfLyPuJ111T37ZPsFL2ibowc6VsMpm+91Qs+fIYBQYDJk2HQIGWcCfLYyZMnFRQUPPXUUz/88EN7R5vn3aNGj3766afvveceURTJf0VAAcax7MjLkzmzb4KfnZmJf3I9F+G2bAEPf7T3pRJFGDGCFBWBUkDieaiogHXr6MsvS5y5W2JYX+vKTnGJZIy3Izf2XFxBAJaFAwcgL68XBCJCAIDgXnQNF0NKHhUR8fVXX5WUlGzesuXAgf3nz1c7HI6AwICxY8bOSEvLzJxtsZhFZ6TXf4FEzTBMRUXFoUMlnF7nQ6ImhPB2u39gYGpKCs4V10MRzm7X6tvAjZWcDHo9OBySTksI6HQQEQEvvEDKyugnn8gWDk1bdsjgPuK9JDuFqqjlGlDlvghvvw2iqHXJfLuaAADJ2ONZjNNqPWHChAkTJnRl5undSEyMAPXkhAzDoDmtZ6IydkgxNM3ZvJJx4c6drc0tJovZh6rPMIyNd8THxw8dOhStYlwPRbjiYjhzRrtvg6RnSDsMpWLccDwPLAvR0d1beJaFiXGXYiH3atJUuuCVxx6uX88OV+ytq+X3+iHehcabblBdVRUcPNgLBidCgFIIDISBA72QFp7gdXXwxRe9wIrxfB82DOJcVrNz0zsXwuFwoNhMGIY4L8Cl8aoPi97o0IeRTH6uIAgcx5GuJ18QBO37ATtkWZYQ4nnW4CDxW+XnWVlZqooxfpuRno5D4npiFcDJxbMfQw5AzbzMcZCa4p7eQAiarGlpafcWfswYGDPGKxl3pSOh7NYV/SDleE6o5wWajxoBN1mPtSN5N6s/FMk4Lw86Orphp/BNxv37u2enuAVRNzb2AivG1UxLA6NROp2dq3OJDLYbh6DrVCM5HD58uLik5Mzp0w0XGyiFwMCA4cNHxETHxMVNxIGperbcOqyurj595kxtba3dbjebzaGhoeFhYcHBwThI+WhgOVYQhPyCAiAqirEoioRhkIxxJFzPHH1O3wbVtFRjx8KYMUCpC+Hh0c7zUFiolY1gbykp0vHhcQZpXDx5lpWkYrfbKysrKyoraqprWlpbKRXNJvOQoUMjx44dPHiwLPNoUW+ww8rKyr179xWXFJ86daq+od5qtVLRmUkEFCgIokBFKlKRUopvDAZD6KBB8XHxmZmzp0yZzLKsRqFRq51Co7dp0CDJBO32e1kWBIG+804vsH3n5iFzZsvvkTxa29q2bdsmCALyK4fDwfM8vhcEweFwyF+1trbeesutERHh8tLgdH33/fcbf/rJZDYDAMuxep2OZTlcF47jdDqdTqfjOE4UhKmJiVMTEtD6fb66et26dV999WXJoUN2q7vlleHY6PHRy5Yuvf/++3HndEXJ+BXLspWVlZ9++tkPP/5w+PDhhoZ62RHIcOzAgQPjJsYtWLDg+uuuGzBgAADwPK/T6crKyo4fO6bT632QMUMYm9U2YuSI+Pj4zj3f3cBtSimtrRUDAjrjb9XCZcXlyztj9+WGEbDFxSLDqPeDL5YVAeinn7r1htzSZrPdcNNN05OTZ8ycmZKWmpyaMj0leXpKctL0aQmJUycnTImfPGlifPzE+Lhx48cVFRdj8CqltKio6OFHHomMijL7WTxnLbh/v7lXXvnDjz/KD/IdDUspXb9+/bz584OCg3uu7XJcenr61m3b8KFdPhc/t9vFUaN6IbZZXq+bb/ayXhhEvXVr7zwIV1yvp6dOyZuBdzgopd9s2KB9os6cOaPMi8A3aTNmaLx97bp1lNL6+voXXnhxUOgg/FBvNJgsZrOfRfkymIz4bXpGRl1dXVeLggOw2+0vvPhi/xApmpXVcQaT0WQx48tgMjKcdDQPHjLkxd//vrW1FffPu++9BwBmP4uPUGqzxQIAt9x6q3LLQQ/SIej338tEpYnwvvzSy7bAP996S2soPy68wUDPnHFLkMC527dvn8bFGzQ4tKmpiVJ6vrp6+fL7DEYjpoHpDHrMocGVw2QaTi/x/N89/LCP+Huc0F27dqWmpko+AL1O2ZWvl9lsNJvw0XiLvGmefOop/IHeKRkHc+CAlFJy6flkmKWwcqV3MqZUvPbaS029UGwMcfJkKopy9gXP85TSh373O5Zl/QMD5Plxoyizn8U/MIDjuMw5s5U0jFNUU3Ohf0iIwWS0+Pt53ogvi7+f3mgYOnxYc3PLRx99HB4RgXzb7GfxkY1gNJv8AvwBYPacOSgUeKXh8+fPp6al4QbADj3zOpCqzX4WpOfomJgdO3ZQSm+59VZ1MvazAMD7H3wgzxillOuJYvzLL5pEOHTuG40wbZoXVRa9VtnZ3VPboqNhxAg3+RxlqqzsbIZhLP5+DqXOJiVcS43juLaW1tmZswMCAr7ZsOGRRx6prKjAqcFN4CnMsCyns+gJIatXrRo5cuTKxx7zFHQxz/udd//1u4d+Z7fZTBYzjupS4oqwkz//6U9NzU3/fPMt79I1yr3bt0ugC5eorMptxAjvds0zZ3ohiFopvWdkACGyfsSyrCCIO/J2CKKAgrTv3PqU5BSlsiOIIseyBYUF9XV1JouZ53kfJiIHz/v5+d1w0w2bN/0MDDH7WVBi960x2e12i7/fL1u2fPvdd9dde61DEDiFLQMAGhsbr7zqqoMHDuA+7KpDpHkA0Ol0nMlUeuhQ5uzZq1evLiouIoSIgugzKJk3mc1paWlKLZLptm9DFOn27VpdTQAQGwvDhnlXjG022LmzG4oxAElL89xG+GO2bd+GqpSgbKKkR8nKFSFk3lXz/vLXv1x37bVV56rwbENbqFdPncwMOR3393/8o6WlxS0EH02Fq1avXr50GRBAV4HXpBzJxedsvjVtfKjF3+/tt/75/gfvo57s3U6Bp2qvuNOxEyRj5TEtBVG/LwX89IpbC4BgDCYhsnnyRNmJo0eO+FYO5YtnzZzpYrCkFAC2bt2qaumllHJ6/YkTJzZv+tlkMRuNRhSmtLs5vv/+e7c5x9PkkRUrDh444Bfgj3xSCzwAz/Mmi1kQhWVLl5aVlekMepGKPqx3vM0+YcKEiPBwZQoU0+0YzOPH4ehRTbSHBuKZM704J/AXHjkC5eVavVZ4y6xZbjsMf0xDQ8OevXtVo8kdDofZz/LaqteffOJJg8loMBgc2jiYKIosx50/V3XkyBFlhA0yyY0bNz7y8MNGs4lhmC45MCGEEGt7R3trG76s7R2+KVnyWHDc/73wYktLi3u6D56MDQ3dOAo1xn6EhnrxM3V00A8/7J0H4YqHhEBCgnwY4ZTu2LHDZrXpdDrfu99msw0ZNmzSpElKjsRxnOBw5Obmqlp68UcZjUb/wAD0KWi3bKMQW3OhRvlo3Aa7d+/+6KN1RrPJbrer2tJZlkWbHRIzy7JGs0mV8vGJs2bNdIsh57odGJCdLTkeVAkAp9KD8FzcJBqlQTn4NjHRTT5HU/OuXbvqai74dprjDhAEYffuXShEoRvJqyzt9V4q0ra2NjeeUFdXt3TZMpbjfATQEUJQJEucljR50uR+/frV1dUVFhYWHTyoNxp8Hx96g76yvHzbtu0LF17jIlqjoLtrFzQ29k4MJqotej0MDnVZMlzu77+HigpfPi28Hf/VEoM5bRoEBsquJtzN27dvV03QYxiGCmJSYqKfn588IcgMjx47dvToUb3BoLqglNL2VkWAJwGjyaRxGwDAwIEDlePEN19+9RUVqRy14qMHa3sHAFj8/Dgd19TUBCLVGfWEEk25EwQyMjLdJA6uhzGYGk/cwECYOrVLxTgnp3vBt3FxbsG38gxu3b5dVZTCCzra2gGgvbWN4VhKKcI7GUxG1YNQFEVWx/Xv319+EJ4Cf/jjH89VVZn9LQ7e4WPTsCz70edf3HTjjUqx+Zlnn/3rX/9iNJl8nD4YPbJn756FC6+hnjBmuBw+yBjpatAg4HloaFAns+Bg6B/iQsZyELXqERAeDufOgc2mSUyb7eJqYlm2vb29cOdOwhBNebaz0pWEJNtHeLvd7GdRFbI4lrtq0VVxE+M4jjtz5kxubu6J48e1bANsqJbLFyMzyN2hLghgZtLkhCnPPPV0XFycXq8/d/78F198sWbNGlC3NRG7zRY6ePDUhAR392r3XE0tLeLAQZpcTWiKzMjwAruDXXV0iMOHa/VeoAX1+ec9Laio9E5OSAAAddATjr3jzrs+XLt227Zt+w8c2L1nzyeffjo1MZFhGd/3Gs0mwpCwiPC2tjYZLIpSWl5e4R8QoDPofWAmobEqPTMDhWSe53met9lslNKqc+eMZpPv21F7v//BB5SWSWkaBUGMjVWZQ/wqI0McOlRl4fDK6GgX4B70TRw4oO4X9PcXb7pR04ISIjIMPXRI3huomhYUFBBGBX0KXzq9rqSkxNPVdM2ihWgdVLX0/v6ll5S7qLW1dckddxCG8X2v3mjQGfR6o/Ho0aPyQ/HfsrIyk9nseykNJiPLcUOGDm1AOCpFe/yJJ1Rt1LiRFi5aRCl1CA7l7Vz3YjD37oULNZpEODxxUaJ2CyTArkpLoaJCq2KM16CarWC5eAaXlZWVHjqkM/iyi6Bxsl+/fm//8y0ERsWWMGVKWmpqdExMe0e7D/gIhmGoSJOnJ5vNZhTkMPhm3UfrWpqbfR//MkoDEj8qfrj2hw8ftlltBqO6EGgxW7xoJWVlcPiwir6KURbx8XT/fhVLmAwYgIuiXLJ33vEVRI2S9lVXSfK2b5kIN09kJERFyYZPnPas7GwqiizL+phMhmGsHR3jo2Mio6JkjoT2kaampl27djEso2of4fS66669VhRF3uFgGUYQBIvFctedd65bu1ZVNbV2dEyMixszZoxsYcJNmJOb29He7nsnsCxr67BmZmYGBwfb7XaO4wgh+MZisWiU5zMzMwGAilRp12IuF9xHF4TX2RWmyGgJu8Nd1a8fTJ7iqRgDQO6OHdaODt92EYZhBIeQMCVBr9fb7Xa0A6NLgNPpWE4T/ktGRoa851iWFUVx/TfrUe9Vic1kmfRZ6W4RvISQ7du3UW0JOpGRkV6mNyvLazSbu6zr7w/R0dDU1G3cDzRu1dfTzz/3FURNKTAMWbwYdu9Wt4Hhj501U6lm4wxkZWdpUYyBQkpyso7jZIKRs+2rz53XG1Wy7e02W1RU1NixYwkhBr0eU5cppdk5OdqyfCEtNU1py8RbfpH8BerbedasWXLYPCFEr9ezLLtlyxbV3+5wOHQGPdrn3fYMc1nSaJDwQkPdot69eIy1qCJ4e0ICBAVK1nLX8wl9DBqBi9AyybIsTgTHcQUFBRfrG/R6vY8eeJ43mkwpzrwwNG4dPXr0UImKFID7JiwsLG7iROXso2EmOydXOll9Lp7eaEhOTnZZPI12Cpyr6GhPm0KXdwwb5p6B9PnncPGiBGzodWNQCvPmQf/+UF6uDsyG0sHsOW6+htra2v3797NqvgYkFASgcrePbNuKsYqqdDhzxkyO42Q6xHB6zEnwvYvw23RFMDNq9a2tbfkF+YRlBNGXjcPO200Wc1pqqhxyjxupqqrqUOkhTq9T3UhRUeMiIyM90faY7sB9VGhNo0EeO20aWCwSWIQHBIx0cmshYzf53NVu1N7eUVBYSBh1lshyrLunEQAAfv75Z9/HMDrrxo0fPyoiAmcQn4UGFd/pJSiNT5823WQyoddaXrzy8vKS4mJOr/PtJ7TbbOPGjYscO7Zz8XAO29ogP18l0wivT02V5k2LGKUEDMAwgbffVpXbyfPPS4mrvh8hexySk+V9gpO5a9euhrp6vU/kGkKI3c77BwQkT5/udiZSShE0Q1O2/ezZ8oqLlBJCzp07d7DoIKvjfOtldrs9qF/wtKQk+el4/d59eyvKKwxqg3fY+OjomHCFyxdvLygsbGlq1ul0vuUIoDBjxgyvEQRMN9yJO3Z0y/tP8Mh0uxi7OnQIzp3TqhjjoDFQ1lUxBoCDRQfLz57VIkqFR4yKiYlRKlQcx9nt9uycbN+CMV6flpoqi1K4A7Zt26Z6fmOT9BmFWRUA8gsKWltafEsB0uKlzXDxSONQ9+6F6moV7oesLz0dLlzoNmAAPi4nB0pKurSGYAbFpEkwdSrFWGjfsyELVgMHyoIV/vztWdu1JOg57HzsxNhhw4YpKYEQcvr06ZKSEp1B75uQbDZb/wEh06dN66RDQQCAgoLC5sYmvUFlLQTeMSl+0qBBg+RcOrz+l1+2gAY8WgCYOWOGJ2yYlt/uAvfhmZut3d9Et/yiNY0GOXBampfjGadpxw6tijFu0yFDIHaiW2/S8m/fTkXRd+0PZIkpyckGg0HJEgHgwMGDJ8tO6n0amdxEKZQCmpubd+1WN6hgjE5aaqqSeyhPAS3gTHgKuIUrSSGxPrYOkiLLwrRpUFmplYwHD+5cZULom2+qPIVS8uKL0NioCZjNDe7DyUtFUczJ3aHKS3ECZ8yYieKVi30kd0dHW7sqQxMdwtSpU0NCQtxyWlEgJ6Ce5Ttr1izlOFEQ2Lptm0ZBQCmQ4+0OhyMvL8+3pwpdTf1C+qMgwHosB6PJuMVxYLdDbo7WGExKISJCQh52I3vJY9xNxTgpCcwmN/kcF3W7BpXG00Alv9myZYvoMxkQRang/v2SEhOVkBR79+07V1WlV4Mv5G32mBgXOQpPAZ7n8wvywacUgIvXPyREKcV12ilUc0VxriKjIDAQzp3TpEVbLBLuB8rtZ8/Cjz92GUQtZ6HOnw+bN0sgEL4XwgPuA8np1KnThw+X+ualcvBDuqtmJFmYtv6i0dI7O3O2THIokWkhJGeWr0sEKA7+5MmTxcXFqo4Sm802YNDAxKlTlQI5IeTY8ePHjh3zHbIiG2gHDBjgNales825pEQr3AfutpQU0Om8K8ZtbbB7T7fC+iTFWLHGSBXV1dX79+/XotKY/SyygUppZEIDoxZRauDAgTiDshQAFLTJUS6hc3j74cNHyk6U6dXMY4JDmDJligv3kO0UqtwPx5aWCgC0pkYTGffrJxW+w24/+MCXGkUIUEoefwIA6KZNmlxNlMKIETBxonsMZt4Oa3uHb14qBz9MmTJFqRmxLNvR0ZFfWEAYlaQC9Epg3AijcHQdOXr02HEVQiKE2Ky24SNGxCmyfDEOf9v27Th4lQoPDmHKlCn9+vWTlxIfl5OTw9tULCwS3EdGRlc8n+kG3IdGPFpZH/OqGIsiHDgANTVaa03g7veQz5EqCgoLmy5eVFEvUaGKjQ0bMcJNoTpbXr5//37fFkKcQQT1xsskI3N2tkbDJs6+fIJKi5eb4+D5niwevsnJUbdT4ELgCVhXp4l1DxoERqPkIrZ20A8+6PKkQFYcFga33Qo878TW1eBqSksDg0E+35UxmKo+W1EQE6YkBAYGulHC/gMHys+c1RsNqsbCsZFjo6PH465QEpLDrrIWLMNQUUxKSrKYzbJehh6jzZs3a3SUZKS7LKV2CwsaaPEAIt5M8YxWuA+NaTQogHGcZIp0i/oQBGAY+sYbWq2meM24KBg3zj1HClUaDeksxMkSQcES8RzNzspqa231fQo4RalZcmg0IaSiorKouEiV/m1W26DQUKUcBZ35WNu1LB7DsqiMdf5GfKMK9yFniU6fDgCS01h1+dC+xfNACPzwI5SXd4lEjaz44YfBZILSUjh5Ul1Sk+A+5rjFYFqt1kINvgZlrRP5ym7ZR9DSi1K0dIgwRONagIIOqXPwDMM0NjbmFxRoqfDAcuzMGTPd5Ijm5padu3b6trAwDGO32iJGjZ4wAQ20pPtkjMRTXw979mjPaoKYGIiIkGqpORzSGyxfvG4dfPEFMIym5FiGAUrJ/Q9I8rlrQIzD4diRt0NdpaGip2kBA5U3qZ2jkig1fERc3ESlYpxfkN/arG5kFgVh6tSpQUFBSsMmwzBNzc27d+9WXTyb1TZq9GgEhXRxNdlsUji6qkQdEwPDhgHPQ2urpoUbMqTTfuEDiRpZcWgo3HUXUAp5eepFZ/BYMRiUghX+/JKSktOnT6vmMzgEB6vjZqTN8DwTtSRU4LdzZs9xcfkybHNzs5bYL57n9UaD0lQp7YT8ggvV1VoqPESMGoV0qJQj9u7dc67qnKqFhVKampqq1+tlQaCbZIy/rbAQmpo0uZpwfqdOlSohyi+Ggaoq+txz9M47tYrTmA4xfLi0VxS7RIq+OHbs2FF1lcZutQ0aPDhBEU2OB2FLS2teXh5RoyUqiolJiRaLRTmDWozMXkViqc7Y3r3V59UXDyhNSU42KBcP+ykqUk/wRG6DUCTNzdDSooUbk5FhAAA6HRQXA54UXRm3KCUPPQRBQUAI1SASdyafjxzpFoOZnZMjqkGOMQzDW+2jRo1CkVimBIZhzp07t//Afk7VPmKz9Qvpr3Q4y6bK8+c0mCrt9qioccoYTLx+08+bNFZ4SJ6erKRDZ8jKNlVPFQ5rtqvP0q1x2uA+NCO2IY/97DO6cyeMHAmDB4PFAk1NcPo07NsHzc3dq/nkcJA//xn8/JTIiZ1RrDk5quksqFAlTp0aFBgow0RgbuPu3burKit8p6d5JNNQjuN4ns/LVzEyywaVma6hc04faRaax1RDqd0czi4hsb5hSfFKdLa3tEhkrNpGDJcW2gcSNfLV4GBYvhwohbY2CRTRNyQIHisZGZ2Zj3IMZpamGExKafL06UgJyuTE/Pz85sYmk59ZcAgqlt6EqWjpVdKhbKpUCRygkJaaijIgx3HUuRO2Z21X3QleHSXoqUI/i+8dyNtt/oEBbgbabpKxBPeR1b188ZYWKC6G4mLvMfRamk4HPE9uuAFuvtmNhrtlG3BTqJTr9/Pmn1XXz+Fw6A2dopQoUoYhh48cKTtxQtXIbO2wjhs/bvy4cW5+QgDIzslWFebtdrtfgH+q2+JJdoot6vYqDJaamiAth9WqcosSMKCuzlcQNcuCw0GWLYOQEACAgwelKBTf2wO/VcB9yHgPezXgPWBLT3ehBJzUX7ZqdfkiQ5O3Aa5FlnZTJVptUSoSRJZli0tKjh875juzBZfS4uenpEMcw+nTp0uKi3wXiGAYxtbhiJ8WP8yJLO/9MvUYzBMn4MiR7lXNRUhqlu0Uqlm2GxhOOh3wPMTGwrvvekYCy9EXqraBTpY4Y4abq0kUxW3bt/nWq2Xb5tixkUrFOCdH3cjsrJSVqtPpHA6H0s1YWVlZVFSsGkDrsPMTJ8YNHz7cJQaTYaCmBvbu06QYT4yFwUMkoVrVHobKLTqNv/gCGhq8B1FLB4QFfvc7aQAoUavGYIoiDBjgCfexe8+e2gsXDOoxmHazxaIMLKeUsizH8/yOvB3qkpHg4HScVApY4aqoqKgo1mCqxBjMpKRpAICGNBzt5s2bBYeKOoCRZxNiJ4SNHOkWg5mTm9ve1u7bwqLkQ77qSGiqmuvBD9VFcbRLo33L4QBB0Bo+zXHA8xAdTTZuhIAAz/3ntA3sO3/uvKpKY7fZR48ZM378eDeX/dFjx0oPlapyVKCQmpLKcVLqXHcNKpkZmZ4jzy8oaG1u1uk0LN6sWS6Lh2/y8qC1VcVOgRJsmhPn9eJFTa4Bf38IDQVKJSTqrhMhyO1LYOhQHI+kGPteXNw806eDv7/sauqUabXFYMZMcKEEvL20tPTEiRN6o1p2itU+ZuxYrCGqtDDl5WsyVQq8Iz4+PjS0MwYTSXfzls2aUrIAZqbNVC4ldrLlly1a4D4IQzIy0lXC/nsN7gMuDT6GYaTj3+GAefNIdjYMHeo1KQdnbdv2bZqiWClNTUnR6XRuMZjbtm6122wcpwNt0XMuSa1qRmY8vwOCAtGgwirqIci6gG87A26XjHQvi6cJWR7HJsM1o9PYNzcGgOBgCA6GHTuguFiyL3ZlbV65EigFnQ4uXABMY9YCf6OA+5CVw5zcXK0xmGlpxNVliFYGgXdwrLpkNCNthlIy0h4PK8VgzuyMwZSDDvbt2+ebk8u3pGe4J0W1tbXn5+cTH+BtnTEnIyfFT/JdTYFRKbmmJY3GkyC1vLBYOYrcyL0dDhgyhLzxBvnxRwgJ6SqxThl9oRLFCtTTtIBz8bNaeqdMitOcYfSyYVOLkRnP7yFDhsjlBaQYTIdD1TyGgXtDhw2bPHmyi6sJDU5ZanYKGT5pyhSJZmprNXmbBg8GQuiqVV2ybhQBbrgBRo0ChI/duRNaWjTFYLIspM9SStSEkLNnz6pWD5SXyc1/LsOhanY1zZY1WzkeVoupEiutyIEDctDB9u3b21paVUViu80+aHBogiLyTPJW7N9Xcbbc4DOlh2VZKorJ06ebFTEn3TRxyXAfNTXdQGyjtCfopwwD8fHkllvgjiXQP0TqwdtOQttAeXl5kZptgBDC23n/wIDk6cluMBENDRf37t2rNxp8lNViWVbgHXET44YOGYJ3oVytxbDpJhKjFo30fOTIkRMnjqsK81QQk6YlKSHjJLS60lIoK1OxUyAjnTQJ+vcHux30emho0ETGo0fDxYu+gqhFEViWPPlk5yojN9MI9zE2UnY14Trm5ee3t7apYqfYbLaQgQOmJkx1W8f6hobdu/f4No/JIfGoV8uaLSGktLS0TE0gR344bPjw+Pg4+elS0MGmTVokamXsgFId2Lp1qzLp1Ufz7WpSI+PuVs1FoImQEBeFVq6fiG8IkWyKDAMWCwwcSMLCIC4OEhMhJsbl5PZZJGlHXl5bS6uqq8nWYY1LmjZsWKeJD4lq46aNF6qrAcCzVI9bw7XHu5RGZh9Bf7I+g2ZVZQwmOskcdl4L6A/q1Z2Lh7IJhsT6xhJFoRElakwAUCVjvG/cOPjkE7DZvPePHy5cCBMmgCCAXg+UStgPqjGYokhmzVJW3pJkWo0xmA5hyuQp/fv3c3MZ7tq5s+7CBdUaogLvSJiSgCHxSkNxVnaO4HAYjAbfu0iKwbRY8EhFTt7U3JyXn6dqYZViB2ale1rIt6klRRFCeN7uiSzfTTLWmEbj9uQffoApU6Q95xY/qPy3K58zStpq86JdpUG3rcwScS6io6M//PBDwjAOh4NSESHdeN6BoPNOpHja3ta++JZbZImaYZjyiori4mJOr/OB1yHH0LtUypKDh7PUzWM8zxuMhhmu1nXJ1bRli/pyKBVjvB2FarXoazAafQVRiyIQQp5+WtKAWBZOnoQjR9THg996yLR2u72gQF2mdUsPVDK0XyQrA9GIXyXf7syN26Y5FroThRNPkMLCgvNV51QBlR0OB6fjlLEDOIYzZ84eLDqoLk7a+LjE+AgnWEX3yRjpsLJSK9yHHCg/ZQpoLLaKu0GWn9HEpZZ8i8ufl5+nRaUBQtxiMHEu4uPi4hFdSHOhTYfDwTBMfl5+a3OLqhRARXH6tGkWJ/ie0km2S0MMprWjIy4+fqwiYMiJLF8Pu3ZqUoz794f4+E4TcX09aKgaTXfv7nK50eGfmQmJiZ04Sjt2SMmJPrYyyuf+AVJot6tMe7LspG+Z1hlYzsx0TU6UUpRzslVDcRGvH2OhlQJ5Y2Pj7t17GFbFX807eL3BoOSHUvDWpp+1BG9ZO6xR46LcHCUMw+Tk5qhqExKy/MxZhBCMOfH1rN6B+0CdISVFEr1Qd+rypahvLIdqagPsB4CSkpJTJ0+p+txtNtvQYUMnT/Ji4pPB9FSbItKAyMnl2mIwvcB97Nu//3yVlhhMmDljphe4j4JCaFQLicVfOmWKEskdGhvVeSYhsHGjG9SZe1bD0890aumypKaqGANAQgIMGCB3LrvfBYe6kdlus4WFh8cqAsulMjEnThwuPaxSQ5RhbFbb6DFjPIOZd+/ZfaG6WhXug7fZo8ZFKY9UDOTatn2bKiNxhtOm6HQ6h+BiIZfw93y7mqgo61aqAOxc71TNxbnAULteKbTbtWKclZ2tSaURxMTERH9/f88iZj0oY61dCuB53mAyznDVZyQA16ztoGbV8Jrb2IksL9satBTcQdGX56G5RVMUbVdZUMhvk5IgI71TXbLbJReGFriP2ZlKnGPteA8I2zItaZrRaHSLwczJzbVZreoMjdIZaWnoapJtjbK/WksMZmpKZwwmPrrk0KGjR4+qyhGgiMFE1iWj6ufl5xGG+HY12a220CGDp05N0FK4m/EJ95GrNatJEECnAwzEZxi4PE17ip8yLYFect0wPBdLDh06WXbStxSA53d0dPSoUaOU+ozTSZajnlBls/UfMCDJE+5DFCnat3wvhzI9Gwm+tRWam7Qmmfr48plnpM2A/WiEkcDx4FZWxGA2NjXt3rNH1UQEUgxmumsMJpFjMLvhalJ6cZxwtlpgdzIUg8frf/nlF1VntRxOq4w868yOPnvWYDSqpceJiYmJyuTqbpKxjHp3+rSmGEx8xrhxEBHhNSu4V5rkY6iv37t3j5aSazqDfqZrUlvPHy0iL80SHA7VRBwAdwQ8GcT0YNFBTs/5PgVEh5AwZUpI//7ucB/HjsGxY+pZTVjnBeE18PbmZvUsRSXP9wqaFxsL8+ZJyRJybJ8qmhqmso0cCbGxbjGYe/furTmvEoQn4worA8ul7LTW1sLCQqIhCCeoX3BySop8ksr+6pKSElULk91uDwwOVsJf4Rg2a8CU7gynVaD/SZFL27ZhqSd1y1xGpupZ45MbdwvuAwc0Y0bvVL71GQ2zc9euugu1BoMGSPHIqMjISAr00slYkgK2aY00cEPAk0BMCwpamjTFYHqD+6Cwfbt6SCz+0sREF1zh5mbAAn89lkooJU8+2YkfgDtSC2K5vDEUcB9O/SJL9YTtxBVWiDaSlWHfvqrKSoOGIJwpk6eEKoAsnZhBee2tbdpiMONCQ0PxdpSoq86d27t3j2/cKEXsl0sMpuRq0iBOOpHlZ2nkQ0zXcB+aXU1o/1DIHpeJGysiGdWh/VNTU1mW9ZG81i0poK6ubs9e9UgDm80WMnBgohN8T/ntNg3Bw2hWlcKVXJDlCd28WZOZSlaM5QgN1Hh7dpahA2L0aLjhBulMR2mrqQl2aSgQ4QH3ocjxytEYjazEFXbZBlQbQ8vM7Ao3pwcxmACQm5vb3NhkUJMjJEfJrFluwfyVlZUHDxzQhiwfFRUVqepq6oKMZbiP3bu6oRj7+UFS0mVVjJ0wqN1UaXpJCigoLKyvrVM9/kWHkJCQ0F8BmyZjL+5Qw150wn2MmoBg2oR0hsQ2NWkCu8K9jhYK+bxAb1PPjldE6lm5EvR6iZ3iAPbsgYZ6FfgHGUVIYTHRnlfkAxFWo3kMcXOUxkIUyG02W35BPjBEEw6mgg7x3583/6zlCLDbbEOGDlGG08rJGC3NzTpt4OTea9NrImP8bTt3dg/uI36SVF7kstmoEUn0cGmpKpKo3W4PCg5GSHG2W4lZXW8m9BBoiTTI8AYWdfTo0RPHj6uCmKJ/Qu8J97FrF9SrkQ1+O2yYFA8nX4yxHz1YF2TFw4bB7bd3qlfYp5bkRClZciKMGKGMwUT9QjWvyBNXWFlto7ioSJWhIQSSm6cKTZWnTp4yaMDBHDZs+CRnDI8MwZmbu0MVNswJVpEYEBAgL6WyUBHpATh5t7mxFsQ2N0EufVavFbzvmiXm5OZaO6zqJdd4R/ykeFmlucRHcxznEITsnByNkQZu+ow8ctUyMeA1gNatiLEWQG+j0QVXuL4BemoSkEDzlJo2RrNgeoYWCV+G+/DQL1TtEW64wkrNVlu1DZqWmqbX6x2uuDlZWVlaMIOUMZhyUZH9Bw6cPXNGr1YBU5kkTBXggVp8ljLekLK0RffJGH0bWZrhPvAaRFG9bIqxi0pDNag0s9I1mvi0HB9Hjhw5plbDXj7+Y2KiPcHQVVOUnf6JgGQ3uA+WBUole5KWZEAPQG+42NBDcVoQYMAAuPfeTlaM0lZVlaYCEd7gPiRs9/x81TPRE1e4W8jykqvJVS3X7q/2SocolKlCcEoGKr0LWIWUHX34cNmJMtXsaMEhTJk8pStkeQ1kjOtUVibFympRjEURBg6EyZMvn2IsO80LCgsJwwga0srSZ87SLpCokvG2bdu0lFzD3GY32DSWZVtaWnbt3qWK3eew83FxE5X+ic7lOHRIk2JMCKSkuC+EapZiVxH1lJL77oPg4E5WjAPIz4eODnXcAtwYUzpr2UrY7lKOlwpDE1xxhZWabV6eimbr9BUFSbg5znjYbjks9QaDMobHaWTepsUyZ7fZx46NjFJUYHYGrmWrBq6pIstrI2N0CfqumuspyCHq3WVTjAHgwIEDFeVnDUYDpaKGtIS4XvEYYw+qlSUUcB8ZnjGY+w/sr6qsUsWpkbH73GMwVYsYy5pwWBhERblloVDVvIiuWHFAADz4oGcgANWSnIjcOzlZuTFk/UIV2x1jmIaP6MQVlm8vLi4+fUpFs0WBfPLkyYNDQ0VRVCLL79q9W6PDMjIqcuzYsco6uBUVFQcPHlS1zMn4TZyiArMTN0ajZY5LT0/vFh9iLgnuQ6n/XHKwlG8K2Z6Vpeo0l9MSVNOstbuaauvqdu7ayaq5mnie9wvwd4MvdMb9Zal6R9A/4Q73oX05sPPp0ztNyjKlIYJPD1jx3Xe7V0XGqEyNsX0eribtEEiSapqYpMQVdqK+bFfVbCUAPdfYiW47LJ0xmJ06+Y48VcucV0eJjBuzZ69KMoYT0TpiQsyEbvEh5pLgPnDHKHPi4HLFYGpXaXotBhM9BHl5qnV3JZF4YpyyYKf2MjHocB42fPgkZSIHLkdrK+TlaVyOTo+xkrY11otwY8UmE6xYIWdBuASTHT+uKQaTZQHHo8gramlp2bV7N9GWpotOVzfYFu3VNtzi0rVjBnnSYbeqvdnt9oDAwOkIiM12lnrat29f9Xn1ZAygNDUl1WDQd4sPMe4S9b596lVz3Sonjh9/+exbuPznz58/cGC/augMpiW4VSH9FQJOlDmxbjGYWupfMwwDgjgtSYL7cHE17dmjqd4VpmorFWO83maTyLibrBgWL4aRI11YMY4nN1e9QASOdtw4GDvWzdW0f//+c1VVqrETvMOhNxhSXdMDGYa5cOHCvn17WZ0aQ7PZRo0eFRs70c1TdfLUqdLSQzqD3ne6OOrV05wOy05vc36+FlcTyvOhg1CeZ1DTJoTsyMsDbbEcWuA+fHJjUMB9aBPkiNfKib3XBGcV6aaLjao+Bt5mHz9+/OjRozXGvqgGnADAwaKDque3BJvmKhLjGVxQWNjc2KTqI6UAV199tRdXk2oRY/nb0aNhzBj3i1tbuwfx78xyIU884cKKZQl/61aNGwNmzVLi8knOnuxsLUCIvM0WGdmpmiqDcC7WN+j1apmeojtDc0rFzrqNoBaDGRc/ODQU86JlI/OpU6dULXP4uFGjRzMMEQQBL8aq2j/++KMq9pPdbvcPUEGWVyNjPPa2di8GEy6zYgzKKtKqKg1AWmoa4xNtUDsrRo23trYWVFIDic1qGxkeNik+Xnl8YA+qAK5oUBk6fNiCqxfgwe+CvqKlAh4+MTnZpY4E3tLcDG1t3WbFixZBVJQLK0YJv71dU4EIZQyma/SVFmx3VE1TUlI4p2ra6e/Zqh6Eo3Q1eaSLdxs0pjNopLhYNTFGwpnRcVs2/1xcXKzT6RiGsdv57JycjMzMffv26tXS4xx2Pi7eXTXT0jgXuI+qKq1wH3hs6/VePBy92qRIxh3qkOJKWzHpPdFAVbYhhFBRDAwMDAgIQAkKJMx8XX1Dw4YNG1gd5+NYYVnW2t7xzNPPBAYGdKZG43KcPi1V3tASuoyKqFtrbpYgLDWes6IIDEOeespLRVuWhYMH4dw5KY9K1co9LUkZg8kwzLnz5w8ePKiqGbmUaFBsA0EQcnNzfTucnXimQamuriYMwCosKCBaYjBdY6GxlVdUaHWOclxFRcX0lOSEKQlGk/Hs2fIjh0uBgtFs0mYRSFfCTnWTG8twH6ouQWVyYnQ0hIVdvuREKfri6NHjx4/pVWMwbbZ+ISGJiUm9ohijNKXT6QaEDPBdWEQURYPJWHqo9I+vvGK32zlnq6qqWrz4lurz531I1Dqdrq2lNT0z877lywVBYNwU0ZwcsNu9V2/wTPaWUHIYF26MuB8aZwNzmObOhUmTQHRNbsPeMChIY5ZV/xA3uI/CwsLmxkYtMZhKXGHlNlCtvCfFfk2KHzJkiJurqaio6MyZM+q1yG22ocOHxXvgQjs0G5wopXqDwW63ZWdl/bxx05HSUoPRaLKYVZ3ATmT5nvAhrodwHwh3OHMmEKLVydxTuI/s7BxeDU3SGfsyecCAEBk57dLVco7jZs6cWZCfz/r0E1BKWY597tlnP/nkk8SkJLPJdO78+by8vNqaGqPZ1BUrRhqOjIz69OOPMWrX3dX082aN2QsQGQnh4S7nKZKKKtC8F6Sep8EzVk57cqIE9zFbCfcBmnO8kA7jJsYNceIKK7ZBtmrlPbc0XWUEVVZ2NhVFViGodwktnJjk52dxA40ZOXy4dpsTpZRhWJNFhwPgeV5Vy5NDHiZNmtQDPsR1wn3wPKhWzVWk0gMApF/e5ESnp7GHJdd65elLly5dtWqVzWZj1UJ/jBbT4dLSw6Wl0u0ca7SYREH02jMhpK2lNS4+/ttvvx00aJDLmGVFdEeuuiKKCQwpKVLJaLfzVHt6E/qE09IgNdXdFo2nQ10d7NunNctKqlpGlCJxnoZi1LiOiArqhme6VQPcB7qa3PCrnA7L7T2Iwey0ucyYoTcY0GamhZ4Ry7qtpRUADCaj6i2ILD992nQlEmM3hWp8RrfgPgQRAgIgKfGyxmCi03ynhirSuH6zXPETL52MBUEIGznyjTfe4O12VXVFFESj2WT2s5j9LCaLWafTedIwy7KoDHe0td++5I7s7OyRI0a4nzv4S/fvh3Pn1F1NyEIxlNqzNTR0o+yWzIo9FWMA2LULmpvVAf0ohfBwmDDBDe7j+PHjKBJ3N01XUXNnF8OxqiW7wiMiJk6c6Oapqq2t3b9/P6vjqEhJ180huMdgyttg9KhRy5Yts3VY0XDVFekyDMNxHCHE2t7R3toWOS7q8See1Ov08tntowHA7MzZPQt5YFyC/ggBnU69bgtiWU6eLJVouZwxmPsPHKi9cMFkMTMMw3bRdDqd4BDCI8JjY2N7RTF2qR0hCHcsWfL+Bx/odfr21jbkLSzLej0sZMxNJ9i1tLosy+IR0NHW3tHWHhcf/82GDevWfhgYEOBFdpCTATkO9HqXau9uL50OCAGTqatkb6oKbas0UE+eDFdc4cUtjOPJzpaQTBFL3POFG4NlYcYMZTCZnGfrsNv1ej3udW+NsCzL2/khQ4coBUu8fc/evTXnq9Hh3NUxjbbG1JQUo9Hg5moqLCxsqKvX6XSCKIiiiGjkbo1Sau+wjRk7JjLSPVkfHUV//vOfr73+utbmFmt7B+4N2Q7CciyiICP18jyfNG3amjVrDuzbP3VqQktzM6XUZrPZnc3m0dpaWlkdN2NGWs82MNep+Xz3HYiiBPiiIaupE37xsnFjAPhmwzeCw9HWrI4mlZCQoMRP7F1KvuvOOxOnJr700u+/+/57JGaGY/FglneVm3sDPxEEwW63U0FE4SojM+Puu++54fobdDoOjaJe1oxlQRDoJ59IxShV25ixypxel3bhQjeQep56SpLM3fphWXA46IYNIAgqEr7d7hmDibPx3XffiZS2trT4SFBjOFZ0CAlTEjBNV4b4BoCffvqJUuoQBAEnxDnFilReiafNnTtXuRZyCCce927o/8p/dTpdO5DMjExcceUuwgtMRuP6r75+97333n77n8UlJR1t7W7jD+oXHDk2MjMzY8GCa6ZiCViAzVs29w8JMVvMgiDKT5P+I4QhBAjBCiexEydqQZb3foRRZKfNzTQzE5qaJLlIWbQFlKVbFDG3770HkydfVjImhDz19NMlxSVGk5FS0bl4xPU/wrKs3Wq97/77r5gzp9fJuDNgnWXRXvrdt9/+snXrodLSCzU1qiZ9VscNGTwkNjY2fdasK664Ijo62q1D781mg3ffBbvdyyoolwMV43HjYNYs94VABPn58+Gnn1QQ4XHFo6JIUZHEVMFLfBxs3uxksASI25AIMIodMn06+Pm5RY/s3LWrra0NfzKRd7EkTRLCAAGCIVNDhw5Fx6ksVBNCjh8/3tzcwnKspHYCuIukCFpMaXh4uF6vdxt+ZVWVtaNDIg/n7UrqB0IYQiilwcHBFovFK8/HEwE/P3z48JGjR6urq63WDr3e0K9fvxHDh48aNWrIkCFK4zbLMC0tLaIoIsF6Hh9Ix7LJk+upqdipryNwqZJWL5vh6jfaUDyTT8r6+vqysrJTp06dLS+vqalpbGqydnQgcZrM5uCgoCGDh4SFjRw9enRERIS/v7+8FVCKJpd7eikFQmhKCuTnq5Axy4IgkPffh7vuunxOh/+apsonsMAIc9kiKXyScU83yq9APBpH6F1AvQzjwSo+3aJDvKt7q6tFnAZF/Q2vSxQTA6WlvirpOTFoyeHDYDT6Or61B8Ypy3d1fx29nnF4u5Y59zrDlFLtu0jLU3A8yj5x+3XFw7sFj9GDxvmCKdZQoOByt1/5VNMyHvTxygtJldBKpNPhittObkpNT6vZqVtHqluVCUKgo0MK/1ADfiCPPgomk5IVe/ELaF5uqoqJr0Hq6W5EnTzrokP8t2wMtIP0ONboEjVBIteJE0UR/iPbpcif3bq3uw8i/7F6B5LxhQt0zBhobu4yfBJZ8aBB5NgxQLFfoY72yc+/ocb1rKxRX9MSho0oTm6fy/9S5ztPy6rb9cqLXf6nuJ1hmMDAQCLD4hICra3Q3q4i/Toc5MEHISBAyYoJIafPnLFZrRjqoBy0y0MBqCg6pRKgOCrne/ByIxaclZroFGnkj73fIlKRKpooUue1iicp5pBSSqkgirK81Ck3eTTFhFNRwOucV4uuv8k5Rte1UkyAfE9n5x6/SV72zoGB3W4fOHDgM08/fSkEKFWXOnDgwJYtWzidDh1o1G2SOoeCnwEAFUUqikLn7waKaZxu98obUjl5VMRpFpW/rHPpQfFk0bmObmuhWHz5P1x8QRA67xG93udyL1ZpcrkO3BZCuUvkCaAipZ0/wfUWcB1W527rnFEvm8lzm4CCQlxoWXE5IYy1oyMyKrIgLx8Jj8h5Eahge2XFGIwdHAz33SeD5mFc9969e2fMnCk6ac7beSSTsw8aVwq71FP87Wtyu3LeVRhk0mPRWiLj1W+s/uD9D/om9NfVFrx+QrQL8PghJrjZrDY8zokch4exH13Zt1gWHA6ydCmEhLix4hdefLGjvd1kMTscMsayy8A8/iTd+9Hd03RADdfZ97N6fvuvIQxzXFtL62233naJeDUcOuuKiks4jlPNpfqPEVuB/gqn+q/zlB5lR7oHqPAO/wD/TrUWb/cRUI2s2GKBhx+W40aQG2Tn5GzatAl3Ahrzene09PJnp/9mjnFC7Ha7yWxOSU65RGsuh5B/x44eBYbwPE/7pvg3qIpTSs0ms7t1CgOqvZIxAgwsWQJDh8oV3vDGF158gVKRqGV39zXoDa+HrcMaP23aiBHDLxGvhgGAAwcOtLW26nS6Phr+7TazxezOGLvKi0BWbDCQxx6Tnf+oFf+0cWNOVrbRZBIuW2XMvuaO4Jk52wXVuMdkXLhz53+0+6SvadgN/n7+7l/UXvCVCHHDDTB6tBzCSQgRBOHF3/+eMKRvJ8CvFRDGsAxWUb/EOWcAYPfu3b2CCNvX/o0NIYRc/FW1ddBVZgvLkieflHVUZMXrv1m/Z9euPlb8q0nUdpstYtSouLheKI3A1NbWHj58WDWht6/9hzc5bLtTH0ah2u105jgQRZg/HyZMQHpGddput7/00ssMy/Sd5r8aGVORzkibYTAYLr00ArN//4GamhqdGhZ+X/sPbxaLxR0Qy2skJiaZPv20Gyv++JNPDpWUGIzGvtMcfjV3C8AVV1zRK4IwV7izkCFEr9M7BAd02+vZ+U9fg3+f75HjuE5ujFYrSqWyL8otgqlOGRmQlCSzYizY+ee//NlgNHQ35eM3atn3Foz9a5szHA5HcP9+WBrh0lNruQ3ffisIQguCkve13zIxu/zd3u6l7AtmUDzzjPwekYn++Morx44cBQCb1dY3k79aS56e7A7D1uPVnxgbO3bMaEZZstUt0Eb5JyZ8u71XfdP5Hzjzp5UducY0yfd1MYDObz0f5fqhlzF4GZLzC4I2WgJdjIq4/+llHtwfDd6QDrocgysYgjOxHKQkOOXYiHuZBbvdDUEKWluhtdULaF5SEmRkyEg9GPwTFhb2l7/8heU4CtRlfIpfp0x39/InuOV5gZeJcrXHKsOzXN+7f+hWLLoTbcA5NJeLwUvklvOKzmw0t8vct7xLTx5du02C51hlTATFCJVTQxhGcDjGjBnTWx4i0qcSw38dvgEwDJw8SSMjJbwOXGKEB/j2W7jmmj54gP82WexX9i70nRpwOROhO/9ubHSnYVGE2FiYPx9E0Y2GlQCAfe1Xi9vuRaAL7nIgV/W1f78JRw6oVtR2I08+KYVhuu6evj3wmz/E+6bgv5OMlQHVmOQ0ejRcf72ck9jX+si4r/3HNyUZEwKUkpUrwWC4fCVs+1ofGfe13m51dS7VYYYNg9tv72PFfWTc135TknVtrRJwizz8MFgsfay4j4z7GvxWMp5caikKAoSEwL339rHiPjLua7+1drGxkxXfdx8EB/ex4j4y7mu/JQ8yAMDFBgAAnoeAAHjwwctXSr6v9ZFxX7s8CNWCIOVFiCLcdReEhl6+Ult9rY+M+9rlae3t0NICAGA2kxUrfp0yPX0N/u1w833Nd+hoD+LXZVhpjWWBerO1tUFHBwDA4sUQFiaD5rmNratIQLeic5d1epW1nfpqHlwqGXcVVdtVgSn4TVVCxKxauITaed2CAsdEfCX1yp/8SkJ1Swu0tgLHkccf98qK3U4WURQpUNaZ5fbr0BJOqdusYs3nPjCwHpKx7z3aKymR/8acgZ4xCpyTixcv+vsHcByrnXvjjY2NjQ0XLxr0+sFDhsh12H6NeqgA0NwMggA33ghRUZ6sGADOnTvX0WENDw/DyXGbotOnT4uUjoqIuKx8mGXZxsbGnNzckpISq9U6dMiQ1NTUmJiYviJSPSFjnLKNmzaePXOW5ThRFJ2laESTyTx8+PDJkyf3Cw7+LVIyjvmvf/9b1rbta9euDQkJ0bg/8Ma333nn1VdeqTp3LiSk/8MPP/L0U09S6ku6ljv//Isv1qxZs2v3Lt5mB4DwiPA777jr8cdXms3mX2mD1tZK8AAeEhb+tLvvuSe/IL+qohKB+A6VlmZnZz/4wAPIqDMyM9va2qrPn5dKyfTqgGV5/m9///vLL7/ciKY4Z1tyxx1vrF7t7+//W6Hk/5RxOhwOSmlKWmpXF4QOHrzh22+x7iPt1eajRpazyJXo4xrPb91uwZ927XXXAcDZs2fxE999yne9+957AJCekbFq9eoZM2cCwOurVsnfeh2MIAgdHR03Lb4ZAPqF9L/z7rt+/9JLj61cGRkVBQDJKSkNDQ2CICifLgiCw+HAUXn2hm/wAq+TLwgCz/M8z3d+y/OUUmHNGkfiVPwxyt8lCAJemTlntsFkbLh4URTF+vp6/8DA6SnJDocD6w0svHbRnLlzcUg4QuWzeJ73nEC8l+d5/C04Zq8ThQO47/77AWBCbOznn39eVlZWXl6enZ0z/+qrAeDKefNwnPgUURTlnvFfZW/yE/GN/Fz8RJ5etxkTRZHH2RAFl9lzTr7yQ88e5N/oeQF+7nU1fe+6S2wSGc9fcDXHcRs3bjx69OjhI0eOHjt29Oix3Xv2PPf88wDgF+B/5swZeQ3k3+l1wZSz4DYjyonwfO+24br6E58rf9K52B5bFntecscdLMuePXvWrc8uqFE6C8ZGRQ4bPgw/bGtvDxkwIHpCjI+jBztcft99AHD7kiWNjY3KrXb/gw8AwF133y1f6bmunkMSRKGrY6urIwzJmP7j73TLFjcyVlLRFXPnGs2muvp6SqnVZuP0ugULr+nWget2GGncbfgbP/3sMwDIyMxsb293u+DqBQsA4B+vvYbz5nW2VR/X1eL6aG7bSTvLkT++rFSqlYyvmj8fAE6eOuV5xcOPPAIAq1at8jGz2hmv1zVwqS2p2KlWm83HPLa1tXl+dfHixY6ODnxvt9sppbcvWQIAF2prKaUNDQ01NTU+5l1mQRGjR4UOHtza2oon0YBBA2NiY7u6C+dwz969ADAlIQF/I/IQHIPNbh8ZFgaElJ08qdxnZWVlv2zdmp+f39TUpCTO5uZmPDdFSnfs2PHtd98dPHjQ87lFRUWfff75F198WVRUJI3f4aCUnvz44z25ufho7LCjoyM/P7/s5EmJjK+cqzMampqaGhoaNmz41mg2T01K2rx5M26AvLy87OxsQRAppadOnfrpp58opWfLy//x2mv/87//++mnn8qjlf/dvWfPCy+88PDDD3/22eeU0m3bt33//fdep5fnHbFxE3U6XWlpKaXUZrMh77XZbJTS/fv3x8bG/uGPf5RnyWazrVu37pZbb5k3f/4jK1bs3LlTuYv++Mor3373XXNz8xNPPpmekX7DjTd+8803lNKLjY1PPvXU9OTk+fPnf/Dhh3JvP/z444MPPtjU1PSnP/05Lj4+Lj5+5cqVFZWVysm/cKH2pZdfnp6cHD4qInJc1I033bh5yxZKKe/gKaVvv/POPffe29TUtPLxx8MjIoYOH7ZgwYKsrCwczxdffnnVVVfl5ecjh8NxVlVVzbniitdef71nR0w3yHje1fMB4GBRkd1ut1qtdrvdbre3trXZ7fbPPv+cYZinnnlaJgybzfbGmjUzZ82KjomZc8Wcjz7+GGuQYnM4HGvefDM5OTk8IiJ24sRHHnnk5MmTSkHx5MlT9913X8SoUaGDB6ekpn722WduPPaLL76YlZ4+YNDAgKDAsPDwe5cuPeU8X+rr62fOnPnlV1/97e9/DwgMGD169NatWymlTc3Nz//P/wwfMUKn1/sHBFx33XXHjh3DW267/XaO43Jyc6+86iqGY4Eh46OjP/7kk67OFJyQp55+GgDuf+CBtra2h373OwB465//ROL0vAU/fPSxxwDgvffflydKeXLt3rNn7969HVYr/nn06NHZs2fLmot/QMCrf/qTfOPqN94wmkzrv/lmzNix8jVXXnVVXV0dTnJtbe0Vc+cqdZ85V1xRU1PjEARK6aKbbgKAqqoqeWzHjh0DgLvvuQeHNPeqKxmOdTgcW7ZsAQCTxWw0mwHglVdfpZSGRYT3C+mPdPX7l14CgD++8irLccAwhGUAYGxk5MmTJ2XB8mnE6CNkYGgoAGTOmTN85MiR4WFemXZpaSkATE1K9Jx/t4tFUayoqEiYOhUARowcOSUhgdPrAOB//+//5O3k5+8fGxc3PibGPyBg0uTJOBWvr1o9MS4uuF/wtOTpOoNeZkKU0ieefBIAkqZNYznu1ttvW3TdtQAwbPjwY8eP48SeO3cuatx41KeW3HHHHOck//jjjzi82+9YAgDxkyYFBAYuvmXxvPnzAYDT6Xbu3EUp3blzJwBcf+MNsqJBKX3t9dcB4Icff7zsZIzCTFnZSc8rbltyOwC8/8EHuCcaGxtnzJoFAJMTpty8eHHMhAkAcNvttyPzoZTeu3QpqoL3Ll2K3YYOHnzq1GmchX379vXr3x8AFt9yyyMrVkyYGAsAj61cKe9g3DfREyY8uvKxJ596Km3mDAAYNz66qamZUlpeXg4AkePGcXp9dEzMwEGD9u7bZ7VaUbdfcM01q1avfmzlSgAYERaGp+xtS5YwLGu2WOInTXrl1VefeOJJk9kEADt25HmdVmS/NpstbcYMhmXGx0QDwBNPPilrYl3x8JS0NAAoKSlRyvxexY3KysrhI0YAwCuvvLJ7z57Nm7fMSk8HgOf/93/xmtdXrwIAo8l08+LFO3bsyN2Ru/DaRQCw8okn8IJ77l0KAO/861+nT58+ffr0y3/4AwBcfY0kGN94443ElYyPnzjBMGT5fffhBVfNm8fpdfX19e3t7fv27zdZzKkz0k6fPt3Q0EApjZs0aUTYSCTjv/397yzH6g2Gf/zjtbq6upqaGqSEpcuXYVeff/4FAFyzcGFlZSXP8wcOHBg1ejQAJKemuP1wHMm3330HAMuWL8d57krExZaRmYk/Ez+vrq6ec8UVAPDFl19SSq1W68T4ONRi2js6KKX5BQVYWXLJHXfg+I8cORIYFDg+OprnHZTSV159lWXZgYMGHT9xAvvcum0bAMy+Yg6OdMkddwDA1+vXy4PZuHEjIQQpk1L62MqVDCHTU5Kbm5vxkw8+/BAAHnzoIfwzJS3N7GdB6Q+3wcS4uBFhIx0O4fLJ3hIZL7jmGgBY/803RcXF+/fv379/f35Bwfpvvrl58WIAGB8d3djYiGO6/4EHAODNt96Su0D9+Y01ayilJ06cAIAHHnxQ/vbjTz4GgD++8gqKdtETYkwm0959++Q9fceddwIAyi1lJ08q5VJst99xBwDk5uZSSs+ePdt/QAgAfPHFl5RSVEHfWLMGAF56+WX5lm82bJBn9s677gKAW2+7Tf726/XrCSErH3/cK3fFRx8/fjw9IwNP4hd///uu+LC8MLzDMXrsGJPZXF1d43W1cF9iJ4+seBQAPv3sU8W3YtK0aQzLHDl6lFL65ltvAsANzq1DKW1paQkIDIyfPAn/DIuIiBwXpez//gceePa553A1b7r5ZgCorOwkY1yXZcuX48Xz5s/n9LoLFy4gMZj9LHOuuELuKm5S/NDhw6xWq8xJcK6wWW22gCDnSEQaP3lSv/79W1pa5DPx4MGDDMsmoI3NQ2b5cO1aAHj62We6mlLZqLF33z4AuOW2W2XTFKX0/PnzZoslITGRUsrzjjGRkWaLBU8fXLiYCRNMZnN9fb3MGBKnJQUGB128eJFS+qc//wkA3n7nHdyNSOo33nQTAJw4cQL3xp/+/Ge3IZks5vTMDHy/4rFH5e3a3t4uCEJdfT3DsgsXLVJSNQpllNKSQ4cA4Jlnn/WxhXqNjK9ZuBC6qNO3cNEiSU8Txbq6OoPRmDlntlsvI8JGjhs/nlJ65OhRAFiw8Jrz58/L3x48eLC6uppSmpOTAwAv/+EPripuu8FguHnxYkppbW3txx9/XFJSorzgjTVrCCE//vgjpbSiolJvNMTETlCSyvTkZP+AgJaWFlSx0Oq27qOPdu3aRSm9+957AAAPjvb2dp7nz507D0QibDfuilvhhx9/MJpMZj/LyiceNxiNI0aOPHLkCKV0/4EDRUVFuL/dyZjnR40Zbfaz1Fy40JVNCK19giCMHjtm8JAhsmUVO1y7bh0ArH7jDUrpmjffBIBPPv1EEASr1YqDHBM5dkzkWOz5+htuBICbFy/esGFDRUWFG6ncfMtiAEBhREnG9yy9Fy+bv+BqVsdduHBBFMWLFy9a/P0yMjNlUomfPGnIsKESGa96HQA2bPjW4XDYbDZRFAVRDB81Kmr8OErp+epqhmWvWbhQtpvgUMNHjUKLoCcZf/nVV4SQFY8+6oMbYyfv/OtfhJDPPv9cEAQkSPw8OTXVYDQiWY4MDxs1erSoaLETJw4eMsRms8vaadrMGX4B/kjqf3zlFQAoOXRIPlUFQVi1ejUBQHcMtqqqquycnHffe++RFSsmT5kChMyeM0cyFa14RJa50Kra0NCgNxrmXT0fV7mhocHP3x+FEUrpM88+AwCHDh26HL4euTlrzDMMADz7/HPDhg4VRbGysuq9997j7fa3/vnPm2+6Cf1SHMcdPnLEZrXydvurf3pVEESGIQ6HAwihIj1RVnbhwoWxY8bMX3D1999+t3379hlpaRkZmRnp6RMnTsSnHDh4kBBSWFj48COPiFQkQEQqOniHzWbbt38/pTQkJOTWW2+12WxZ2dnHjh49euzo3r37Sg6VoJUIABiG8DwfNjIMJwUrHpSdLAuPiPDz86OU6vV6fNbtt92mrAsQGBgIADqdjuM4SkWgwDt4T58qIaSsrOzmm28OCgra+ssv0dHRQwYPWfnYY7fedlt2VtaDDz1UWJB/5vSZkSNHyo50dK5yHDdwwMCTZSebmpoGDhjg6U4khCAifGNT0/nz5yfFT2JZVu6EUjpmzBhCCGoNINVz8WMYBkOdKKUMYbCyB6X01Vf+WF5+9vPPPvv8s890Bn3y9ORrFiy48867AgMDAIAhjDsIKSEAQJ2FXViGlQNFWZZlCKFA5aLk+Iuk9wAAoDfoWWe1JwLAOKsf19fXU0EICRkg34idDAgJaWpu8lr5ceTIkZTSU6dPdYULWVNT069fP5ZlkaP269dPWS2dUjo4NNRmtba1tQUFBVEKOr0Oe5bmnCBMtPQ4hmEIdP4c/Nffz49hGDnmNDAggBLS2NiIgTGPrFjx9Vdf4eMGDx0yLWlaaWmpw+FQApYzLOOKnk1wm/E8HxwcfP31169d+2FZ2cnRo0etXbcuftKk6OjoS6xgrCmKi2EIACy9596wsDD85JZbbslIT1+2dKm/n/+8eVfhb77Y0EAIOXDwIAo80i8gxGwyDx8+rL29nRDy0dp1b6xZ89VXX/30408//fgTAExPTn7zzTcnxsY2NTUicz5YVOQMuSMMw0SNixo9eozD4dDpdGvefPO5555ramwEgAGDBiYlJaXPSv92wwaiADhnOVb+E/VYk9HoUkxQQUWEuOOPSqsuegmN4Dhu7UcftbW2vfHGmujoaKvV+tijj5aWlr7/3ntXX7OguOhgYtI0JQ3LcYUcx02Mi9tZWHj0yJFRERHKCwRBIITZvHnzz5t/vvvuu0ePGiUIAmFcEMIxApFSKmG8u1Kd9AkheNAAwKhRo3bt3JmTk/vL1l+ysrJycnOys7K+Xr9+08aN/v7+uJrUo16E3J/UfyckPAEXkieKYHLGy1w5LzCZTBSgrb3NDRTearV2FU43fty4gYMGFRYWtrW1GY1GeaJQyrBarQlTp4YODt1VuDMgIIAQ0t7eLsdd4yw1tzSzOs5gMEgoY65jI4SIokvUi3Kq8VmoSMuL3tjUBJQGBwUBwL3Llm76aeP9Dzyw+Oabw8PDhw0bBgAWfz9BFJRTJwqisiIHIUBp52Ldc889H37wwU8bf8rMzDxXWfXsM8/Km+TyZjjh+d1w8aLD4bDb7TabbUJMzHvvvd/S0nLnXXeePVuOIwgMCqKUPvDAg7U1F6rPVddfqK27UFtbc6H6/PlTZSdHjhxJCAkKCnr+ueeKDh48duzYh2vXzrv66oL8/LvvuRsAgoP7EULeWP1GZXl5xdmz5WfOlp85c+bUqSOHj/zw/fc6nW5HXt5DDz4YGhq6cdOmqqqqqorK77/9bv78+YryCwTXSf7EZDIFBQbV1tXKEUJIw/kFBXv27JEFDTeaAQIiFb2yi/KzZxmGiYqK4nmeYRiHw7F61ao5V1yRk5Vts9p+/8KL6JfwvHHhNddQStd99BFyD9n2Looiw5DXV69a9frrx48ft1gsAwcMlG3vsj3s7NmzhJDBoYM7ycz9KSDLnCfKysrLy2fMSHv5pZfy8/KOHz12zaKF+Xl527Oy5N1FFaEjHVarsi4CdiXVgnEW8cC4BXduTFCgoZ74IgAwbOjQwUOH7N27BwnMbrcTQlpaWk6dOoVk5jZLgiD4+fndfPPNtTUX3n3vPYxRlQNgWJb96OOPK8rLBw0cRAgZO2YMWq0YhkEBGE/toqKiESNGBAcHI1m6rQVDGACqDF9jFGcWbuOioiIcLXJI1PUSExPrGxo2/bQxOTXlzTVrUlNTkYYPHznS0dbuxhU8EhCkPYkyy7SkaWHh4V9+9eXb77yj0+uvvfbayx2pzii5McswWNfLYDDwPH/11fOXLV9eV1u74tEVuDUjx47l9Lodubkmk8nPz6LT6QwGg8FgWPn44888+ywhZO/evXfccWd+fj4AjB079o4lS378/vvklJSig0U8z09LSkLNEw8nnudRiLr66qtfeullAPjpp59YhnnttdeunDt38JDBOOk7duzAxUamShTYyyhXT5ky5cyp02VlZUh1hBCbzZaZmXnvsmVdVNwiqAh4jYiOjo4WRXH9+vU6nU6v13McZzab5869Enfz+epzDMOwHjjPoihmpKcnTJ369VdfrfvoI51Ox7IsisQ6nW7dRx9t3rQpfvKkaxYsAIC5c+dWllf8vHkzXqPX6wkhH364llKqrM1FPbgZcuPW1tZJkybdcNON8lejR4/OzMiUk5OCgoIYhikrK+M4zmg0siz76aefoigo61DKfclxLG/nOY7T6XQAwDCdBdkIwyhlWvn3Iqnr9fplS5eVHT+x+o038IcAwJNPP9Xa0mLQG7xm2lBKH1/5eMiAAY8//vjadesIkbYcx3Ebvv328cdXmszmV195hVI6bdq0iNGj3v7nWyUlJQaDQafTEUJeefXVmvPVt992O8uygiDqdDq3teA4zo1gOJ2OYVhQCNUvvPB/56urjUajTqfbuGnTN+vXX7NoYWhoKG+36w2G+vr6VmfdnIsXLy5fvpzSzqoxLMe6MVVCiE7HEYbIRxXLMkuXLi3Iy3/v3Xfnzp07ODQUc2MuezDmLbfewrIsRhEgc0AbQF1d/ciwMAD48quvJLvxkiVyZCI2tMdkzp5NKUUCTs/IkAN0KiorQwcPHhsViWwhado0AMAgAbQWLr7lFgBAj/8rr74qOwax/fPtt3Ft0NNbXV1tNJsw5EgOIMvNzQWAtBkzKquqKKXt7R3o6f1w7VpK6bLlyzmOQwcD2lSqq2s4ve666693M3HJnsNBoaFoja+pqTlRVvbkU08BQPioiKDgYMKQf779tt1u9wxNQ30hKDgYAO64886ff95cVFyclZX1wIMPAoDFzw9DF0RRPFFWFtyvn8Vi+fiTTyqrqg4fPozm9Lvvlfy673/wvuz2kO1A46LHDxsxAv/EcLF7ly7duXNnyaFDH65dazKbw8LD0ZCzcdMmABgZFrbuo482bdp0+5IlgUFBeoMe7YiU0msWXoMHKPYfFhHO6XT33X//t999RymdGB8X1C8Yo2tWvbEaADZ8u0E5krCI8OEjR+BvaWxqwjVNmzHj3qVLI8dF+QX4BwYFTYiN9REvtW3btuB+/QAgaty4u+65e9l9yxMSpwKA3mD44ssvZCNzdna20WQCQpYuW/bCiy/OnDULw79aWlpQ0h40ePCgwaHKniPHRRlMRrTP4eJOmz4NAGpraymlr/7pTwAwKDTUL8D/lttuu2rePACIGhdVXlGBF2OwU1hExF13333d9df7+/vPmDlzZHiY3qBvuHhR9tSgxRQn5OLFiwCQOC1JphoMm8Gd8PX69T6MeZfF4bRnzx7lzsY3X339NQCY/SxlZWWU0pqamoSpCQAwacrk25YsmZ6cDACxEydWV1fjD8DAiUGhoQuvXTRv/ny90ajT6zdv3oyrfvz48bGRkQAQEzthzhVXYMDAXXffjbJlVdW50WPGoHt97pVXhoWHB/ULfnjFCgD43cMPo78Bd4wyqpFS+vqqVcg6xkWPD+rXDwAefuQR/AodWmhqlpwW1dUAgPZ2r5bqvPz88PBwZVGxjMzMc+fO/7x5M8MwI8JGNjY2eYZD4r37DxzAGGxlS0xKKnSGH+FlBYWF0TExykc8smKF1WbFEX6w9kMA+Orrr5XEExs3MSwinHc4RFFsbW3F3yW3pGnTiktK5F/08h/+4OcslTpi5Mic3NzoCROW3HEHdrXkzjv7hYSgwwkDyAcMGAAAt9x6K6V07pVzY2Jj8SBe99G6IUOH4vLJI0nPzJgxa6ZskLdarc89/3x0TMywEcMXXXtt6eHDY6Mix8dE+458PHXq1IoVj44eO8ZgNHB63ZChQ++6666i4mK3lS0qKrp58eJBoaEBQYHRMdF/+etfkUTx0cuWL1+6bJnSZfDEk0/eedddeApgDy+9/PJtt9+OkWd//dvfAODHn3566eWXx4wdOyE29vnn/weDUuXg4jVvrknPyIiJnTB7zhx0WX+zYcMDDzyAYfnffvfdihUrkGFg/x0dHf/zv/+LHiY5AopSmpiUFNQvGF1xlztUkyC7//s//rEjN/evf/ubm3kG3//+pZcOlZTccMONN9xwPQC0tbW9/c47GzZsqK6pDunff968+Q8+8EBwcLCcLPr1+vVffP75yVOndDrd1KlTly9fHhMdLVspGpua1n744S9bf2lqahoxfMT1N9ywaOFC+Vnnq6v/9c47O3ftAoApU6Y8cP/9oaGhf/3bX4cOGbp48eKOjo63/vnPsLCwaxctku1YeOOh0tKvvvrqRNmJASEDFi1aNHPGDPy8cOfOo0eOXHfddQEBAXiL1Wr9ZsOGYcOGpaWmepqU8a7m5uaff/75UGmpxWJJnp6ckpKM3+7IywsKDJwwYYLXlC/5w+Li4kOlpbW1tf7+/jHR0VOnTlV+i28EUdy5c+epU6csZnNCQsLw4cNl41xTU1NVVdXw4cOVuT4VFRUipSNHjJAfV1lZeeJEGc/bh48YMS4qSr4d/62rqz92/JjRaJw0aRIBqK+vNxgMfn5+ANDa2srzfGBgIArMuCgtzc1BQUH+/v5IJyaTCYU1u91uMBiUqaw8zwMhOo4DgIMHD/bv3x8HL//AgKCgyZMmZW3f3lVinPLz5uZmQRD8/f1RWPXcfvi7eDuvN+h7nFeE+tdrr7/+6IoVW7dty0hPv6yJShcvXhwydOidd9751ptvopfnsmdadSsPSTV23Hc4u++Yah9xzhpD2zvvEnp+/nnpTRQ9Y7O6uldLQL9nV56ZMb4XxbMHH7kfvkfeM38mPmJWerrJbFb6rteuXQcA//fCC74DHmQ3dVc5MJ7JMyidusVs+ki8UX6Cz3p91SqWZX/evBk/8ezQLe0H75IvVuZIeSZa4e1VVVUVFZX33HMPupcppY7L5i529xvjsLwiVKDWLrngnH4R5OFodEEbo9JkgtcrWaV8vspW3E4XiwK0QO5ctgdiz2i4kg2b8ns3848oilKhE8UFniOUOvGwVCl7w2HIo8LeCCGCKBKfVkeZ34pO9w46SN1uwUfgtONUKH+RbG93w+iQ+yeSxV5UOmyVj0CTqSwfKX3CsqVH7hy/lZ/o9q0np1JavB599NEFV1+dnJpy+223BwQEFJeUfPLRR7ETJz744AO+QVcYD+OZ14sZhaNB9r37wITo6hM0kSKJ8jzPsixuM097lfyJPB7lwLwiDclyBCHkpptvztuxAwAefeyxmJiYbuHGXEZu3Nf6mm82/vXXX0+InSCF/fn53XPvvRjD9+/N3fM61KysrPvuuw+Tq3o9pgo7/OCDD2666aY1a978FdKM5fb/ACICI0Wk9jK6AAAAAElFTkSuQmCC", "key": "Test_Project", "images": {"BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 1.png": true, "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 2.png": true, "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 3.png": true, "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 4.png": true, "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 5.png": true, "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 6.png": true, "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 7.png": true, "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 8.png": true, "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI_CODE 9.png": true, "BA3-BA4-BU1BU10- SẢN PHẨM CHỐNG MUỖI - Showphoto Script/NH Khac.png": true}, "version": "017b285745"};
+window.IMG_ZOOM = CONFIG.image_zoom !== false;
+window.STRICT_TICK = CONFIG.strict_tick !== false;
+</script>
+<script>
+/* ===== PHÓNG TO HÌNH + CHỈ CHỌN KHI BẤM Ô ===== */
+/* Phóng to hình - kính lúp ẨN, chỉ hiện khi cần:
+   - Chuột / bút: rê tới GÓC DƯỚI BÊN PHẢI của hình -> hiện kính lúp -> click để phóng to
+   - Ngón tay (tablet / điện thoại, không có "rê"): chạm góc dưới bên phải 1 lần -> hiện kính lúp, chạm lần nữa -> phóng to
+   - Chạm / click chỗ khác trên hình vẫn chọn đáp án như bình thường; chạm góc kính lúp KHÔNG chọn đáp án
+   - Hình showcard dưới câu hỏi: chạm / click 1 lần là phóng to
+   Trong màn hình xem: nút + / −, chụm 2 ngón, lăn chuột, chạm 2 lần; kéo để di chuyển khi đã phóng to. */
+(function () {
+  if (window.IMG_ZOOM === false) return;
+  const ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21M10.5 7.5v6M7.5 10.5h6"/></svg>';
+  const css = `
+.zw{position:relative;display:inline-block;max-width:100%;line-height:0}
+.zbtn{position:absolute;right:0;bottom:0;width:44px;height:44px;min-height:0;min-width:0;padding:0;margin:0;border:0;
+  background:transparent;display:flex;align-items:center;justify-content:center;cursor:zoom-in;z-index:2}
+.zbtn i{width:32px;height:32px;border-radius:50%;background:rgba(11,46,89,.82);color:#fff;border:2px solid #fff;
+  display:flex;align-items:center;justify-content:center;box-shadow:0 1px 4px rgba(0,0,0,.35);
+  opacity:0;transform:scale(.6);transition:opacity .15s,transform .15s;pointer-events:none}
+.zbtn i svg{width:17px;height:17px;display:block}
+.zbtn:hover i,.zbtn:focus-visible i,.zbtn.on i{opacity:1;transform:scale(1)}
+img.qimg{cursor:zoom-in}
+.zv{position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.92);display:flex;align-items:center;justify-content:center;
+  touch-action:none;overflow:hidden;user-select:none;-webkit-user-select:none}
+.zv img{max-width:96vw;max-height:86vh;object-fit:contain;transform-origin:center center;will-change:transform;
+  background:#fff;border-radius:4px;cursor:grab}
+.zv .zbar{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);display:flex;gap:8px}
+.zv .zbar button,.zv .zx{min-height:0;min-width:48px;height:48px;padding:0 14px;border-radius:24px;border:0;
+  background:rgba(255,255,255,.92);color:#0B2E59;font:600 20px/1 system-ui,sans-serif;cursor:pointer}
+.zv .zx{position:fixed;top:12px;right:12px;width:48px;padding:0;font-size:26px}
+.zv .zcap{position:fixed;top:18px;left:16px;right:72px;color:#fff;font:600 16px/1.3 system-ui,sans-serif}`;
+  const st = document.createElement("style"); st.textContent = css; document.head.appendChild(st);
+
+  function open(src, cap) {
+    let s = 1, x = 0, y = 0;
+    const v = document.createElement("div");
+    v.className = "zv"; v.setAttribute("role", "dialog");
+    v.innerHTML = `<div class="zcap"></div><img alt=""><button type="button" class="zx" aria-label="Đóng">×</button>
+      <div class="zbar"><button type="button" data-z="out" aria-label="Thu nhỏ">−</button><button type="button" data-z="fit">Vừa màn hình</button><button type="button" data-z="in" aria-label="Phóng to">+</button></div>`;
+    v.querySelector(".zcap").textContent = cap || "";
+    const im = v.querySelector("img"); im.src = src;
+    const apply = () => { im.style.transform = `translate(${x}px,${y}px) scale(${s})`; im.style.cursor = s > 1 ? "grab" : "zoom-in"; };
+    const zoom = (k) => { s = Math.min(6, Math.max(1, s * k)); if (s === 1) { x = 0; y = 0; } apply(); };
+    const close = () => { v.remove(); document.removeEventListener("keydown", key); };
+    const key = (e) => { if (e.key === "Escape") close(); if (e.key === "+" || e.key === "=") zoom(1.4); if (e.key === "-") zoom(1 / 1.4); };
+    document.addEventListener("keydown", key);
+    v.querySelector(".zx").onclick = close;
+    v.querySelector(".zbar").onclick = (e) => {
+      const z = e.target.closest("button")?.dataset.z;
+      if (z === "in") zoom(1.4); else if (z === "out") zoom(1 / 1.4); else if (z === "fit") { s = 1; x = 0; y = 0; apply(); }
+    };
+    v.addEventListener("click", (e) => { if (e.target === v) close(); });          // chạm nền đen = đóng
+    v.addEventListener("wheel", (e) => { e.preventDefault(); zoom(e.deltaY < 0 ? 1.15 : 1 / 1.15); }, { passive: false });
+    let lastTap = 0;
+    const pts = new Map(); let base = null;
+    im.addEventListener("pointerdown", (e) => {
+      im.setPointerCapture(e.pointerId); pts.set(e.pointerId, { x: e.clientX, y: e.clientY });
+      const now = Date.now();
+      if (pts.size === 1 && now - lastTap < 300) { s = s > 1 ? 1 : 2.5; x = 0; y = 0; apply(); }
+      lastTap = now; base = null;
+    });
+    im.addEventListener("pointermove", (e) => {
+      if (!pts.has(e.pointerId)) return;
+      const prev = pts.get(e.pointerId); pts.set(e.pointerId, { x: e.clientX, y: e.clientY });
+      if (pts.size === 2) {                                    // chụm / mở 2 ngón
+        const [a, b] = [...pts.values()], d = Math.hypot(a.x - b.x, a.y - b.y);
+        if (base) { s = Math.min(6, Math.max(1, s * d / base)); if (s === 1) { x = 0; y = 0; } apply(); }
+        base = d;
+      } else if (s > 1) { x += e.clientX - prev.x; y += e.clientY - prev.y; apply(); }   // kéo khi đã phóng to
+    });
+    const up = (e) => { pts.delete(e.pointerId); base = null; };
+    im.addEventListener("pointerup", up); im.addEventListener("pointercancel", up);
+    document.body.appendChild(v); apply();
+  }
+
+  function enhance(root) {
+    root.querySelectorAll("img.lbl:not([data-z]), img.qimg:not([data-z])").forEach((img) => {
+      img.dataset.z = "1";
+      if (img.classList.contains("qimg")) {
+        img.addEventListener("click", (e) => { e.preventDefault(); open(img.currentSrc || img.src, ""); });
+        return;
+      }
+      const w = document.createElement("span"); w.className = "zw";
+      img.parentNode.insertBefore(w, img); w.appendChild(img);
+      const b = document.createElement("button");
+      b.type = "button"; b.className = "zbtn"; b.title = "Phóng to hình"; b.setAttribute("aria-label", "Phóng to hình");
+      b.innerHTML = `<i>${ICON}</i>`;
+      let touch = false, hideT = null;
+      b.addEventListener("pointerdown", (e) => { touch = e.pointerType === "touch"; e.stopPropagation(); });
+      b.addEventListener("click", (e) => {
+        e.preventDefault(); e.stopPropagation();                 // không chọn / bỏ chọn đáp án
+        if (touch && !b.classList.contains("on")) {               // ngón tay: chạm 1 = hiện kính lúp
+          document.querySelectorAll(".zbtn.on").forEach(x => x.classList.remove("on"));
+          b.classList.add("on"); clearTimeout(hideT); hideT = setTimeout(() => b.classList.remove("on"), 3000);
+          return;
+        }
+        b.classList.remove("on");
+        const cap = img.closest("label, th, .opt")?.innerText?.trim() || img.alt || "";
+        open(img.currentSrc || img.src, cap);
+      });
+      w.appendChild(b);
+    });
+  }
+  const start = () => {
+    enhance(document);
+    new MutationObserver(() => enhance(document)).observe(document.body, { childList: true, subtree: true });
+  };
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start); else start();
+})();
+
+/* Chỉ chọn đáp án khi bấm ĐÚNG ô vuông / ô tròn (tránh PVV chọn nhầm khi chạm vào khoảng trắng, chữ, hình).
+   Tắt bằng dòng "Chỉ chọn khi bấm ô" = FALSE trong file Default. Ô "Khác (ghi rõ)" vẫn gõ được bình thường. */
+(function () {
+  if (window.STRICT_TICK === false) return;
+  const st = document.createElement("style");
+  st.textContent = `.opt,.chip,.mtx td label{cursor:default}
+.opt:hover{background:var(--surface)}
+.opt:has(input:checked):hover{background:var(--sel)}
+.opt input[type=radio],.opt input[type=checkbox],.chip input,.mtx td input{cursor:pointer}`;
+  document.head.appendChild(st);
+  document.addEventListener("click", (e) => {
+    const lab = e.target.closest("label");
+    if (!lab) return;
+    const inp = lab.control;
+    if (!inp || (inp.type !== "radio" && inp.type !== "checkbox")) return;
+    if (e.target === inp) return;                                       // bấm đúng ô -> chọn
+    if (e.target.closest("input[type=text],input[type=number],input:not([type]),textarea,select,button")) return;
+    e.preventDefault();                                                  // bấm chỗ khác trong ô đáp án -> bỏ qua
+  }, true);
+})();
+
+/* Câu GRID_DRAG: kéo hình / nhãn hiệu thả vào ô thang điểm (data giống GRID_SA: Q1_<nhãn> = điểm).
+   Lớp giao diện phủ lên bảng grid có sẵn (bảng ẩn đi, radio vẫn là nơi lưu câu trả lời) ->
+   kiểm tra bắt buộc, lọc nhãn, piping, raw data giữ nguyên như GRID_SA.
+   Thao tác: kéo thả bằng ngón tay / chuột, hoặc chạm hình rồi chạm ô điểm. Kéo về khay trên cùng = bỏ chọn. */
+(function () {
+  const css = `
+.dd{margin:8px 0 14px;user-select:none;-webkit-user-select:none}
+.ddhint{font-size:14px;color:var(--muted);margin:0 0 6px}
+.ddpool{display:flex;flex-wrap:wrap;gap:10px;min-height:96px;padding:10px;border:2px dashed var(--line);border-radius:10px;background:var(--bg)}
+.ddpool.empty::after{content:"Đã xếp hết – kéo hình về đây nếu muốn bỏ chọn";color:var(--muted);font-size:14px;align-self:center}
+.ddcols{display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));gap:8px;margin-top:12px}
+@media (max-width:640px){.ddcols{grid-template-columns:repeat(min(var(--n),3),minmax(0,1fr))}}
+.ddcol{border:2px solid var(--line);border-radius:10px;background:var(--surface);display:flex;flex-direction:column;min-width:0}
+.ddhead{padding:6px 4px;text-align:center;font-size:14px;line-height:1.25;border-bottom:1px solid var(--line);background:var(--sel);border-radius:8px 8px 0 0}
+.ddhead img.lbl{max-height:48px;margin:0 auto}
+.ddzone{flex:1;min-height:110px;padding:6px;display:flex;flex-wrap:wrap;gap:6px;align-content:flex-start;justify-content:center}
+.ddcol.over,.ddpool.over{border-color:var(--topbar,#0B5CAD);box-shadow:0 0 0 3px rgba(11,92,173,.25)}
+.ddcol.target{cursor:pointer}
+.ddcard{background:var(--surface);border:2px solid var(--line);border-radius:8px;padding:4px;max-width:150px;text-align:center;
+  font-size:13px;line-height:1.2;touch-action:none;cursor:grab;position:relative}
+.ddcard img.lbl{max-height:clamp(60px,12vh,120px);margin:0 auto}
+.ddzone .ddcard{max-width:100%}
+.ddzone .ddcard img.lbl{max-height:clamp(44px,8vh,80px)}
+.ddcard.sel{border-color:var(--topbar,#0B5CAD);box-shadow:0 0 0 3px rgba(11,92,173,.35)}
+.ddcard.ghost{position:fixed;z-index:9000;pointer-events:none;opacity:.9;box-shadow:0 8px 24px rgba(0,0,0,.3);transform:scale(1.05)}
+.ddcard.hold{opacity:.35}
+.ddcard .oth{display:block;width:100%;margin-top:4px;font-size:13px;padding:3px 5px;touch-action:auto}
+.mtx-wrap.dragq table.mtx{display:none}`;
+  const st = document.createElement("style"); st.textContent = css; document.head.appendChild(st);
+
+  function cleanClone(el) {
+    const c = el.cloneNode(true);
+    c.querySelectorAll(".zbtn, input, .code").forEach(x => x.remove());
+    c.querySelectorAll(".zw").forEach(w => { while (w.firstChild) w.parentNode.insertBefore(w.firstChild, w); w.remove(); });
+    c.querySelectorAll("[data-z]").forEach(x => x.removeAttribute("data-z"));
+    return c;
+  }
+
+  function build(wrap) {
+    if (wrap.dataset.dd) return;
+    wrap.dataset.dd = "1";
+    const table = wrap.querySelector("table.mtx");
+    if (!table) return;
+    const heads = [...table.querySelectorAll("thead th:not(.corner)")];
+    const rows = [...table.querySelectorAll("tbody tr")].map(tr => ({ th: tr.querySelector("th.rlab"), radios: [...tr.querySelectorAll("input[type=radio]")] }));
+    const dd = document.createElement("div"); dd.className = "dd";
+    dd.innerHTML = `<p class="ddhint">Kéo hình thả vào ô điểm tương ứng (hoặc chạm hình rồi chạm ô điểm). Kéo về khay này để bỏ chọn.</p>
+      <div class="ddpool" data-col="-1"></div><div class="ddcols" style="--n:${heads.length}"></div>`;
+    const pool = dd.querySelector(".ddpool"), colsEl = dd.querySelector(".ddcols");
+    const zones = heads.map((h, i) => {
+      const col = document.createElement("div"); col.className = "ddcol"; col.dataset.col = i;
+      const hd = document.createElement("div"); hd.className = "ddhead"; hd.append(...cleanClone(h).childNodes);
+      const z = document.createElement("div"); z.className = "ddzone";
+      col.append(hd, z); colsEl.appendChild(col);
+      return z;
+    });
+    let selected = null;
+    const refresh = () => pool.classList.toggle("empty", !pool.querySelector(".ddcard"));
+    const place = (card, ci, fire = true) => {
+      const r = rows[card.dataset.row];
+      if (ci < 0) { r.radios.forEach(x => { x.checked = false; }); pool.appendChild(card); }
+      else { r.radios[ci].checked = true; zones[ci].appendChild(card); }
+      if (fire) (r.radios[Math.max(ci, 0)] || r.radios[0]).dispatchEvent(new Event("change", { bubbles: true }));
+      card.classList.remove("sel"); selected = null; refresh();
+    };
+    rows.forEach((r, ri) => {
+      const card = document.createElement("div"); card.className = "ddcard"; card.dataset.row = ri;
+      card.append(...cleanClone(r.th).childNodes);
+      const oth = r.th.querySelector("input.oth");                 // dòng "Khác (ghi rõ)": chuyển ô gõ vào thẻ
+      if (oth) { card.appendChild(oth); ["pointerdown", "mousedown", "touchstart"].forEach(ev => oth.addEventListener(ev, e => e.stopPropagation(), { passive: true })); }
+      const ci = r.radios.findIndex(x => x.checked);
+      (ci >= 0 ? zones[ci] : pool).appendChild(card);
+      drag(card);
+    });
+    refresh();
+    table.parentNode.insertBefore(dd, table);
+
+    // chạm hình -> chạm ô (không cần kéo)
+    // chạm chỗ trống / tiêu đề của ô điểm -> đặt thẻ đang chọn vào ô (chạm thẻ khác = đổi thẻ đang chọn)
+    const tapTarget = (e, ci) => { if (selected && !e.target.closest(".ddcard")) place(selected, ci); };
+    pool.addEventListener("click", (e) => tapTarget(e, -1));
+    colsEl.querySelectorAll(".ddcol").forEach(col => col.addEventListener("click", (e) => tapTarget(e, +col.dataset.col)));
+
+    function targetAt(x, y) {
+      const el = document.elementFromPoint(x, y);
+      const t = el && el.closest(".ddcol, .ddpool");
+      return t && dd.contains(t) ? t : null;
+    }
+    function drag(card) {
+      let sx, sy, ghost = null, over = null, pid = null;
+      card.addEventListener("pointerdown", (e) => {
+        if (e.button > 0 || e.target.closest(".zbtn, input")) return;
+        sx = e.clientX; sy = e.clientY; pid = e.pointerId; try { card.setPointerCapture(pid); } catch (_) { }
+      });
+      card.addEventListener("pointermove", (e) => {
+        if (pid !== e.pointerId) return;
+        if (!ghost && Math.hypot(e.clientX - sx, e.clientY - sy) > 6) {
+          const r = card.getBoundingClientRect();
+          ghost = card.cloneNode(true); ghost.classList.add("ghost"); ghost.classList.remove("sel");
+          ghost.style.width = r.width + "px"; document.body.appendChild(ghost); card.classList.add("hold");
+        }
+        if (!ghost) return;
+        ghost.style.left = (e.clientX - ghost.offsetWidth / 2) + "px"; ghost.style.top = (e.clientY - ghost.offsetHeight / 2) + "px";
+        const t = targetAt(e.clientX, e.clientY);
+        if (t !== over) { over && over.classList.remove("over"); over = t; over && over.classList.add("over"); }
+        if (e.clientY < 70) window.scrollBy(0, -12); else if (e.clientY > window.innerHeight - 90) window.scrollBy(0, 12);   // tự cuộn khi kéo sát mép
+      });
+      const end = (e) => {
+        if (pid !== e.pointerId) return;
+        pid = null;
+        if (ghost) {
+          ghost.remove(); ghost = null; card.classList.remove("hold");
+          over && over.classList.remove("over");
+          if (over) place(card, +over.dataset.col);
+          over = null;
+        } else if (e.type === "pointerup") {                         // chạm (không kéo) = chọn thẻ
+          const was = card.classList.contains("sel");
+          dd.querySelectorAll(".ddcard.sel").forEach(c => c.classList.remove("sel"));
+          selected = was ? null : card; if (!was) card.classList.add("sel");
+        }
+      };
+      card.addEventListener("pointerup", end); card.addEventListener("pointercancel", end);
+    }
+  }
+  const run = () => document.querySelectorAll(".mtx-wrap.dragq").forEach(build);
+  const start = () => { run(); new MutationObserver(run).observe(document.body, { childList: true, subtree: true }); };
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start); else start();
+})();
+
+</script>
+<script>
+(function () {
+  "use strict";
+  const E = window.SurveyEngine;
+  const QNR = new E.Questionnaire(SURVEY);
+  const P = new URLSearchParams(location.search);
+  const PVV = P.has("pvv") || CONFIG.mode === "pvv";
+  const SHOWCODE = PVV && CONFIG.show_code === true;             // mặc định chỉ hiện label, không hiện code        // chế độ PVV (CAPI) hay đáp viên tự làm (CAWI)
+  const REF = (P.get("id") || P.get("ref") || "").slice(0, 60); // mã phiếu / mã đáp viên trong link (?id=001)
+  const PREFILL = REF ? { MSP: REF } : {};                        // link theo mẫu: MSP tự điền = mã trong link, không hỏi lại
+  const DONE_KEY = REF ? "cawi_done_" + REF : "cawi_done";     // link theo mẫu: chặn làm lại theo TỪNG mã, máy khác mã vẫn làm được
+  const KEY = "pv_" + (CONFIG.key || QNR.project).replace(/\W+/g, "_");
+  const app = document.getElementById("app");
+  let iv = null, error = null, keep = null;
+  // điền lại form sau khi báo lỗi (không xóa lựa chọn / chữ đã gõ)
+// Cột "Khác (ghi rõ)" trong bảng grid: tick -> hiện ô ghi rõ dưới tên nhãn; gõ chữ -> tự tick
+function gothSync(f) {
+  f.querySelectorAll('.mtx input[data-oth]').forEach(cb => {
+    const box = f.querySelector(`.goth[name="goth_${cb.dataset.row}_${cb.value}"]`);
+    if (box) box.classList.toggle('on', cb.checked);
+  });
+}
+// Câu số: tự thêm dấu phẩy hàng nghìn khi gõ (30000 -> 30,000), giữ vị trí con trỏ
+function numfmt(el) {
+  const raw = el.value, pos = el.selectionStart ?? raw.length;
+  const digitsLeft = raw.slice(0, pos).replace(/[^\d.]/g, "").length;
+  let s = raw.replace(/[^\d.\-]/g, ""); const neg = s.startsWith("-"); s = s.replace(/-/g, "");
+  const parts = s.split("."), ip = parts.shift().replace(/^0+(?=\d)/, "");
+  const out = (neg ? "-" : "") + ip.replace(/\B(?=(\d{3})+(?!\d))/g, ",") + (parts.length ? "." + parts.join("") : "");
+  el.value = out;
+  let n = 0, p = 0; while (p < out.length && n < digitsLeft) { if (/[\d.]/.test(out[p])) n++; p++; }
+  try { el.setSelectionRange(p + (neg && p === 0 ? 1 : 0), p + (neg && p === 0 ? 1 : 0)); } catch (e) { /* bỏ qua */ }
+}
+  function restore(f, fd) {
+    f.querySelectorAll("input,textarea,select").forEach(el => {
+      if (!el.name) return;
+      const vals = fd.getAll(el.name).map(String);
+      if (el.type === "checkbox" || el.type === "radio") el.checked = vals.includes(el.value);
+      else if (vals.length) el.value = vals[0];
+      else if (el.tagName === "SELECT" || el.type !== "hidden") el.value = "";
+    });
+  }
+
+  // ---------- lưu trữ (không có localStorage vẫn chạy được) ----------
+  const store = {
+    get(k, d) { try { const v = localStorage.getItem(KEY + "_" + k); return v === null ? d : JSON.parse(v); } catch (e) { return d; } },
+    set(k, v) { try { localStorage.setItem(KEY + "_" + k, JSON.stringify(v)); } catch (e) { /* bỏ qua */ } },
+    del(k) { try { localStorage.removeItem(KEY + "_" + k); } catch (e) { /* bỏ qua */ } }
+  };
+  const LOGO = CONFIG.logo ? `<span class="brand"><img src="${CONFIG.logo}" alt="logo"></span>` : "";
+  const PROG = CONFIG.show_progress === true;
+  // nút Quay lại: cột 'Hide back' của câu (Y/N) đè cài đặt chung 'Hiện nút Quay lại' trong file Default
+  const canBack = (q) => (q && typeof q.back === "boolean") ? q.back : CONFIG.show_back !== false;
+  const esc = (s) => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const imgUrl = (n) => !n ? null : (/^https?:\/\//i.test(n) ? n : (CONFIG.images || {})[n] ? "images/" + n.split("/").map(encodeURIComponent).join("/") : null);
+  let withLabel = false;                            // hiện CẢ hình lẫn label (Default 'Hình kèm label' hoặc câu có Image label = Y)
+  // **từ** = in đậm, __từ__ = gạch chân (theo nhấn mạnh của Research trong BCH)
+  const plain = (s) => String(s ?? "").replace(/\*\*(.+?)\*\*/g, "$1").replace(/__([^_](?:.*?[^_])?)__/g, "$1");
+  const fmt = (s) => esc(s).replace(/\*\*(.+?)\*\*/g, "<b>$1</b>").replace(/__([^_](?:.*?[^_])?)__/g, "<u>$1</u>");
+  const lbl = (o, small) => { const u = imgUrl(o.image); return u ? `<img class="lbl${small ? " sm" : ""}" src="${esc(u)}" alt="${esc(plain(o.label))}" title="${esc(plain(o.label))}">${withLabel ? `<span class="imgcap">${fmt(o.label)}</span>` : ""}` : fmt(o.label); };
+
+  // ---------- hàng đợi gửi data ----------
+  let sending = false;
+  async function flush() {
+    if (sending) return; const q = store.get("queue", []); await countAudio();
+    if ((!q.length && !audioPending) || !CONFIG.submit_url) { render.homeCount && render.homeCount(); return; }
+    sending = true;
+    try {
+      for (const rec of q.slice()) {
+        const url = CONFIG.submit_url + (CONFIG.submit_url.includes("?") ? "&" : "?") + "rid=" + encodeURIComponent(rec.RespID);
+        const r = await fetch(url, { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(rec) });
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        const rest = store.get("queue", []).filter(x => x.RespID !== rec.RespID); store.set("queue", rest);
+        const sent = store.get("sent", 0) + 1; store.set("sent", sent);
+      }
+      for (const a of (await idb.all().catch(() => []))) {
+        const url = CONFIG.submit_url + (CONFIG.submit_url.includes("?") ? "&" : "?") + "rid=" + encodeURIComponent(a.name.replace(/\.[^.]+$/, ""))
+          + "&kind=audio&ext=" + encodeURIComponent(a.name.split(".").pop());
+        const r = await fetch(url, { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: b64(a.data) });
+        if (!r.ok) throw new Error("HTTP " + r.status + " (ghi âm)");
+        await idb.del(a.name);
+      }
+      store.set("last_ok", new Date().toLocaleString("vi-VN")); store.del("last_err");
+    } catch (e) { store.set("last_err", new Date().toLocaleTimeString("vi-VN") + " - " + (navigator.onLine ? e.message : "mất mạng")); }
+    finally { sending = false; await countAudio(); render.homeCount && render.homeCount(); }
+  }
+  // ---------- IndexedDB cho file ghi âm (localStorage quá nhỏ) ----------
+  const idb = {
+    db: null,
+    open() {
+      if (this.db) return Promise.resolve(this.db);
+      return new Promise((ok, no) => {
+        try {
+          const r = indexedDB.open(KEY + "_audio", 1);
+          r.onupgradeneeded = () => r.result.createObjectStore("audio", { keyPath: "name" });
+          r.onsuccess = () => { this.db = r.result; ok(this.db); }; r.onerror = () => no(r.error);
+        } catch (e) { no(e); }
+      });
+    },
+    async tx(mode, fn) { const db = await this.open(); return new Promise((ok, no) => { const t = db.transaction("audio", mode); const st = t.objectStore("audio"); const res = fn(st); t.oncomplete = () => ok(res && res.result); t.onerror = () => no(t.error); }); },
+    put(item) { return this.tx("readwrite", st => st.put(item)); },
+    del(name) { return this.tx("readwrite", st => st.delete(name)); },
+    all() { return this.tx("readonly", st => st.getAll()); }
+  };
+  let audioPending = 0;
+  async function countAudio() { try { audioPending = (await idb.all()).length; } catch (e) { audioPending = 0; } return audioPending; }
+  const toBuf = (blob) => blob.arrayBuffer ? blob.arrayBuffer() : new Promise((ok, no) => {
+    const r = new FileReader(); r.onload = () => ok(r.result); r.onerror = no; r.readAsArrayBuffer(blob); });
+  function b64(buf) {                              // ArrayBuffer -> base64 (theo khối để không tràn bộ nhớ)
+    const u8 = new Uint8Array(buf); let s = "";
+    for (let i = 0; i < u8.length; i += 0x8000) s += String.fromCharCode.apply(null, u8.subarray(i, i + 0x8000));
+    return btoa(s);
+  }
+
+  // ---------- Ghi âm (MediaRecorder) ----------
+  const rec = { mr: null, chunks: [], mime: "", status: "off" };
+  async function startRecording() {
+    if (!(PVV && CONFIG.recording)) return "off";
+    if (!window.isSecureContext || !navigator.mediaDevices || !window.MediaRecorder) return "unsupported";
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const types = ["audio/webm;codecs=opus", "audio/webm", "audio/mp4", "audio/ogg"];
+      rec.mime = types.find(t => MediaRecorder.isTypeSupported && MediaRecorder.isTypeSupported(t)) || "";
+      rec.mr = new MediaRecorder(stream, rec.mime ? { mimeType: rec.mime, audioBitsPerSecond: 32000 } : {});
+      rec.chunks = []; rec.mr.ondataavailable = (e) => { if (e.data && e.data.size) rec.chunks.push(e.data); };
+      rec.mr.start(5000); rec.status = "on"; return "on";
+    } catch (e) { rec.status = "denied"; return "denied"; }
+  }
+  function stopRecording() {
+    return new Promise((ok) => {
+      if (!rec.mr || rec.mr.state === "inactive") return ok(null);
+      rec.mr.onstop = () => { rec.mr.stream.getTracks().forEach(t => t.stop()); const blob = new Blob(rec.chunks, { type: rec.mime || "audio/webm" }); rec.mr = null; rec.chunks = []; ok(blob); };
+      rec.mr.stop();
+    });
+  }
+  const audioExt = (mime) => /mp4/.test(mime) ? "m4a" : /ogg/.test(mime) ? "ogg" : "webm";
+
+  // ---------- GPS ----------
+  function getGPS(ms) {
+    return new Promise((ok) => {
+      if (!(PVV && CONFIG.gps)) return ok(null);
+      if (!navigator.geolocation || !window.isSecureContext) return ok({ status: "unsupported" });
+      let done = false; const fin = (v) => { if (!done) { done = true; ok(v); } };
+      setTimeout(() => fin({ status: "timeout" }), ms + 500);
+      navigator.geolocation.getCurrentPosition(
+        p => fin({ status: "ok", lat: +p.coords.latitude.toFixed(6), lon: +p.coords.longitude.toFixed(6), acc: Math.round(p.coords.accuracy), time: new Date().toISOString() }),
+        e => fin({ status: e.code === 1 ? "denied" : "unavailable" }),
+        { enableHighAccuracy: true, timeout: ms, maximumAge: 60000 });
+    });
+  }
+
+  function enqueue(rec) { const q = store.get("queue", []); q.push(rec); store.set("queue", q); flush(); }
+  window.addEventListener("online", flush); setInterval(flush, 30000);
+
+  // ---------- màn hình ----------
+  const render = {};
+  render.home = function () {
+    const name = store.get("interviewer", "");
+    const queue = store.get("queue", []), saved = store.get("draft", null);
+    app.innerHTML = `<div class="top"><span class="tl">${LOGO}<b></b></span><span>Link PV${PVV ? " · PVV" : ""}</span></div>
+    <main>
+      <h1>${PVV ? "Bắt đầu phỏng vấn" : "Khảo sát"}</h1>
+      ${PVV ? `<div class="card"><label for="pvv"><b>Mã PVV</b></label>
+        <input id="pvv" type="text" value="${esc(name)}" placeholder="VD: PVV01" autocomplete="off" style="margin-top:8px;text-transform:uppercase">
+      </div>` : `<p>Cảm ơn Anh/Chị đã tham gia khảo sát. Bấm <b>Bắt đầu</b> để trả lời.</p>`}
+      ${store.get("draft_dropped", null) ? `<div class="card warn">Link vừa được cập nhật bảng câu hỏi mới – phiếu đang làm dở của bản cũ đã được bỏ, vui lòng làm phiếu mới.</div>` : ""}
+      ${saved ? `<div class="card warn">Có 1 phiếu đang làm dở (${esc(saved.resp_id)}). <button class="ghost" id="resume" style="margin-top:8px">Làm tiếp phiếu dở</button></div>` : ""}
+      ${PVV ? `<div class="card" id="sync"></div>` : ""}
+    </main>
+    <div class="nav"><div class="in"><button class="go" id="start">Bắt đầu${saved ? " phiếu mới" : ""}</button></div></div>`;
+    document.getElementById("start").onclick = async () => {
+      let who = "WEB";
+      if (PVV) { who = document.getElementById("pvv").value.trim().toUpperCase().replace(/[^\w-]/g, ""); if (!who) { document.getElementById("pvv").focus(); return; } store.set("interviewer", who); }
+      store.del("draft_dropped");
+      iv = new E.Interview(QNR, who, null, PREFILL); error = null;
+      iv.meta = { rec: "off", gps_start: null };
+      const btn = document.getElementById("start"); btn.disabled = true; btn.textContent = "Đang chuẩn bị…";
+      const [r, g] = await Promise.all([startRecording(), getGPS(10000)]);
+      iv.meta.rec = r; iv.meta.gps_start = g; save(); show();
+    };
+    const rs = document.getElementById("resume");
+    if (rs) rs.onclick = async () => {
+      iv = new E.Interview(QNR, null, saved); error = null; iv.meta = saved.meta || { rec: "off" };
+      if (iv.meta.rec === "on" || iv.meta.rec === "resumed") iv.meta.rec = (await startRecording()) === "on" ? "resumed" : "lost";
+      show();
+    };
+    render.homeCount = function () {
+      const el = document.getElementById("sync"); if (!el) return;
+      const q = store.get("queue", []), last = store.get("last_ok", null), err = store.get("last_err", null);
+      el.innerHTML = `<div class="rlab"><div><div class="big">${store.get("done", 0)}</div><div class="muted">Phiếu đã xong trên máy này</div></div>
+        <div><div class="big ${q.length ? "warn" : "ok"}">${q.length}</div><div class="muted">Chờ gửi lên OneDrive</div></div>
+        ${CONFIG.recording ? `<div><div class="big ${audioPending ? "warn" : "ok"}">${audioPending}</div><div class="muted">File ghi âm chờ gửi</div></div>` : ""}</div>
+        ${CONFIG.recording || CONFIG.gps ? `<p class="muted">Phiếu có ${[CONFIG.recording ? "ghi âm" : "", CONFIG.gps ? "GPS" : ""].filter(Boolean).join(" + ")} – trình duyệt sẽ hỏi quyền, PVV bấm <b>Cho phép</b>.</p>` : ""}
+        <p class="muted">${!CONFIG.submit_url ? '<span class="bad">Chưa cấu hình nơi nhận data (chế độ test) – data chỉ lưu trên máy này.</span>'
+          : err ? `<span class="bad">Gửi lỗi: ${esc(err)}</span> – tự thử lại khi có mạng.` : last ? `Gửi thành công lần cuối: ${esc(last)}` : "Chưa gửi lần nào."}</p>
+        ${q.length || audioPending ? `<button class="ghost" id="send">Gửi ngay</button> <button class="ghost" id="dl">Tải file data (dự phòng)</button>` : ""}
+        ${audioPending ? ` <button class="ghost" id="dla">Tải file ghi âm (dự phòng)</button>` : ""}`;
+      const da = document.getElementById("dla"); if (da) da.onclick = async () => {
+        for (const a of await idb.all()) { const x = document.createElement("a"); x.href = URL.createObjectURL(new Blob([a.data], { type: a.type })); x.download = a.name; x.click(); }
+      };
+      const s = document.getElementById("send"); if (s) s.onclick = flush;
+      const d = document.getElementById("dl"); if (d) d.onclick = () => {
+        const b = new Blob([JSON.stringify(store.get("queue", []), null, 1)], { type: "application/json" });
+        const a = document.createElement("a"); a.href = URL.createObjectURL(b); a.download = `${KEY}_data_${Date.now()}.json`; a.click();
+      };
+    };
+    render.homeCount(); countAudio().then(() => render.homeCount());
+  };
+
+  function save() { if (iv && iv.current !== null) store.set("draft", Object.assign(iv.state(), { meta: iv.meta || {}, version: CONFIG.version })); else store.del("draft"); }
+  // phiếu dở của phiên bản link cũ (Script_PV đã sửa) -> bỏ, không mở tiếp để tránh lệch câu
+  (function () { const d = store.get("draft", null); if (d && d.version !== CONFIG.version) { store.del("draft"); store.set("draft_dropped", d.resp_id || "1"); } })();
+
+  render.question = function () {
+    const q = QNR.questions[iv.current], t = q.type, qid = q.id;
+    withLabel = CONFIG.image_label === true || q.image_label === true;
+    const val = iv.answers[qid], opts = iv.options(q), topics = iv.topics(q);
+    const vals = Array.isArray(val) ? val : (val === undefined || val === null || typeof val === "object" ? [] : [val]);
+    const gval = (val && typeof val === "object" && !Array.isArray(val)) ? val : {};
+    const oth = (c) => iv.answers[`${qid}_${c}_OTH`] || "";
+    let body = "";
+    const cols = Math.max(1, Math.min(6, q.columns || 1));
+    const grid = (html) => cols > 1 ? `<div class="optgrid" style="--cols:${cols};--cols-sm:${Math.min(cols, 2)}">${html}</div>` : html;
+    if (t === "sa" || t === "ma") {
+      body = grid(opts.map(o => `<label class="opt"><input type="${t === "ma" ? "checkbox" : "radio"}" name="ans" value="${o.code}"
+        ${vals.includes(o.code) ? "checked" : ""} ${o.exclusive ? "data-excl=1" : ""}>
+        ${SHOWCODE ? `<span class="code">${o.code}</span>` : ""}<span style="flex:1">${lbl(o)}
+        ${o.other ? `<input class="oth" type="text" name="oth_${o.code}" value="${esc(oth(o.code))}" placeholder="Ghi rõ" data-code="${o.code}">` : ""}</span></label>`).join(""));
+    } else if (t === "scale") {
+      body = `<div class="scale">${opts.map(o => `<label class="opt"><input type="radio" name="ans" value="${o.code}" ${vals.includes(o.code) ? "checked" : ""}>
+        ${SHOWCODE || o.label === String(o.code) ? `<b>${o.code}</b>` : ""}${imgUrl(o.image) ? lbl(o, true) : (o.label !== String(o.code) ? `<span class="${SHOWCODE ? "muted" : ""}">${fmt(o.label)}</span>` : "")}</label>`).join("")}</div>`;
+    } else if (t === "rank") {
+      const rk = {}; (Array.isArray(val) ? val : []).forEach((c, i) => { rk[c] = i + 1; });
+      body = `<p class="muted">Chọn thứ hạng 1, 2, 3… cho từng đáp án (để trống nếu không xếp hạng).</p>` + grid(opts.map(o => `<div class="opt rank">
+        <select name="rank_${o.code}" aria-label="Hạng của ${esc(plain(o.label))}"><option value=""></option>
+        ${opts.map((_, i) => `<option value="${i + 1}" ${rk[o.code] === i + 1 ? "selected" : ""}>${i + 1}</option>`).join("")}</select>
+        ${SHOWCODE ? `<span class="code">${o.code}</span>` : ""}<span style="flex:1">${lbl(o)}
+        ${o.other ? `<input class="oth show" type="text" name="oth_${o.code}" value="${esc(oth(o.code))}" placeholder="Ghi rõ">` : ""}</span></div>`).join(""));
+    } else if (t === "form") {                      // thông tin đáp viên: nhiều ô nhập 1 dòng
+      body = topics.map(tp => {
+        const gv = gval[String(tp.code)], req = E.REQ.test(tp.label), nm = E.fieldName(tp.label), tel = E.PHONE.test(nm);
+        return `<label class="fld"><span>${fmt(nm)}${req ? ` <span class="req">*</span>` : ""}</span>
+          <input type="${tel ? "tel" : "text"}" name="g_${tp.code}" value="${esc(gv ?? "")}" ${tel ? 'inputmode="tel" autocomplete="tel"' : ""}></label>`;
+      }).join("");
+    } else if (t === "grid_sa" || t === "grid_ma") {      // dạng bảng như BCH: dòng = nhãn, cột = thang điểm
+      const head = (o) => {
+        if (imgUrl(o.image)) return lbl(o, true);
+        const L = String(o.label), C = String(o.code), m = L.match(new RegExp("^" + C + "\\s*[-.:)]\\s*(.+)$"));
+        if (L === C) return `<b>${C}</b>`;
+        if (m) return `${C}.<br>${fmt(m[1])}`;
+        return (SHOWCODE ? `${C}.<br>` : "") + fmt(L);
+      };
+      const typ = t === "grid_ma" ? "checkbox" : "radio";
+      body = `<div class="mtx-wrap${q.drag && t === "grid_sa" ? " dragq" : ""}"><table class="mtx"><thead><tr><th class="corner"></th>${opts.map(o => `<th scope="col">${head(o)}</th>`).join("")}</tr></thead><tbody>` +
+        topics.map(tp => {
+          const gv = gval[String(tp.code)], gvs = Array.isArray(gv) ? gv : (gv === undefined || gv === null ? [] : [gv]);
+          return `<tr><th scope="row" class="rlab">${SHOWCODE ? `<span class="code">${tp.code}</span> ` : ""}${lbl(tp)}
+            ${tp.other && !tp.piped ? `<input class="oth" type="text" name="toth_${tp.code}" value="${esc(oth(tp.code))}" placeholder="Ghi rõ (nếu có)">` : ""}</th>` +
+            opts.map(o => `<td><label><input type="${typ}" name="g_${tp.code}" value="${o.code}" ${gvs.includes(o.code) ? "checked" : ""} ${o.exclusive ? "data-excl=1" : ""} ${o.other ? `data-oth=1 data-row="${tp.code}"` : ""}
+              aria-label="${esc(plain(tp.label))}: ${esc(plain(o.label))}"></label>${o.other ? `<input class="goth${gvs.includes(o.code) ? " on" : ""}" type="text" name="goth_${tp.code}_${o.code}" value="${esc(iv.answers[`${qid}_${tp.code}_${o.code}_OTH`] || "")}" placeholder="Ghi rõ" data-row="${tp.code}" data-code="${o.code}" aria-label="${esc(plain(tp.label))}: ${esc(plain(o.label))} - ghi rõ">` : ""}</td>`).join("") + `</tr>`;
+        }).join("") + `</tbody></table></div>`;
+    } else if (t.startsWith("grid_")) {
+      body = topics.map(tp => {
+        const gv = gval[String(tp.code)], gvs = Array.isArray(gv) ? gv : (gv === undefined || gv === null ? [] : [gv]);
+        let inner;
+        if (t === "grid_sa" || t === "grid_ma") inner = `<div class="chips">${opts.map(o => `<label class="chip"><input type="${t === "grid_ma" ? "checkbox" : "radio"}"
+            name="g_${tp.code}" value="${o.code}" ${gvs.includes(o.code) ? "checked" : ""} ${o.exclusive ? "data-excl=1" : ""}>
+            ${SHOWCODE || o.label === String(o.code) ? `<b>${o.code}</b>` : ""}${imgUrl(o.image) ? lbl(o, true) : (o.label !== String(o.code) ? `<span>${fmt(o.label)}</span>` : "")}</label>`).join("")}</div>`;
+        else if (t === "grid_num") inner = `<input type="text" class="${E.numGroup(q) ? "numfmt" : "num"}" name="g_${tp.code}" inputmode="decimal" autocomplete="off" value="${gv == null ? "" : E.fmtNum(gv, E.numGroup(q))}">`;
+        else inner = `<textarea name="g_${tp.code}" class="small" placeholder="Ghi nguyên văn">${esc(gv || "")}</textarea>`;
+        return `<fieldset class="topic"><legend>${SHOWCODE ? `<span class="code">${tp.code}</span> ` : ""}${lbl(tp)}
+          ${tp.other && !tp.piped ? `<input class="oth show" type="text" name="toth_${tp.code}" value="${esc(oth(tp.code))}" placeholder="Ghi rõ (nếu có)">` : ""}</legend>${inner}</fieldset>`;
+      }).join("");
+    } else if (t === "numeric") {
+      body = `<input type="text" class="${E.numGroup(q) ? "numfmt" : "num"}" name="ans" inputmode="decimal" autocomplete="off" value="${val == null ? "" : E.fmtNum(val, E.numGroup(q))}">`;
+    } else if (t === "date") {
+      body = `<input type="date" name="ans" value="${esc(val || "")}">`;
+    } else if (t === "oe" && q.single_line) {
+      body = `<input type="text" name="ans" value="${esc(val || "")}" autocomplete="off">`;
+    } else if (t === "oe") {
+      body = `<textarea name="ans" placeholder="${PVV ? "Ghi nguyên văn câu trả lời của đáp viên" : "Nhập câu trả lời"}">${esc(val || "")}</textarea>`;
+    }
+    const note = PVV ? iv.pipe(q.note || "") : "";
+    const m = iv.meta || {};
+    const recTag = PVV && CONFIG.recording ? (rec.mr && rec.mr.state === "recording" ? ` <span class="rec">● REC</span>` : ` <span class="rec off">● Không ghi âm</span>`) : "";
+    app.innerHTML = `<div class="top"><span class="tl">${LOGO}<b>${PVV ? esc(iv.interviewer) : ""}${recTag}</b></span><span>${PVV ? esc(iv.resp_id) : PROG ? iv.progress() + "%" : ""}</span></div>
+    ${PVV && CONFIG.recording && !(rec.mr && rec.mr.state === "recording") ? `<div class="warnbar">Không ghi âm được (${m.rec === "unsupported" ? "trình duyệt / link http không hỗ trợ" : m.rec === "lost" ? "phiếu mở lại, micro chưa cho phép" : "chưa cho phép micro"}). Kiểm tra quyền micro của trình duyệt.</div>` : ""}
+    ${PROG ? `<div class="bar"><i style="width:${iv.progress()}%"></i></div>` : ""}
+    <form id="f" novalidate><main class="${cols > 2 || ((t === "grid_sa" || t === "grid_ma") && opts.length > 6) ? "wide" : ""}">
+      ${error ? `<div class="err" role="alert">${esc(plain(error))}</div>` : ""}
+      <h1>${CONFIG.show_qnum !== false && t !== "info" ? `<b class="qn">${esc(qid)}.</b> ` : ""}${fmt(iv.pipe(q.text))}</h1>
+      ${CONFIG.pipe_image !== false ? (() => { const pi = iv.pipeImages(q.text).filter(([im]) => imgUrl(im)); return pi.length ? `<div class="pimgs">${pi.map(([im, l]) => `<img class="lbl" src="${esc(imgUrl(im))}" alt="${esc(plain(l))}">`).join("")}</div>` : ""; })() : ""}
+      ${imgUrl(q.image) ? `<img class="qimg" src="${esc(imgUrl(q.image))}" alt="">` : ""}
+      ${note ? `<p class="note">${fmt(note)}</p>` : ""}
+      ${body}
+    </main>
+    <div class="nav qnav"><div class="in">
+      <button type="submit" class="nx">Tiếp tục &gt;&gt;</button>
+      ${canBack(q) ? `<button type="button" class="bk" id="back" ${iv.history.length ? "" : "disabled"}>&lt;&lt; Quay lại</button>` : ""}
+      ${PVV ? `<button type="button" class="stop" id="abort">Hủy</button>` : ""}
+    </div></div></form>`;
+    const f = document.getElementById("f");
+    f.onsubmit = (e) => {
+      e.preventDefault();
+      const fd = new FormData(f);
+      error = iv.submit(fd);
+      keep = error ? fd : null;                    // lỗi -> giữ nguyên những gì vừa nhập
+      if (!error && iv.current === null) return finish();
+      save(); show(); window.scrollTo(0, 0);
+    };
+    if (keep) { restore(f, keep); keep = null; }
+    gothSync(f);
+    f.addEventListener("change", () => gothSync(f));
+    f.querySelectorAll("input.numfmt").forEach(el => { el.addEventListener("input", () => numfmt(el)); if (el.value) numfmt(el); });
+    f.querySelectorAll(".goth").forEach(tx => tx.addEventListener("input", () => {
+      const cb = f.querySelector(`input[name="g_${tx.dataset.row}"][value="${tx.dataset.code}"]`);
+      if (cb && tx.value.trim() && !cb.checked) { cb.checked = true; cb.dispatchEvent(new Event("change", { bubbles: true })); }
+    }));
+    const bk = document.getElementById("back");
+    if (bk) bk.onclick = () => { if (!canBack(q)) return; iv.back(); error = null; keep = null; save(); show(); };
+    const ab = document.getElementById("abort");
+    if (ab) ab.onclick = async () => { if (confirm("Hủy phiếu này? Dữ liệu chưa lưu sẽ mất.")) { await stopRecording(); iv = null; store.del("draft"); render.home(); } };
+    f.querySelectorAll("input[type=checkbox]").forEach(cb => cb.addEventListener("change", () => {
+      if (!cb.checked) return;
+      f.querySelectorAll(`input[type=checkbox][name="${cb.name}"]`).forEach(o => { if (o !== cb && (cb.dataset.excl || o.dataset.excl)) o.checked = false; });
+    }));
+    f.querySelectorAll("input.oth[data-code]").forEach(tx => tx.addEventListener("input", () => {
+      const box = f.querySelector(`input[name=ans][value="${tx.dataset.code}"]`);
+      if (box && tx.value.trim() && !box.checked) { box.checked = true; box.dispatchEvent(new Event("change")); }
+    }));
+    const first = f.querySelector(".err") ? null : f.querySelector("input[type=number],input[type=date],textarea,input[type=text]:not(.oth)");
+    if (first && !("ontouchstart" in window)) first.focus();
+  };
+
+  async function finish() {
+    const done = iv; iv = null;
+    app.innerHTML = `<main class="center"><h1>Đang lưu phiếu…</h1></main>`;
+    const m = done.meta || {}, extra = { DataType: CONFIG.submit_url ? "REAL" : "TEST", Mode: PVV ? "CAPI" : "CAWI", UserAgent: navigator.userAgent.slice(0, 200) };
+    if (REF) extra.RespondentRef = REF;
+    if (PVV && CONFIG.gps) {
+      const g1 = m.gps_start || {}, g2 = (await getGPS(8000)) || {};
+      Object.assign(extra, { GPS_Status: g1.status || "", GPS_Lat: g1.lat ?? null, GPS_Lon: g1.lon ?? null, GPS_Acc: g1.acc ?? null,
+        GPS_End_Lat: g2.lat ?? null, GPS_End_Lon: g2.lon ?? null, GPS_End_Acc: g2.acc ?? null });
+    }
+    if (PVV && CONFIG.recording) {
+      const blob = await stopRecording();
+      extra.Recording = m.rec || "off";
+      if (blob && blob.size) {
+        const seg = m.rec === "resumed" ? "_2" : "";
+        const name = `${done.resp_id}${seg}.${audioExt(blob.type)}`;
+        try { await idb.put({ name, type: blob.type, data: await toBuf(blob) }); extra.AudioFile = name; } catch (e) { extra.Recording = "save_error"; }
+      }
+    }
+    const rec = done.toRecord(extra);
+    store.del("draft"); store.set("done", store.get("done", 0) + 1); enqueue(rec); countAudio();
+    if (!CONFIG.submit_url) {                       // CHẾ ĐỘ TEST: tự tải file data về Downloads -> 3_BUILD_RAWDATA tự gom
+      try {
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(new Blob([JSON.stringify(rec, null, 1)], { type: "application/json" }));
+        a.download = `${KEY}_${rec.RespID}.json`; document.body.appendChild(a); a.click(); a.remove();
+      } catch (e) { /* bỏ qua */ }
+    }
+    if (!PVV) store.set(DONE_KEY, true);
+    const ok = rec.Status === "Completed";
+    app.innerHTML = `<div class="top"><span class="tl">${LOGO}<b></b></span><span>${PVV ? esc(rec.RespID) : ""}</span></div>
+    <main class="center"><h1>${ok ? "Cảm ơn Anh/Chị đã hoàn thành khảo sát!" : (PVV ? "Phiếu kết thúc" : "Cảm ơn Anh/Chị đã dành thời gian!")}</h1>
+      ${!CONFIG.submit_url ? `<p class="muted">Chế độ test: đã tải file data <b>${esc(KEY + "_" + rec.RespID)}.json</b> về thư mục Downloads – bấm 3_BUILD_RAWDATA để đưa vào raw data.</p>` : ""}
+      ${PVV ? `<p class="${ok ? "ok" : "bad"}"><b>${esc(rec.Status)}</b>${rec.TermReason ? " – " + esc(rec.TermReason) : ""}</p>
+      <p class="muted">Thời gian: ${Math.round(rec.Duration_sec / 60)} phút · Phiếu đã lưu, đang gửi lên OneDrive…</p>
+      ${CONFIG.recording ? `<p class="muted">Ghi âm: ${rec.AudioFile ? esc(rec.AudioFile) : "<span class='bad'>không có</span>"}</p>` : ""}
+      ${CONFIG.gps ? `<p class="muted">GPS: ${rec.GPS_Lat != null ? rec.GPS_Lat + ", " + rec.GPS_Lon + " (±" + rec.GPS_Acc + "m)" : "<span class='bad'>" + esc(rec.GPS_Status || "không có") + "</span>"}</p>` : ""}` :
+      `<p class="muted">${ok ? "Câu trả lời của Anh/Chị đã được ghi nhận." : "Rất tiếc Anh/Chị không thuộc nhóm đối tượng của khảo sát lần này."}</p>`}
+    </main>
+    ${PVV ? `<div class="nav"><div class="in"><button class="go" id="home">Về màn hình chính</button></div></div>`
+      : (!(CONFIG.cawi_once !== false && CONFIG.submit_url) ? `<div class="nav"><div class="in"><button class="go" id="home">Làm phiếu mới${CONFIG.submit_url ? "" : " (chế độ test)"}</button></div></div>` : "")}`;
+    const h = document.getElementById("home"); if (h) h.onclick = () => { iv = null; render.home(); };
+  }
+
+  function show() { if (iv && iv.current !== null) render.question(); else if (iv) finish(); else render.home(); }
+
+  // CAWI có phiếu dở -> làm tiếp luôn; CAWI mới -> vào thẳng câu đầu
+  const draft = store.get("draft", null);
+  const TEST = !CONFIG.submit_url;                 // chưa dán URL Power Automate = chế độ test
+  const ONCE = CONFIG.cawi_once !== false && !TEST; // mỗi máy chỉ làm 1 lần (chỉ áp dụng khi chạy thật)
+  if (!PVV && !draft && ONCE && store.get(DONE_KEY, false) && !P.has("again")) {
+    app.innerHTML = `<div class="top"><span class="tl">${LOGO}<b></b></span><span></span></div><main class="center"><h1>Anh/Chị đã hoàn thành khảo sát này.</h1><p class="muted">Cảm ơn Anh/Chị!</p></main>`;
+    flush(); return;
+  }
+  if (!PVV && draft) { iv = new E.Interview(QNR, null, draft); show(); }
+  else if (!PVV && CONFIG.cawi_autostart) { iv = new E.Interview(QNR, "WEB", null, PREFILL); save(); show(); }
+  else render.home();
+  flush();
+})();
+</script>
+</body>
+</html>
