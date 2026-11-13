@@ -1082,7 +1082,7 @@ function numfmt(el) {
       ${saved ? `<div class="card warn">Có 1 phiếu đang làm dở (${esc(saved.resp_id)}). <button class="ghost" id="resume" style="margin-top:8px">Làm tiếp phiếu dở</button></div>` : ""}
       ${PVV ? `<div class="card" id="sync"></div>` : ""}
     </main>
-    <div class="nav"><div class="in"><button class="go" id="start">Bắt đầu${saved ? " phiếu mới" : ""}</button></div></div>`;
+    <div class="nav qnav"><div class="in"><button class="nx" id="start">Bắt đầu${saved ? " phiếu mới" : ""} &gt;&gt;</button></div></div>`;
     document.getElementById("start").onclick = async () => {
       let who = "WEB";
       if (PVV) { who = document.getElementById("pvv").value.trim().toUpperCase().replace(/[^\w-]/g, ""); if (!who) { document.getElementById("pvv").focus(); return; } store.set("interviewer", who); }
@@ -1286,8 +1286,8 @@ function numfmt(el) {
       ${CONFIG.gps ? `<p class="muted">GPS: ${rec.GPS_Lat != null ? rec.GPS_Lat + ", " + rec.GPS_Lon + " (±" + rec.GPS_Acc + "m)" : "<span class='bad'>" + esc(rec.GPS_Status || "không có") + "</span>"}</p>` : ""}` :
       `<p class="muted">${ok ? "Câu trả lời của Anh/Chị đã được ghi nhận." : "Rất tiếc Anh/Chị không thuộc nhóm đối tượng của khảo sát lần này."}</p>`}
     </main>
-    ${PVV ? `<div class="nav"><div class="in"><button class="go" id="home">Về màn hình chính</button></div></div>`
-      : (!(CONFIG.cawi_once !== false && CONFIG.submit_url) ? `<div class="nav"><div class="in"><button class="go" id="home">Làm phiếu mới${CONFIG.submit_url ? "" : " (chế độ test)"}</button></div></div>` : "")}`;
+    ${PVV ? `<div class="nav qnav"><div class="in"><button class="nx" id="home">Về màn hình chính &gt;&gt;</button></div></div>`
+      : (!(CONFIG.cawi_once !== false && CONFIG.submit_url) ? `<div class="nav qnav"><div class="in"><button class="nx" id="home">Làm phiếu mới${CONFIG.submit_url ? "" : " (chế độ test)"} &gt;&gt;</button></div></div>` : "")}`;
     const h = document.getElementById("home"); if (h) h.onclick = () => { iv = null; render.home(); };
   }
 
